@@ -1,16 +1,16 @@
 # Map Overlay Types
 
-[ReactMapGL](https://github.com/uber/react-map-gl) and [Deck.gl](https://github.com/uber/deck.gl) 
-offers a collection of map overlays. Here we provide a list of overlays and 
+[ReactMapGL](https://github.com/uber/react-map-gl) and [Deck.gl](https://github.com/uber/deck.gl)
+offers a collection of map overlays. Here we provide a list of overlays and
 explan how they can be used in mapping visualizations
 
 ### Scatterplot
 
-[Scatterplot](https://uber.github.io/deck.gl/#/documentation/layer-catalog/scatterplot-layer) can be used to plot point locations. It provided a fast overview of where the events have occured. You can color code the points to show different types of events, or have its radius based on a numeric metric such as price, occurrence or duration. 
+[Scatterplot](https://uber.github.io/deck.gl/#/documentation/layer-catalog/scatterplot-layer) can be used to plot point locations. It provided a fast overview of where the events have occured. You can color code the points to show different types of events, or have its radius based on a numeric metric such as price, occurrence or duration.
 
 <p class="inline-images">
-  <img src="../../src/static/images/mg_scatterplot_2.png" alt="extruded" width="300px" height="300px"/>
-  <img src="../../src/static/images/mg_scatterplot_1.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_scatterplot_2.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_scatterplot_1.png" alt="extruded" width="300px" height="300px"/>
 </p>
 
 _Left: Trip dropoffs in LA, using additive blending to show density_  
@@ -45,13 +45,13 @@ const layers = [
 [Arc](https://uber.github.io/deck.gl/#/documentation/layer-catalog/arc-layer) can be used to plot links between two points. Color and thickness of arcs can be based on different metrics. Arc overlay can be used to plot network graphs. The connection of different region is more visible when viewed in 3d.
 
 <p class="inline-images">
-  <img src="../../src/static/images/mg_arc_1.png" alt="extruded" width="300px" height="300px"/>
-  <img src="../../src/static/images/mg_arc_2.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_arc_1.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_arc_2.png" alt="extruded" width="300px" height="300px"/>
 </p>
 
-_Left: Restaurant deliveries. Color based on cuisine type_ 
- 
- 
+_Left: Restaurant deliveries. Color based on cuisine type_
+
+
 ```js
 const layers = [
   new ArcLayer({
@@ -70,17 +70,17 @@ _Right: All trips originated from a specific area, in perspective view. Color ba
 
 ### Hexagon
 
-[Hexagon](https://uber.github.io/deck.gl/#/documentation/layer-catalog/hexagon-layer) renders a hexagonal heatmap based on points aggregations. 
-It takes an array of points and radius of the hexagon bin, then projects points into the bins. The color and height of the hexagon 
-is scaled by number of points it contains by default. However, you can pass a function to getColorValue that calculate a value by all the points in a hex bin to used as color reference. 
+[Hexagon](https://uber.github.io/deck.gl/#/documentation/layer-catalog/hexagon-layer) renders a hexagonal heatmap based on points aggregations.
+It takes an array of points and radius of the hexagon bin, then projects points into the bins. The color and height of the hexagon
+is scaled by number of points it contains by default. However, you can pass a function to getColorValue that calculate a value by all the points in a hex bin to used as color reference.
 Hexagon elevation can be enabled in 3d by passing `extruded: true`. Elevation is based on number of points in each bin.
- 
-You can pass in `upperPercentiles` and `lowerPercentile` to filter bins and re-calculate color based on filtered range. 
+
+You can pass in `upperPercentiles` and `lowerPercentile` to filter bins and re-calculate color based on filtered range.
 Bins with value outside the percentile range will be hidden. The percentile is a useful feature to help visualize hidden patterns in the low percentile range.
 
 <p class="inline-images">
-  <img src="../../src/static/images/mg_hex_1.png" alt="extruded" width="300px" height="300px"/>
-  <img src="../../src/static/images/mg_hex_2.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_hex_1.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_hex_2.png" alt="extruded" width="300px" height="300px"/>
 </p>
 
 _Left: Trip pickup heatmap in LA_
@@ -110,8 +110,8 @@ const layers = [
 ```
 
 <p class="inline-images">
-  <img src="../../src/static/images/mg_hex_5.png" alt="extruded" width="300px" height="300px"/>
-  <img src="../../src/static/images/mg_hex_6.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_hex_5.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_hex_6.png" alt="extruded" width="300px" height="300px"/>
 </p>
 
 _Left: Trips in NYC, color based on average trip fares_
@@ -144,8 +144,8 @@ const layers = [
 ```
 
 <p class="inline-images">
-  <img src="../../src/static/images/mg_hex_3.png" alt="extruded" width="300px" height="300px"/>
-  <img src="../../src/static/images/mg_hex_4.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_hex_3.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_hex_4.png" alt="extruded" width="300px" height="300px"/>
 </p>
 
 _Left: Road accident in UK, upper percentile set to 100._
