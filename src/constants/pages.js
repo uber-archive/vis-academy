@@ -48,6 +48,21 @@ export const docPages = generatePath([
         path: 'simple',
         content: getDocUrl('guidelines/mapping.md')
       },
+      {
+        name: 'Scatterplot',
+        path: 'scatterplot',
+        content: getDocUrl('guidelines/scatterplot.md')
+      },
+      {
+        name: 'Arc',
+        path: 'arc',
+        content: getDocUrl('guidelines/arc.md')
+      },
+      {
+        name: 'Hexagon',
+        path: 'hexagon',
+        content: getDocUrl('guidelines/hexagon.md')
+      }
     ]
   },
   {
