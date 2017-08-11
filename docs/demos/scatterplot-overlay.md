@@ -18,7 +18,7 @@ which we will use.
 ## 1. Add Taxi Data
 
 Download the Taxi data we have in the repository
-[here](https://github.com/abmai/vis-tutorial/blob/master/demos/data/taxi.csv),
+[here](https://github.com/uber-common/vis-tutorial/blob/master/demos/data/taxi.csv),
 and then import the file into your `app.js` component. If you cloned our
 tutorial repo as-is, your import statement should look like this:
 

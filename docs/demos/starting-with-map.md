@@ -7,12 +7,12 @@ the powerful `MapboxGL` mapping library. `react-map-gl` makes it super easy to
 drop a mapping component into your application.
 
 Checkout the complete code for this step
-[here](https://github.com/abmai/vis-tutorial/tree/master/demos/starting-with-map).
+[here](https://github.com/uber-common/vis-tutorial/tree/master/demos/starting-with-map).
 
 ## 1. Start with a bare React Component
 
 Checkout the starting code here
-[here](https://github.com/abmai/vis-tutorial/tree/master/demos/starting-code).
+[here](https://github.com/uber-common/vis-tutorial/tree/master/demos/starting-code).
 
 The app component in the starting code above currently looks like this:
 ```js

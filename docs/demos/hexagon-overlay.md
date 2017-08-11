@@ -1,7 +1,7 @@
 <!-- INJECT:"HexagonOverlay" -->
 
 # Add a Hexagon Overlay with Deck.GL
-[View code](https://github.com/abmai/vis-tutorial/tree/master/demos/hexagon-overlay)
+[View code](https://github.com/uber-common/vis-tutorial/tree/master/demos/hexagon-overlay)
 
 **NOTE** This step follows from the **completed** code of the previous section,
 [Scatterplot Overlay](/#/deck/scatterplot-overlay).
