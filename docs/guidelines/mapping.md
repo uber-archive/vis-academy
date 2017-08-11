@@ -14,8 +14,8 @@ explan how they can be used in mapping visualizations
         <td><img src="../../src/static/images/mg_arc_1.png" alt="extruded" width="300px" height="300px"/></td>
     </tr>
     <tr>
-        <td>Path</td>
-        <td>Chorepleth</td>
+        <td>Geojson: Path</td>
+        <td>Geojson: Chorepleth</td>
     </tr>
     <tr>
         <td><img src="../../src/static/images/mg_path.png" alt="extruded" width="300px" height="300px"/></td>
