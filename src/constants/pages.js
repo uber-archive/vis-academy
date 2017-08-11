@@ -41,6 +41,16 @@ export const docPages = generatePath([
     ]
   },
   {
+    name: 'Mapping guidelines',
+    children: [
+      {
+        name: 'Mapping types',
+        path: 'simple',
+        content: getDocUrl('guidelines/mapping.md')
+      },
+    ]
+  },
+  {
     name: 'Deck GL',
     children: [
       {
@@ -54,24 +64,7 @@ export const docPages = generatePath([
     ]
   },
   {
-    name: 'React Vis',
-    children: [
-      {
-        name: 'Add Charts',
-        content: getDocUrl('demos/add-charts.md')
-      },
-      {
-        name: 'Line Charts',
-        content: getDocUrl('demos/line-charts.md')
-      },
-      {
-        name: 'Scatterplot Charts',
-        content: getDocUrl('demos/scatterplot-charts.md')
-      }
-    ]
-  },
-  {
-    name: `Visualization guidelines`,
+    name: 'Visualization guidelines',
     children: [
       {
         name: `Do - clear simple charts`,
@@ -96,13 +89,20 @@ export const docPages = generatePath([
     ]
   },
   {
-    name: 'Mapping guidelines',
+    name: 'React Vis',
     children: [
       {
-        name: 'Mapping types',
-        path: 'simple',
-        content: getDocUrl('guidelines/mapping.md')
+        name: 'Add Charts',
+        content: getDocUrl('demos/add-charts.md')
       },
+      {
+        name: 'Line Charts',
+        content: getDocUrl('demos/line-charts.md')
+      },
+      {
+        name: 'Scatterplot Charts',
+        content: getDocUrl('demos/scatterplot-charts.md')
+      }
     ]
   }
 ]);
