@@ -11,8 +11,10 @@ Checkout the complete code for this step
 
 ## 1. Start with a bare React Component
 
-If you are starting from scratch, let's first setup the outline of our React
-component. For the purpose of this tutorial, your component outline should look like:
+Checkout the starting code here
+[here](https://github.com/abmai/vis-tutorial/tree/master/demos/starting-code).
+
+The app component in the starting code above currently looks like this:
 ```js
 import React, {Component} from 'react';
 
