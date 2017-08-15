@@ -109,7 +109,7 @@ const DROPOFF_COLOR = [255, 0, 128];
 export default class DeckGLOverlay extends Component {
 
   render() {
-    const {viewport, data, onHover, settings} = this.props;
+    const {viewport, data} = this.props;
 
     if (!data) {
       return null;
@@ -123,9 +123,8 @@ export default class DeckGLOverlay extends Component {
         getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
         getRadius: d => 1,
         opacity: 0.5,
-        pickable: true,
-        onHover,
-        radiusScale: settings.radiusScale,
+        pickable: false,
+        radiusScale: 3,
         radiusMinPixels: 0.25,
         radiusMaxPixels: 30
       })
