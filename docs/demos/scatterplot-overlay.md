@@ -76,9 +76,13 @@ import React, {Component} from 'react';
 import DeckGL, {ScatterplotLayer} from 'deck.gl';
 
 export default class DeckGLOverlay extends Component {
+  
+  renderLayers() {
+    return [];
+  }
 
   render() {
-    const {viewport, data, onHover, settings} = this.props;
+    const {viewport, data} = this.props;
 
     if (!data) {
       return null;
@@ -96,48 +100,50 @@ export default class DeckGLOverlay extends Component {
 This gives us the basic structure, using the export `DeckGL` react component
 to render our `deck.gl` overlay. You'll notice that `layers` is being passed to
 `DeckGL` but it's an empty array. We have to initialize each `deck.gl` layer
-separately. Once we add the code to initialize a `ScatterplotLayer`, we will have
-a working `deck.gl` component. The final code looks like this:
+separately. Let's edit the function and initialize a `ScatterplotLayer` 
 
 ```js
+
+  const layers = [
+    new ScatterplotLayer({
+      id: 'scatterplot',
+      data,
+      getPosition: d => d.position,
+      getColor: d => [0, 128, 255],
+      getRadius: d => 1,
+      opacity: 0.5,
+      pickable: false,
+      radiusScale: 3,
+      radiusMinPixels: 0.25,
+      radiusMaxPixels: 30
+    })
+  ];
+
+````
+
+Once we add the code to initialize a `ScatterplotLayer`, we will have
+a working `deck.gl` component. We can further edit our `ScatterplotLayer` to color
+the dots by `pickup` or `dropoff`. First lets define colors outside the component 
+under the imports.
+
+```js
+
 import React, {Component} from 'react';
 import DeckGL, {ScatterplotLayer} from 'deck.gl';
 
 const PICKUP_COLOR = [0, 128, 255];
 const DROPOFF_COLOR = [255, 0, 128];
 
-export default class DeckGLOverlay extends Component {
-
-  render() {
-    const {viewport, data} = this.props;
-
-    if (!data) {
-      return null;
-    }
-
-    const layers = [
-      new ScatterplotLayer({
-        id: 'scatterplot',
-        data,
-        getPosition: d => d.position,
-        getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
-        getRadius: d => 1,
-        opacity: 0.5,
-        pickable: false,
-        radiusScale: 3,
-        radiusMinPixels: 0.25,
-        radiusMaxPixels: 30
-      })
-    ];
-
-    return (
-      <DeckGL {...viewport} layers={ layers } />
-    );
-  }
-}
 ```
 
-Let's go over just some properties of the `ScatterplotLayer` above:
+Then let's edit our `ScatterplotLayer` to have the color depends on pickup or dropoff by changing
+the getColor callback
+
+```js
+  getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
+
+```
+That's all you need to render a scatterplot layer with deck.gl. Let's go over just some properties of the `ScatterplotLayer` above:
 
 ##### `data` {Array}
 Data for the layer. In this case, it's our Taxi data set.
