@@ -6,9 +6,7 @@ const resolve = require('path').resolve;
 const webpack = require('webpack');
 
 module.exports = {
-  entry: {
-    app: resolve('./app.js')
-  },
+  entry: resolve('./root.js'),
 
   devtool: 'source-map',
 

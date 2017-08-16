@@ -3349,9 +3349,9 @@ mapbox-gl-supported@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mapbox-gl-supported/-/mapbox-gl-supported-1.2.0.tgz#cbd34df894206cadda9a33c8d9a4609f26bb1989"
 
-mapbox-gl@0.37.0:
-  version "0.37.0"
-  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-0.37.0.tgz#20103b0ae73a0e77fe9405439749318b87c04f10"
+mapbox-gl@0.38.0:
+  version "0.38.0"
+  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-0.38.0.tgz#64731bb55eabdaa520270815175fcf31e5a3cd80"
   dependencies:
     "@mapbox/gl-matrix" "^0.0.1"
     "@mapbox/shelf-pack" "^3.0.0"
@@ -4378,14 +4378,14 @@ react-hot-loader@next:
     redbox-react "^1.3.6"
     source-map "^0.4.4"
 
-react-map-gl@>=3.0.0-alpha.13:
-  version "3.0.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-3.0.0-alpha.13.tgz#fd96be0a4ea1f16d0117ef3fbdc16ebac262c9eb"
+react-map-gl@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-3.0.4.tgz#bd0bb8d92357e4cc774363fda83f02a3050202fb"
   dependencies:
     bowser "^1.2.0"
     hammerjs "^2.0.8"
     immutable "*"
-    mapbox-gl "0.37.0"
+    mapbox-gl "0.38.0"
     prop-types "^15.5.7"
     viewport-mercator-project "^4.0.1"
 

@@ -1,7 +1,9 @@
 /.sass-cache
 /coverage
-/node_modules
+node_modules
+/**/*/node_modules
 /npm-debug.log*
 .idea
 *.DS_Store
 /dist
+/**/*/yarn.lock
