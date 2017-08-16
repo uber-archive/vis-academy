@@ -37,6 +37,8 @@ There should now be a new link called **Live Code Playground** right after
 a nice visualization app as the tutorial progresses. Every change you make will
 be rendered on this page (assuming you keep the local node instance running).
 
+You can press the tilde (~) key anytime to fullscreen the app that will be displayed here.
+
 ## 3. Open Starting Code in your Text Editor
 
 You can now point your text editor to the following file:

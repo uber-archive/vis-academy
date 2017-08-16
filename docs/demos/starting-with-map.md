@@ -17,6 +17,7 @@ highly recommended that you do so, or your application might not work.
 
 The app component in the starting code above currently looks like this:
 ```js
+/* global window */
 import React, {Component} from 'react';
 
 export default class App extends Component {
@@ -27,7 +28,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div />
+      <div>Empty App, Edit Me!</div>
     );
   }
 
@@ -47,8 +48,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       viewport: {
-        width: 500,
-        height: 500,
+        width: window.innerWidth,
+        height: window.innerHeight,
         longitude: -74,
         latitude: 40.7,
         zoom: 11,
@@ -78,6 +79,7 @@ export default class App extends Component {
       <div>
         <MapGL
           {...viewport}
+          mapStyle={MAPBOX_STYLE}
           // Callback for viewport changes, addressed below
           onViewportChange={this._onViewportChange.bind(this)}
           // This is needed to use mapbox styles

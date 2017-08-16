@@ -1,3 +1,4 @@
+/* global window */
 import React, {Component} from 'react';
 
 const MAPBOX_STYLE = 'mapbox://styles/uberdata/cive485h000192imn6c6cc8fc';
