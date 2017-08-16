@@ -76,10 +76,6 @@ import React, {Component} from 'react';
 import DeckGL, {ScatterplotLayer} from 'deck.gl';
 
 export default class DeckGLOverlay extends Component {
-  
-  renderLayers() {
-    return [];
-  }
 
   render() {
     const {viewport, data} = this.props;
@@ -100,7 +96,7 @@ export default class DeckGLOverlay extends Component {
 This gives us the basic structure, using the export `DeckGL` react component
 to render our `deck.gl` overlay. You'll notice that `layers` is being passed to
 `DeckGL` but it's an empty array. We have to initialize each `deck.gl` layer
-separately. Let's edit the function and initialize a `ScatterplotLayer` 
+separately. Let's edit the function and initialize a `ScatterplotLayer` in `render()` function.
 
 ```js
 
@@ -122,7 +118,7 @@ separately. Let's edit the function and initialize a `ScatterplotLayer`
 ````
 
 Once we add the code to initialize a `ScatterplotLayer`, we will have
-a working `deck.gl` component. We can further edit our `ScatterplotLayer` to color
+a working map. We can further edit our `ScatterplotLayer` to color
 the dots by `pickup` or `dropoff`. First lets define colors outside the component 
 under the imports.
 
@@ -137,13 +133,14 @@ const DROPOFF_COLOR = [255, 0, 128];
 ```
 
 Then let's edit our `ScatterplotLayer` to have the color depends on pickup or dropoff by changing
-the getColor callback
+the `getColor` callback
 
 ```js
   getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
 
 ```
-That's all you need to render a scatterplot layer with deck.gl. Let's go over just some properties of the `ScatterplotLayer` above:
+That's all you need to render a scatter plot layer with deck.gl. Let's go over 
+just some properties of the `ScatterplotLayer` above:
 
 ##### `data` {Array}
 Data for the layer. In this case, it's our Taxi data set.
@@ -161,7 +158,7 @@ Indicates whether this layer would be interactive.
 ## 3. Using the `deck.gl` Component
 
 Now that we have the component created, we can render it inside `App` and pass
-data as well as other probs to it.
+data as well as other props to it.
 
 ```js
 import DeckGLOverlay from './deckgl-overlay';
