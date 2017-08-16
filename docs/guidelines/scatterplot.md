@@ -1,10 +1,10 @@
 # Scatterplot
 
-[Scatterplot](https://uber.github.io/deck.gl/#/documentation/layer-catalog/scatterplot-layer) can be used to plot point locations. It provided a fast overview of where the events have occured. You can color code the points to show different types of events, or have its radius based on a numeric metric such as price, occurrence or duration. 
+[Scatterplot](https://uber.github.io/deck.gl/#/documentation/layer-catalog/scatterplot-layer) can be used to plot point locations. It provided a fast overview of where the events have occured. You can color code the points to show different types of events, or have its radius based on a numeric metric such as price, occurrence or duration.
 
 <p class="inline-images">
-  <img src="../../src/static/images/mg_scatterplot_2.png" alt="extruded" width="300px" height="300px"/>
-  <img src="../../src/static/images/mg_scatterplot_1.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_scatterplot_2.png" alt="extruded" width="300px" height="300px"/>
+  <img src="images/mg_scatterplot_1.png" alt="extruded" width="300px" height="300px"/>
 </p>
 
 _Left: Trip dropoffs in LA, using additive blending to show density_  
