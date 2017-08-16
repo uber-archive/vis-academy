@@ -72,15 +72,15 @@ class LineChart extends Component {
       xDomain={[0, 24]}
       yDomain={[0, 1000]}
     >
-    <YAxis
-      tickFormat={(d) => (d / 100).toFixed(0) + '%'}
+    <XAxis
+        tickValues={[0, 6, 12, 18, 24]}
+        tickFormat={(d) => (d % 24) >= 12 ? (d % 12 || 12) + 'PM' : (d % 12 || 12) + 'AM'}
+    />
+    <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
     />
     <LineSeries onNearestX={(d) => this.setState({hour: d.x})} data={pickups} color='#0080FF'/>
     <LineSeries data={dropoffs} color='#FF0080'/>
     <MarkSeries data={marks} colorType='literal' size='3'/>
-    <XAxis 
-      tickPadding={2} tickValues={[0, 6, 12, 18, 24]}
-      tickFormat={(d) => (d % 24) >= 12 ? (d % 12 || 12) + 'PM' : (d % 12 || 12) + 'AM'}/>
     </XYPlot>]}</div>);
   }
 }

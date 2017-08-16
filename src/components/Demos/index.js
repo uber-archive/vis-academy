@@ -7,3 +7,4 @@ export {default as ScatterplotCharts} from '../../../demos/scatterplot-charts/ap
 export {default as StartingCode} from '../../../demos/starting-code/app';
 
 export * from '../../../demos/guidelines/';
+export * from '../../../demos/charts/';

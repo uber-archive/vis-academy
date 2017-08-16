@@ -15,14 +15,18 @@ The only difference with our bar chart is that we are going to replace VerticalB
     height={140}
     width={280}
   >
-  <YAxis
-    tickFormat={(t) => Math.round(t / 1000) + 'k'}
+  <LineSeries data={pickups} color='#0080FF' />
+  <LineSeries data={dropoffs} color='#FF0080' />
+  <XAxis
+    tickValues={[0, 6, 12, 18, 24]}
+    tickFormat={(d) => (d % 24) >= 12 ? (d % 12 || 12) + 'PM' : (d % 12 || 12) + 'AM'}
   />
-  <LineSeries data={pickups} />
-  <LineSeries data={dropoffs} />
-  <XAxis tickPadding={2}/>
+  <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
+  />
 </XYPlot>
 ```
+This code produces this chart: 
+<!-- INSERT:"LineChartsBasic" -->
 
 Now let's go deeper and add some interaction to that. Wouldn't that be nice if moving the mouse around would give you the value of that precise point?
 Each react-vis series has some event handlers built in. So, to that aim, we're going to use one of the event handlers of LineSeries: onNearestX.
@@ -41,6 +45,9 @@ class LineChart extends Component {
 <LineSeries onNearestX={(d) => this.setState({hour: d.x})} data={pickups} color='#0080FF'/>
 <LineSeries data={dropoffs} color='#FF0080'/>
 ```
+
+<!-- INSERT:"LineChartsInteraction" -->
+*Our chart looks exactly the same, but it records mouse movements and holds a state! let's see what we can do with it in the next insert.*
 
 So, whenever we mouseover our line chart, the state of that component will change. 
 Note that there's no need to have onNearestX on several lineSeries, especially if their dataset have the same x values. 
@@ -73,6 +80,8 @@ We also want the marks to disappear when we no longer mouse over the plot. To do
     ...
   >
 ```
+<!-- INSERT:"LineChartsDynamicMark" -->
+*Now mouseing over the chart makes the dots move!*
 
 Note that just as in classic React, you can pass functions to those event handlers as props from higher-level components. So, a mouseover on a function can affect the state of a dashboard that contains several charts, or the store of an app, and cascade down as props to other charts. 
 

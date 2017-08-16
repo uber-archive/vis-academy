@@ -192,6 +192,12 @@ code {
   height: 100vh;
   transition: height 600ms ease-in;
 }
+
+.inline-code {
+  margin: -64px 36px -24px 36px;
+  overflow-x: hidden;
+}
+
 .markdown {
   height: 100%;
   overflow-y: auto;
