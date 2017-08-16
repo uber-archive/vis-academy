@@ -88,6 +88,23 @@ export const docPages = generatePath([
     ]
   },
   {
+    name: 'React Vis',
+    children: [
+      {
+        name: 'Basic Charts',
+        content: getDocUrl('demos/add-charts.md')
+      },
+      {
+        name: 'Introducing interaction',
+        content: getDocUrl('demos/line-charts.md')
+      },
+      {
+        name: 'Canvas Charts',
+        content: getDocUrl('demos/scatterplot-charts.md')
+      }
+    ]
+  },
+  {
     name: 'Visualization guidelines',
     children: [
       {
@@ -112,21 +129,4 @@ export const docPages = generatePath([
       }
     ]
   },
-  {
-    name: 'React Vis',
-    children: [
-      {
-        name: 'Add Charts',
-        content: getDocUrl('demos/add-charts.md')
-      },
-      {
-        name: 'Line Charts',
-        content: getDocUrl('demos/line-charts.md')
-      },
-      {
-        name: 'Scatterplot Charts',
-        content: getDocUrl('demos/scatterplot-charts.md')
-      }
-    ]
-  }
 ]);
