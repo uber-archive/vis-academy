@@ -3,7 +3,7 @@
 # Add a Scatterplot Overlay with Deck.GL
 
 **NOTE** This step follows from the completed code of the previous section,
-[Starting With A Map](/#/react-map/starting-with-map).
+[Starting With A Map](https://uber-common.github.io/vis-tutorial/#/react-map/starting-with-map).
 
 As cool as having a map is, an empty map is not that useful. Let's see if we
 can add a `Scatterplot` overlay with the Taxi data set to the map we created in the previous example.

@@ -13,7 +13,7 @@ Checkout the complete code for this step
 
 **HOLD UP!!!** If you got here without reading the **Setup** step, it is
 highly recommended that you do so, or your application might not work.
-[GO HERE](/#/setup) and go through it now.
+[GO HERE](https://uber-common.github.io/vis-tutorial/#/setup) and go through it now.
 
 The app component in the starting code above currently looks like this:
 ```js

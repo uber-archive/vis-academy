@@ -47,4 +47,4 @@ vis-tutorial/demos/starting-code/app.js
 
 It's an empty component! `starting-code` will be the folder that holds all your
 changes as you go through the tutorial. You can now head to the next step:
-[Starting With A Map](/#/react-map/starting-with-map).
+[Starting With A Map](https://uber-common.github.io/vis-tutorial/#/react-map/starting-with-map).

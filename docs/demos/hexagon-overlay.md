@@ -4,7 +4,7 @@
 [View code](https://github.com/uber-common/vis-tutorial/tree/master/demos/hexagon-overlay)
 
 **NOTE** This step follows from the **completed** code of the previous section,
-[Scatterplot Overlay](/#/deck/scatterplot-overlay).
+[Scatterplot Overlay](https://uber-common.github.io/vis-tutorial/#/deck/scatterplot-overlay).
 
 `Scatterplot` can plot raw points, but to visualize distribution of these
 points, we need a layer that can aggregate points into a geo grid.
