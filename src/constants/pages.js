@@ -37,6 +37,10 @@ export const docPages = generatePath([
     content: getDocUrl('demos/live-code.md')
   },
   {
+    name: 'Setup - READ ME FIRST',
+    content: getDocUrl('setup.md')
+  },
+  {
     name: 'React Map GL',
     children: [
       {

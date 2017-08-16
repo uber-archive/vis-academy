@@ -11,8 +11,9 @@ Checkout the complete code for this step
 
 ## 1. Start with a bare React Component
 
-Checkout the starting code here
-[here](https://github.com/uber-common/vis-tutorial/tree/master/demos/starting-code).
+**HOLD UP!!!** If you got here without reading the **Setup** step, it is
+highly recommended that you do so, or your application might not work.
+[GO HERE](/#/setup) and go through it now.
 
 The app component in the starting code above currently looks like this:
 ```js
