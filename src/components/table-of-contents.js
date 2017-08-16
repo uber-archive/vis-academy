@@ -2,10 +2,16 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router';
 
+/* eslint-disable no-undef, no-process-env */
+const NODE_ENV = process.env.NODE_ENV;
+
 export default class TableOfContents extends Component {
 
   _renderPage(parentRoute, page, i) {
-    const {children, name, expanded} = page;
+    const {children, name, expanded, env} = page;
+    if (env && env !== NODE_ENV) {
+      return null;
+    }
     const path = `${parentRoute}/${page.path}`;
 
     if (children) {

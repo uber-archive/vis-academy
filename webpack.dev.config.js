@@ -18,7 +18,10 @@ module.exports = Object.assign(config, {
 
   plugins: config.plugins.concat([
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development'
+    })
   ])
 
 });

@@ -223,10 +223,12 @@ code {
 
 .markdown .demo.fullscreen {
   position: fixed;
+  top: 64px;
   height: 100vh;
   width: 100vw;
   left: 0;
   z-index: 10002;
+  background-color: white;
 
   >div:first-child {
     margin-top: -7vh;

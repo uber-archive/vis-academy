@@ -32,6 +32,11 @@ export const docPages = generatePath([
     content: getDocUrl('demos/introduction.md')
   },
   {
+    name: 'Live Code Playground',
+    env: 'development',
+    content: getDocUrl('demos/live-code.md')
+  },
+  {
     name: 'React Map GL',
     children: [
       {
