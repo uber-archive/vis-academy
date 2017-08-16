@@ -1,8 +1,9 @@
 <!-- INJECT:"LineCharts" -->
 
-# Line Charts
+# Introducing interaction
 
-Line charts, in react-vis, are not so different from bar charts.
+## 1. Setup with line charts
+For this example, we are going to use Line charts, which, in react-vis, are not so different from bar charts.
 
 This time, we want to plot pickups and dropoffs over time.
 We prepare two series as arrays of the form {x, y}: where x is the hour, and y is the value (either pickup of dropoffs).
@@ -28,6 +29,8 @@ The only difference with our bar chart is that we are going to replace VerticalB
 This code produces this chart: 
 <!-- INSERT:"LineChartsBasic" -->
 
+## 2. Introducing interaction
+
 Now let's go deeper and add some interaction to that. Wouldn't that be nice if moving the mouse around would give you the value of that precise point?
 Each react-vis series has some event handlers built in. So, to that aim, we're going to use one of the event handlers of LineSeries: onNearestX.
 When you mouseover on a plot that contains a line chart, onNearestX can pass the element corresponding to the nearest datapoint horizontally. 
@@ -40,25 +43,51 @@ class LineChart extends Component {
     this.state = {hour: null};
   }
 
-...
-
-<LineSeries onNearestX={(d) => this.setState({hour: d.x})} data={pickups} color='#0080FF'/>
-<LineSeries data={dropoffs} color='#FF0080'/>
+  render() {
+    const {hour} = this.state;
+ 
+    return (<XYPlot
+      margin={{left: 40, right: 20, top: 10, bottom: 30}}
+      height={140}
+      onMouseLeave={()=> {this.setState({hour: null});}}
+      width={280}
+      xDomain={[0, 24]}
+      yDomain={[0, 1000]}
+    >
+    <XAxis
+      tickValues={[0, 6, 12, 18, 24]}
+      tickFormat={(d) => (d % 24) >= 12 ? (d % 12 || 12) + 'PM' : (d % 12 || 12) + 'AM'}
+    />
+    <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
+    />
+    <LineSeries onNearestX={(d) => this.setState({hour: d.x})} data={pickups} color='#08F'/>
+    <LineSeries data={dropoffs} color='#F08'/>
+    {hour ? <LineSeries data={[
+      {x: hour, y: 0},
+      {x: hour, y: 1000}]} color="#888" opacity="0.8" strokeWidth="1" /> : null}
+    </XYPlot>);
+  }
+}
 ```
 
 <!-- INSERT:"LineChartsInteraction" -->
-*Our chart looks exactly the same, but it records mouse movements and holds a state! let's see what we can do with it in the next insert.*
+*Now, our line chart reacts to mouse movements and shows a moving line which corresponds to the last position of the mouse cursor*
 
 So, whenever we mouseover our line chart, the state of that component will change. 
+We use the state to draw a third, dynamic LineSeries - we just compute its data prop on the fly. 
+This third line also demontrates the opacity abd strokeWidth props. 
+
 Note that there's no need to have onNearestX on several lineSeries, especially if their dataset have the same x values. 
 
-To show the user that there's been action, we're going to draw 2 dots on the charts. To do that, we're going to use a MarkSeries. Traditionally, MarkSeries are used for scatterplots, but we can represent as many or as few datapoints as we want.
+### 3. Finetuning - adding dots on the lines. 
+
+We can go further and draw 2 dynamic dots on the charts. To do that, we're going to use a MarkSeries. Traditionally, MarkSeries are used for scatterplots, but we can represent as many or as few datapoints as we want.
 
 ```js
   const marks = hour === null ? [] :
     [pickups, dropoffs].map((d, i) => ({
       ...d.find(e => e.x === hour),
-      color: i ? '#FF0080' : '#0080FF'}));
+      color: i ? '#F08' : '#08F'}));
 ```
 
 Here, we build the series that we're going to pass to the MarkSeries. If it's an empty array, no series is rendered. Else, I'm going to choose the data point corresponding to the hour for both series, and I'm adding a color to each datapoint.
@@ -101,15 +130,15 @@ class LineChart extends Component {
     const marks = hour === null ? [] :
       [pickups, dropoffs].map((d, i) => ({
         ...d.find(e => e.x === hour),
-        color: i ? '#FF0080' : '#0080FF'}));
+        color: i ? '#F08' : '#08F'}));
     
     return (<div style={{position: 'relative'}}>
       {[hour === null ? null : <div 
         key='infotip'
         style={{position: 'absolute', top: 10, left: 50}}>
         <span>{`${hour - 0.5}-${hour + 0.5}h: `}</span>
-        <span style={{color: '#FF0080'}}>{(marks[0].y / 100).toFixed(2) + '% '}</span>
-        <span style={{color: '#0080FF'}}>{(marks[1].y / 100).toFixed(2) + '%'}</span>
+        <span style={{color: '#F08'}}>{(marks[0].y / 100).toFixed(2) + '% '}</span>
+        <span style={{color: '#08F'}}>{(marks[1].y / 100).toFixed(2) + '%'}</span>
       </div>, 
     <XYPlot
       key='chart'
@@ -123,8 +152,8 @@ class LineChart extends Component {
     <YAxis
       tickFormat={(d) => (d / 100).toFixed(0) + '%'}
     />
-    <LineSeries onNearestX={(d) => this.setState({hour: d.x})} data={pickups} color='#0080FF'/>
-    <LineSeries data={dropoffs} color='#FF0080'/>
+    <LineSeries onNearestX={(d) => this.setState({hour: d.x})} data={pickups} color='#08F'/>
+    <LineSeries data={dropoffs} color='#F08'/>
     <MarkSeries data={marks} colorType='literal' size='3'/>
     <XAxis 
       tickPadding={2} tickValues={[0, 6, 12, 18, 24]}

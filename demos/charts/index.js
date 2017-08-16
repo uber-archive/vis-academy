@@ -103,13 +103,8 @@ export function BarChartYDomain() {
   return (<div className="bar-chart-y-domain"
     style={basicStyle}>
     <XYPlot height={140} width={280}
-      xDomain={[0, 24]}
       yDomain={[0, 1000]}
-      margin={{left: 40, right: 20, top: 10, bottom: 30}}>
-      <XAxis
-        tickValues={[0, 6, 12, 18, 24]}
-        tickFormat={(d) => (d % 24) >= 12 ? (d % 12 || 12) + 'PM' : (d % 12 || 12) + 'AM'}
-      />
+    >
       <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
       />
       <VerticalBarSeries data={pickups} />
@@ -178,8 +173,11 @@ export function LineChartsInteraction() {
       />
       <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
       />
-      <LineSeries onNearestX={(d) => this.setState({hour: d.x})} data={pickups} color='#0080FF'/>
-      <LineSeries data={dropoffs} color='#FF0080'/>
+      <LineSeries onNearestX={(d) => this.setState({hour: d.x})} data={pickups} color='#08F'/>
+      <LineSeries data={dropoffs} color='#F08'/>
+      {hour ? <LineSeries data={[
+        {x: hour, y: 0},
+        {x: hour, y: 1000}]} color="#888" opacity="0.8" strokeWidth="1" /> : null}
       </XYPlot>);
     }
   }
@@ -201,7 +199,7 @@ export function LineChartsDynamicMark() {
       const marks = hour === null ? [] :
         [pickups, dropoffs].map((d, i) => ({
           ...d.find(e => e.x === hour),
-          color: i ? '#FF0080' : '#0080FF'}))
+          color: i ? '#F08' : '#08F'}))
       return (<XYPlot
         margin={{left: 40, right: 20, top: 10, bottom: 30}}
         height={140}
@@ -216,8 +214,8 @@ export function LineChartsDynamicMark() {
       />
       <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
       />
-      <LineSeries onNearestX={(d) => {console.log(d);this.setState({hour: d.x})}} data={pickups} color='#0080FF'/>
-      <LineSeries data={dropoffs} color='#FF0080'/>
+      <LineSeries onNearestX={(d) => {this.setState({hour: d.x})}} data={pickups} color='#08F'/>
+      <LineSeries data={dropoffs} color='#F08'/>
       <MarkSeries data={marks} colorType='literal' size='3'/>
       </XYPlot>);
     }

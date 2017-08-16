@@ -57,7 +57,7 @@ class Page extends Component {
         'demo fullscreen' :
         'demo';
     }
-      <div className={className}>
+    return (<div className={className}>
         <DemoComponent />
       </div>
     );
