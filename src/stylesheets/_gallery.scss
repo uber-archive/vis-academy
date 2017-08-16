@@ -198,28 +198,41 @@ code {
   -webkit-overflow-scrolling: touch;
 }
 .markdown .demo {
-  height: 80vh;
+  height: 30vh;
+  min-height: 200px;
+  transition: height 600ms;
 
   >div:first-child {
-    margin-top: 0;
-    transition: margin-top 600ms ease-in;
+    margin-top: -20vh;
+    transition: margin-top 600ms;
+  }
+  .options-panel {
+    .input, hr {
+      display: none;
+    }
   }
 
-  &:not(:hover) {
-    height: 30vh;
-    min-height: 200px;
-    transition: height 300ms;
+  &:hover {
+    height: 80vh;
 
     >div:first-child {
-      margin-top: -20vh;
-      transition: margin-top 300ms;
-    }
-    .options-panel {
-      .input, hr {
-        display: none;
-      }
+      margin-top: 0;
     }
   }
+}
+
+.markdown .demo.fullscreen {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  z-index: 10002;
+
+  >div:first-child {
+    margin-top: -7vh;
+  }
+
+  &:hover {}
 }
 
 .guideline-chart {

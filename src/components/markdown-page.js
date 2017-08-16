@@ -181,18 +181,31 @@ export default class MarkdownPage extends Component {
               return null;
             }
             if (Demos[content]) {
-              return <div key={index}>{this.props.renderDemo(content)}</div>;
+              return (
+                <div key={index}>
+                  {this.props.renderDemo(content)}
+                </div>
+              );
             }
-            return (<div key={index} className="markdown-body">
-              {content.split(INSERT_REG).map((__html, i) => {
-                if (!__html) {
-                  return null;
-                }
-                if (Demos[__html]) {
-                  return <div key={i}>{this.props.renderDemo(__html, true)}</div>;
-                }
-                return <div key={i} className="markdown-body" dangerouslySetInnerHTML={{__html}} />;
-            })}</div>);
+            return (
+              <div key={index} className="markdown-body">
+                {content.split(INSERT_REG).map((__html, i) => {
+                  if (!__html) {
+                    return null;
+                  }
+                  if (Demos[__html]) {
+                    return (
+                      <div key={i}>
+                        {this.props.renderDemo(__html, true)}
+                      </div>
+                    );
+                  }
+                  return (
+                    <div key={i} className="markdown-body" dangerouslySetInnerHTML={{__html}} />
+                  );
+                })}
+              </div>
+            );
           })
         }
       </div>
