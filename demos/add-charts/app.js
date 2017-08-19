@@ -93,9 +93,13 @@ export default class App extends Component {
         const distance = curr.trip_distance;
         const amount = curr.total_amount;
 
+        const pickupHour = Number(pickupTime.slice(11, 13));
+        const dropoffHour = Number(dropoffTime.slice(11, 13));
+
         if (!isNaN(Number(curr.pickup_longitude)) && !isNaN(Number(curr.pickup_latitude))) {
           accu.points.push({
             position: [Number(curr.pickup_longitude), Number(curr.pickup_latitude)],
+            hour: pickupHour,
             pickup: true
           });
         }
@@ -103,30 +107,32 @@ export default class App extends Component {
         if (!isNaN(Number(curr.dropoff_longitude)) && !isNaN(Number(curr.dropoff_latitude))) {
           accu.points.push({
             position: [Number(curr.dropoff_longitude), Number(curr.dropoff_latitude)],
+            hour: dropoffHour,
             pickup: false
           });
         }
-
-        const pickupHour = pickupTime.slice(11, 13);
-        const dropoffHour = dropoffTime.slice(11, 13);
-
+        
         const prevPickups = accu.pickupObj[pickupHour] || 0;
         const prevDropoffs = accu.dropoffObj[dropoffHour] || 0;
 
         accu.pickupObj[pickupHour] = prevPickups + 1;
         accu.dropoffObj[dropoffHour] = prevDropoffs + 1;
-        accu.scatterplot.push({x: distance, y: amount});
 
         return accu;
       }, {
         points: [],
         pickupObj: {},
-        dropoffObj: {},
-        scatterplot: []
+        dropoffObj: {}
       });
 
-      data.pickups = Object.entries(data.pickupObj).map(d => ({x: Number(d[0]) + 0.5, y: d[1]}));
-      data.dropoffs = Object.entries(data.dropoffObj).map(d => ({x: Number(d[0]) + 0.5, y: d[1]}));
+      data.pickups = Object.entries(data.pickupObj).map(d => {
+        const hour = Number(d[0]);
+        return {hour, x: hour + 0.5, y: d[1]};
+      });
+      data.dropoffs = Object.entries(data.dropoffObj).map(d => {
+        const hour = Number(d[0]);
+        return {hour, x: hour + 0.5, y: d[1]};
+      });
       data.status = 'READY';
 
       this.setState(data);
@@ -154,26 +160,14 @@ export default class App extends Component {
     });
   }
 
-  _renderTooltip() {
-    const {x, y, hoveredObject} = this.state;
-
-    if (!hoveredObject) {
-      return null;
-    }
-
-    return (
-      <div style={{...tooltipStyle, left: x, top: y}}>
-        <div>{hoveredObject.id}</div>
-      </div>
-    );
-  }
-
   render() {
-    const {viewport, dropoffs, pickups, points, settings, status} = this.state;
-
+    const {viewport, hoveredObject, points, settings, status, x, y} = this.state;
     return (
       <div>
-        {this._renderTooltip()}
+        {hoveredObject &&
+          <div style={{...tooltipStyle, left: x, top: y}}>
+            <div>{hoveredObject.id}</div>
+          </div>}
         <LayerControls
           settings={settings}
           propTypes={LAYER_CONTROLS}
@@ -189,10 +183,7 @@ export default class App extends Component {
             onHover={this._onHover.bind(this)}
             settings={settings}/>
         </MapGL>
-        <Charts
-          dropoffs={dropoffs}
-          pickups={pickups}
-        />
+        <Charts {...this.state} />
         <Spinner status={status} />
       </div>
     );

@@ -22,7 +22,7 @@ export const layerControl = {
 };
 
 export const charts = {
-  background: '#fff',
+  background: 'white',
   borderRadius: 3,
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
   height: 210,
@@ -30,7 +30,7 @@ export const charts = {
   position: 'absolute',
   left: 20,
   top: 20,
-  width: 300,
+  width: 500,
   zIndex: 100
 };
 

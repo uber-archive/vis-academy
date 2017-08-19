@@ -22,29 +22,17 @@ export const layerControl = {
 };
 
 export const charts = {
-  background: '#fff',
+  background: 'white',
   borderRadius: 3,
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-  height: 231,
-  overflow: 'hidden',
+  height: 210,
   padding: '10px',
   position: 'absolute',
   left: 20,
   top: 20,
-  width: 300,
+  width: 500,
   zIndex: 100
 };
-
-export const chartsClick = {
-  width: 300,
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  cursor: 'pointer',
-  textAlign: 'center',
-  background: '#e5e5e4',
-  borderTop: '1px solid #c3c3c3'
-}
 
 export const spinner = {
   animation: 'linear 2s infinite',

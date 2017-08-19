@@ -96,14 +96,15 @@ export const docPages = generatePath([
       },
       {
         name: 'Introducing interaction',
-        content: getDocUrl('demos/line-charts.md')
+        content: getDocUrl('demos/introducing-interaction.md')
       },
       {
-        name: 'Canvas Charts',
-        content: getDocUrl('demos/scatterplot-charts.md')
+        name: 'Linking It All',
+        content: getDocUrl('demos/linking-it-all.md')
       }
     ]
   },
+  /* eslint-disable quotes */
   {
     name: 'Visualization guidelines',
     children: [
