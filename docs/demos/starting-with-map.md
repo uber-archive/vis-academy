@@ -64,7 +64,7 @@ We set the viewport object on component state because `react-map-gl` leaves
 the control of the viewport to the user. We will have to update this viewport
 manually and pass it back into `react-map-gl` if we want to change it.
 
-## 4. Adding the Map Component
+## 3. Adding the Map Component
 
 Now that we have a viewport object, let's add the actual map component.
 `react-map-gl` makes this extremely easy.
@@ -80,10 +80,9 @@ export default class App extends Component {
         <MapGL
           {...viewport}
           mapStyle={MAPBOX_STYLE}
-          // Callback for viewport changes, addressed below
-          onViewportChange={this._onViewportChange.bind(this)}
           // This is needed to use mapbox styles
-          mapboxApiAccessToken={MAPBOX_TOKEN} />
+          mapboxApiAccessToken={MAPBOX_TOKEN}>
+        </MapGL>
       </div>
     );
   }
@@ -91,7 +90,7 @@ export default class App extends Component {
 }
 ```
 
-## 3. `onViewportChange` Callback
+## 4. `onViewportChange` Callback
 
 Remember that `react-map-gl` leaves maintaining the viewport to the user. It would
 be super tedious if you had to implement the event handling yourself.
@@ -114,7 +113,21 @@ export default class App extends Component {
 }
 ```
 
-## 4. Adding Polish
+Now that we have defined the callback. Let's pass it into the react-map-gl component
+```js
+return (
+  <div>
+    <MapGL
+      // ...
+      // Callback for viewport changes, addressed below
+      onViewportChange={this._onViewportChange.bind(this)}
+      // ...
+      />
+  </div>
+);
+```
+
+## 5. Adding Polish
 
 We now have a fully functional map, and we could stop here. But what happens
 when you resize the window? If you do it right now, you'll notice that the map
@@ -140,7 +153,7 @@ export default class App extends Component {
 We leverage the `onViewportChange` callback to make sure there's only one place
 where viewport state is actually being updated.
 
-## 5. Completed Code
+## 6. Completed Code
 
 Our completed component should now look like this:
 ```js
@@ -188,7 +201,8 @@ export default class App extends Component {
         <MapGL
           {...viewport}
           onViewportChange={this._onViewportChange.bind(this)}
-          mapboxApiAccessToken={MAPBOX_TOKEN} />
+          mapboxApiAccessToken={MAPBOX_TOKEN}>
+        </MapGL>
       </div>
     );
   }
