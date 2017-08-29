@@ -4,14 +4,8 @@ import autobind from 'autobind-decorator';
 import {
   XYPlot,
   VerticalBarSeries,
-  AreaSeries,
-  Crosshair,
-  DiscreteColorLegend,
-  Hint,
   LineSeries,
   MarkSeries,
-  LineMarkSeries,
-  VerticalGridLines,
   YAxis,
   XAxis
 } from 'react-vis';
@@ -45,15 +39,16 @@ const data = [
 
 const basicStyle = {
   boxShadow: "0 1px 3px 0 rgba(0,0,0,0.20)",
-  width: 280
+  width: 480,
+  margin: '10px 0 10px 3px'
 };
-const dropoffs = data.map(d => ({x: d.hour + 0.5, y: d.dropoffs}));
-const pickups = data.map(d => ({x: d.hour + 0.5, y: d.pickups}));
+const dropoffs = data.map(d => ({hour: d.hour, x: d.hour + 0.5, y: d.dropoffs}));
+const pickups = data.map(d => ({hour: d.hour, x: d.hour + 0.5, y: d.pickups}));
 
 export function BarChartBasic() {
   return (<div className="bar-chart-basic"
     style={basicStyle}>
-    <XYPlot height={140} width={280}>
+    <XYPlot height={140} width={480}>
       <XAxis />
       <YAxis />
       <VerticalBarSeries data={pickups} />
@@ -108,6 +103,7 @@ export function BarChartYDomain() {
       <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
       />
       <VerticalBarSeries data={pickups} />
+      <XAxis/>
     </XYPlot></div>);
 }
 
@@ -125,16 +121,15 @@ export function BarChartCustomColor() {
       <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
       />
       <VerticalBarSeries
-        color='#0080FF'
+        color="#125C77"
         data={pickups} />
     </XYPlot></div>);
 }
 
-export function LineChartsBasic() {
+export function BasicLineChart() {
   return (<div className="line-chart-basic"
     style={basicStyle}>
-    <XYPlot height={140} width={280}
-      xDomain={[0, 24]}
+    <XYPlot height={140} width={480}
       yDomain={[0, 1000]}
       margin={{left: 40, right: 20, top: 10, bottom: 30}}>
       <XAxis
@@ -143,85 +138,42 @@ export function LineChartsBasic() {
       />
       <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
       />
-      <LineSeries data={pickups} color='#0080FF'/>
-      <LineSeries data={dropoffs} color='#FF0080'/>
+      <LineSeries data={pickups} color="#08F" />
+      <MarkSeries data={dropoffs} color="#F08" opacity="0.5" size="3"/>
     </XYPlot>
   </div>);
 }
 
-export function LineChartsInteraction() {
-  class LineChart extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {hour: null};
-    }
+export class HoverInteraction extends Component {
+  constructor() {
+    super();
+    this.state = {highlightedHour: null};
+  }
+  render() {
+    const {highlightedHour} = this.state;
+    const data = pickups.map(d => ({
+      ...d,
+      color: d.hour === highlightedHour ? '#17B8BE' : '#125C77'
+    }));
 
-    render() {
-      const {hour} = this.state;
-   
-      return (<XYPlot
-        margin={{left: 40, right: 20, top: 10, bottom: 30}}
-        height={140}
-        onMouseLeave={()=> {this.setState({hour: null});}}
-        width={280}
-        xDomain={[0, 24]}
+    return (<div style={basicStyle}>
+      <XYPlot height={140} width={480}
         yDomain={[0, 1000]}
-      >
+        margin={{left: 40, right: 20, top: 10, bottom: 30}}>
+      <YAxis
+        tickFormat={(d) => (d / 100).toFixed(0) + '%'}
+      />
       <XAxis
         tickValues={[0, 6, 12, 18, 24]}
         tickFormat={(d) => (d % 24) >= 12 ? (d % 12 || 12) + 'PM' : (d % 12 || 12) + 'AM'}
       />
-      <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
+      <VerticalBarSeries
+        colorType="literal"
+        data={data}
+        onValueMouseOver={(d) => this.setState({highlightedHour: d.hour})}
       />
-      <LineSeries onNearestX={(d) => this.setState({hour: d.x})} data={pickups} color='#08F'/>
-      <LineSeries data={dropoffs} color='#F08'/>
-      {hour ? <LineSeries data={[
-        {x: hour, y: 0},
-        {x: hour, y: 1000}]} color="#888" opacity="0.8" strokeWidth="1" /> : null}
-      </XYPlot>);
-    }
+      </XYPlot>  
+    </div>);
   }
-
-  return (<div className="line-chart-interaction" style={basicStyle}>
-    <LineChart />
-  </div>);
 }
 
-export function LineChartsDynamicMark() {
-  class LineChart extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {hour: null};
-    }
-
-    render() {
-      const {hour} = this.state;
-      const marks = hour === null ? [] :
-        [pickups, dropoffs].map((d, i) => ({
-          ...d.find(e => e.x === hour),
-          color: i ? '#F08' : '#08F'}))
-      return (<XYPlot
-        margin={{left: 40, right: 20, top: 10, bottom: 30}}
-        height={140}
-        onMouseLeave={()=> {this.setState({hour: null});}}
-        width={280}
-        xDomain={[0, 24]}
-        yDomain={[0, 1000]}
-      >
-      <XAxis
-        tickValues={[0, 6, 12, 18, 24]}
-        tickFormat={(d) => (d % 24) >= 12 ? (d % 12 || 12) + 'PM' : (d % 12 || 12) + 'AM'}
-      />
-      <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
-      />
-      <LineSeries onNearestX={(d) => {this.setState({hour: d.x})}} data={pickups} color='#08F'/>
-      <LineSeries data={dropoffs} color='#F08'/>
-      <MarkSeries data={marks} colorType='literal' size='3'/>
-      </XYPlot>);
-    }
-  }
-
-  return (<div className="line-chart-dynamic-mark" style={basicStyle}>
-    <LineChart />
-  </div>);
-}

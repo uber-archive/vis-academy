@@ -44,16 +44,19 @@ export default class DeckGLOverlay extends Component {
   }
 
   render() {
-    const {viewport, data, onHover, settings} = this.props;
+    const {viewport, data, hour = null, onHover, settings} = this.props;
 
     if (!data) {
       return null;
     }
 
+    const filteredData = hour === null ? data :
+      data.filter(d => d.hour === hour); 
+
     const layers = [
       !settings.showHexagon ? new ScatterplotLayer({
         id: 'scatterplot',
-        data,
+        data: filteredData,
         getPosition: d => d.position,
         getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
         getRadius: d => 1,
@@ -68,7 +71,7 @@ export default class DeckGLOverlay extends Component {
         id: 'heatmap',
         colorRange: HEATMAP_COLORS,
         coverage: settings.coverage,
-        data,
+        data: filteredData,
         elevationRange,
         elevationScale: 10,
         extruded: true,
