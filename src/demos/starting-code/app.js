@@ -1,9 +1,11 @@
-/* global window */
 import React, {Component} from 'react';
 
-const MAPBOX_STYLE = 'mapbox://styles/uberdata/cive485h000192imn6c6cc8fc';
-// Set your mapbox token here
+const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+
+if (!MAPBOX_TOKEN) {
+  alert('The mapbox token is not defined. Please export it in the terminal where you typed "npm start"')
+}
 
 export default class App extends Component {
 
@@ -13,7 +15,11 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className='p2'>Empty App, Edit Me!</div>
+      <div>
+        <div className='intro'>
+          Empty App, Edit Me!
+        </div>
+      </div>
     );
   }
 }

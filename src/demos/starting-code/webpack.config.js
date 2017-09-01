@@ -1,7 +1,3 @@
-// NOTE: To use this example standalone (e.g. outside of deck.gl repo)
-// delete the local development overrides at the bottom of this file
-
-// avoid destructuring for older Node version support
 const resolve = require('path').resolve;
 const webpack = require('webpack');
 
@@ -25,13 +21,20 @@ module.exports = {
 
   resolve: {
     alias: {
-      // From mapbox-gl-js README. Required for non-browserify bundlers (e.g. webpack):
       'mapbox-gl$': resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js')
     }
   },
 
-  // Optional: Enables reading mapbox token from environment variable
   plugins: [
-    new webpack.EnvironmentPlugin(['MAPBOX_ACCESS_TOKEN', 'MapboxAccessToken'])
-  ]
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        MapboxAccessToken: JSON.stringify(
+          process.env.MapboxAccessToken || process.env.MAPBOX_TOKEN
+        ),
+      },
+    }),
+
+  ],
 };
