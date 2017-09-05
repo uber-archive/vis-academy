@@ -3602,6 +3602,10 @@ lodash.clonedeep@^4.3.2:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+
 lodash.flattendeep@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
@@ -4128,9 +4132,9 @@ obuf@^1.0.0, obuf@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.1.tgz#104124b6c602c6796881a042541d36db43a5264e"
 
-ocular@^0.1.15:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/ocular/-/ocular-0.1.15.tgz#907852c57a6c5d82ff6eebbfbe6b50802579880c"
+ocular@^0.1.17:
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/ocular/-/ocular-0.1.17.tgz#105d8d69c5db7c5599eeacb5e4e94b1af6bf5a73"
   dependencies:
     autoprefixer-loader "^3.2.0"
     babel-core "^6.26.0"
@@ -4159,6 +4163,7 @@ ocular@^0.1.15:
     html-webpack-plugin "^2.30.1"
     html-webpack-template "^5.6.0"
     inquirer "^3.2.2"
+    lodash.debounce "^4.0.8"
     marked "^0.3.6"
     node-sass "^4.5.3"
     offline-plugin "^4.8.3"

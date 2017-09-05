@@ -9,14 +9,14 @@
   "main": "index.js",
   "scripts": {
     "start": "ocular start",
-    "build": "ocular build",
+    "build": "ocular build && rm -rf docs && mv dist docs",
     "lint": "ocular lint"
   },
   "dependencies": {
     "autobind-decorator": "^2.1.0",
     "deck.gl": "^4.1.1",
     "luma.gl": "^4.0.1",
-    "ocular": "^0.1.15",
+    "ocular": "^0.1.17",
     "react-map-gl": "^3.0.4",
     "react-vis": "^1.7.2"
   },
