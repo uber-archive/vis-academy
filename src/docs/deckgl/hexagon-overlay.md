@@ -11,9 +11,17 @@ points, we need a layer that can aggregate points into a geo grid.
 `HexagonLayer` and `GridLayer` are both aggregation layers that
 can visualize a distribution heatmap from raw points.
 
-The functional change that's needed here is to add more code to `deckgl-overlay.js`
+## 1. Update our control panel
+We're going to upgrade our control panel so we can switch from the scatterplot layer to the hexagon layer. Let's do that now, so you can see the changes on the hexagon layer as we build it.
 
-## 1. Add Constants for Hexagon Layer
+Replace everywhere in app.js SCATTERPLOT_CONTROLS by HEXAGON_CONTROLS. It appears 4 times:
+- in the import statement,
+- in the component's contructor method, while preparing the initial state,
+- in the render method, as an argument to the LayerControls component.
+
+Now, to implement our new overlay, let's focus on `deckgl-overlay.js`:
+
+## 2. Add Constants for Hexagon Layer
 
 Deck.gl performances shallow compares on layer props to decide how to update attribute buffer.
 To avoid unnecessary re-calculations, we define constant params outside of the render function.
@@ -43,7 +51,7 @@ const LIGHT_SETTINGS = {
 const elevationRange = [0, 1000];
 ```
 
-## 2. Add Hexagon Layer
+## 3. Add Hexagon Layer
 
 We have already passed the necessary data into this component from the previous example. So now we only need to take care of rendering the `HexagonLayer` when needed.
 
@@ -133,7 +141,3 @@ Hexagon cells with value larger than upperPercentile will be hidden
 
 ##### `pickable` {Bool}
 Indicates whether this layer would be interactive.
-
-## 3. Adding Polish
-
-To get the completed example, you need to modify the settings panel that was added in the polish step in the previous example. Check out the source code for more info.

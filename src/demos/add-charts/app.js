@@ -2,56 +2,19 @@
 import React, {Component} from 'react';
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay';
-import LayerControls from './layer-controls';
+import {
+  LayerControls,
+  HEXAGON_CONTROLS
+} from './layer-controls';
 import Charts from './charts';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
 
 import taxiData from '../data/taxi.csv';
 
-const MAPBOX_STYLE = 'mapbox://styles/uberdata/cive485h000192imn6c6cc8fc';
+const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
-
-const LAYER_CONTROLS = {
-  showHexagon: {
-    displayName: 'Show Hexagon',
-    type: 'boolean',
-    value: false
-  },
-  radius: {
-    displayName: 'Hexagon Radius',
-    type: 'range',
-    value: 250,
-    step: 50,
-    min: 50,
-    max: 1000
-  },
-  coverage: {
-    displayName: 'Hexagon Coverage',
-    type: 'range',
-    value: 0.7,
-    step: 0.1,
-    min: 0,
-    max: 1
-  },
-  upperPercentile: {
-    displayName: 'Hexagon Upper Percentile',
-    type: 'range',
-    value: 100,
-    step: 0.1,
-    min: 80,
-    max: 100
-  },
-  radiusScale: {
-    displayName: 'Scatterplot Radius',
-    type: 'range',
-    value: 30,
-    step: 10,
-    min: 10,
-    max: 200
-  }
-};
 
 export default class App extends Component {
 
@@ -64,9 +27,9 @@ export default class App extends Component {
         height: 500
       },
       points: [],
-      settings: Object.keys(LAYER_CONTROLS).reduce((accu, key) => ({
+      settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
         ...accu,
-        [key]: LAYER_CONTROLS[key].value
+        [key]: HEXAGON_CONTROLS[key].value
       }), {}),
 
       // hoverInfo
@@ -79,7 +42,7 @@ export default class App extends Component {
 
   componentDidMount() {
     this._processData();
-    window.addEventListener('resize', this._resize.bind(this));
+    window.addEventListener('resize', this._resize);
     this._resize();
   }
 
@@ -139,19 +102,13 @@ export default class App extends Component {
     }
   }
 
-  updateLayerSettings(settings) {
-    this.setState({settings});
-  }
+  updateLayerSettings = settings => this.setState({settings})
 
-  _onHover({x, y, object}) {
-    this.setState({x, y, hoveredObject: object});
-  }
+  _onHover = ({x, y, object}) => this.setState({x, y, hoveredObject: object})
 
-  _onViewportChange(viewport) {
-    this.setState({
+  _onViewportChange = (viewport) => this.setState({
       viewport: {...this.state.viewport, ...viewport}
-    });
-  }
+  })
 
   _resize() {
     this._onViewportChange({
@@ -162,6 +119,7 @@ export default class App extends Component {
 
   render() {
     const {viewport, hoveredObject, points, settings, status, x, y} = this.state;
+    
     return (
       <div>
         {hoveredObject &&
@@ -170,17 +128,17 @@ export default class App extends Component {
           </div>}
         <LayerControls
           settings={settings}
-          propTypes={LAYER_CONTROLS}
-          onChange={this.updateLayerSettings.bind(this)}/>
+          propTypes={HEXAGON_CONTROLS}
+          onChange={this.updateLayerSettings}/>
         <MapGL
           {...viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange.bind(this)}
+          onViewportChange={this._onViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
             viewport={viewport}
             data={points}
-            onHover={this._onHover.bind(this)}
+            onHover={this._onHover}
             settings={settings}/>
         </MapGL>
         <Charts {...this.state} />

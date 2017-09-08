@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import MapGL from 'react-map-gl';
 
-const MAPBOX_STYLE = 'mapbox://styles/uberdata/cive485h000192imn6c6cc8fc';
+const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 

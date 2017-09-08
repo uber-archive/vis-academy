@@ -2,25 +2,14 @@
 import React, {Component} from 'react';
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay';
-import LayerControls from './layer-controls';
+import {LayerControls, SCATTERPLOT_CONTROLS} from './layer-controls';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
 import taxiData from '../data/taxi.csv';
 
-const MAPBOX_STYLE = 'mapbox://styles/uberdata/cive485h000192imn6c6cc8fc';
+const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
-
-const LAYER_CONTROLS = {
-  radiusScale: {
-    displayName: 'Scatterplot Radius',
-    type: 'range',
-    value: 30,
-    step: 10,
-    min: 10,
-    max: 200
-  }
-};
 
 export default class App extends Component {
 
@@ -36,9 +25,9 @@ export default class App extends Component {
         maxZoom: 16
       },
       points: [],
-      settings: Object.keys(LAYER_CONTROLS).reduce((accu, key) => ({
+      settings: Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
         ...accu,
-        [key]: LAYER_CONTROLS[key].value
+        [key]: SCATTERPLOT_CONTROLS[key].value
       }), {}),
       // hoverInfo
       x: 0,
@@ -50,12 +39,12 @@ export default class App extends Component {
 
   componentDidMount() {
     this._processData(this.props);
-    window.addEventListener('resize', this._resize.bind(this));
+    window.addEventListener('resize', this._resize);
     this._resize();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._resize.bind(this));
+    window.removeEventListener('resize', this._resize);
   }
 
   _processData() {
@@ -80,19 +69,13 @@ export default class App extends Component {
     }
   }
 
-  updateLayerSettings(settings) {
-    this.setState({settings});
-  }
+  updateLayerSettings = (settings) => this.setState({settings})
 
-  _onHover({x, y, object}) {
-    this.setState({x, y, hoveredObject: object});
-  }
+  _onHover = ({x, y, object}) => this.setState({x, y, hoveredObject: object})
 
-  _onViewportChange(viewport) {
-    this.setState({
+  _onViewportChange = (viewport) => this.setState({
       viewport: {...this.state.viewport, ...viewport}
-    });
-  }
+    })
 
   _resize() {
     this._onViewportChange({
@@ -111,17 +94,17 @@ export default class App extends Component {
           </div>}
         <LayerControls
           settings={settings}
-          propTypes={LAYER_CONTROLS}
-          onChange={this.updateLayerSettings.bind(this)}/>
+          propTypes={SCATTERPLOT_CONTROLS}
+          onChange={this.updateLayerSettings}/>
         <MapGL
           {...viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange.bind(this)}
+          onViewportChange={this._onViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
             viewport={viewport}
             data={points}
-            onHover={this._onHover.bind(this)}
+            onHover={this._onHover}
             settings={settings}/>
         </MapGL>
         <Spinner status={status} />
