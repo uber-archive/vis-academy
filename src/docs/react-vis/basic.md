@@ -103,28 +103,33 @@ towards the top of the file with your other imports, and update the render metho
 
 ```js
   render() {
-    const {viewport, points, settings, status} = this.state;
-
     return (
       <div>
-        {this._renderTooltip()}
+        {this.state.hoveredObject &&
+          <div style={{
+            ...tooltipStyle,
+            left: this.state.x,
+            top: this.state.y
+          }}>
+            <div>{this.state.hoveredObject.id}</div>
+          </div>}
         <LayerControls
-          settings={settings}
-          propTypes={LAYER_CONTROLS}
-          onChange={this.updateLayerSettings.bind(this)}/>
+          settings={this.state.settings}
+          propTypes={HEXAGON_CONTROLS}
+          onChange={this.updateLayerSettings}/>
         <MapGL
-          {...viewport}
+          {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange.bind(this)}
+          onViewportChange={this._onViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
-            viewport={viewport}
-            data={points}
-            onHover={this._onHover.bind(this)}
-            settings={settings}/>
+            viewport={this.state.viewport}
+            data={this.state.points}
+            onHover={this._onHover}
+            settings={this.state.settings}/>
         </MapGL>
         <Charts {...this.state} />
-        <Spinner status={status} />
+        <Spinner status={this.state.status} />
       </div>
     );
   }

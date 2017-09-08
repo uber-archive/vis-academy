@@ -118,31 +118,33 @@ export default class App extends Component {
   }
 
   render() {
-    const {viewport, hoveredObject, points, settings, status, x, y} = this.state;
-    
     return (
       <div>
-        {hoveredObject &&
-          <div style={{...tooltipStyle, left: x, top: y}}>
-            <div>{hoveredObject.id}</div>
+        {this.state.hoveredObject &&
+          <div style={{
+            ...tooltipStyle,
+            left: this.state.x,
+            top: this.state.y
+          }}>
+            <div>{this.state.hoveredObject.id}</div>
           </div>}
         <LayerControls
-          settings={settings}
+          settings={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
           onChange={this.updateLayerSettings}/>
         <MapGL
-          {...viewport}
+          {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
           onViewportChange={this._onViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
-            viewport={viewport}
-            data={points}
+            viewport={this.state.viewport}
+            data={this.state.points}
             onHover={this._onHover}
-            settings={settings}/>
+            settings={this.state.settings}/>
         </MapGL>
         <Charts {...this.state} />
-        <Spinner status={status} />
+        <Spinner status={this.state.status} />
       </div>
     );
   }

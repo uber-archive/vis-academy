@@ -4,26 +4,15 @@
 
 For our grand finale, we're going to link interaction on the charts with the deck.gl overlays!
 
-In our app.js in the render method, let's make the following two changes:
+In our app.js in the render method, let's add an "hour" property to DeckGLOverlay:
 
 ```js
-const {
-  viewport,
-  hoveredObject,
-  points,
-  settings,
-  status,
-  x, y,
-  highlightedHour,
-  selectedHour
-} = this.state;
-
 <DeckGLOverlay
-  viewport={viewport}
-  data={points}
-  hour={highlightedHour || selectedHour}
-  onHover={this._onHover.bind(this)}
-  settings={settings}
+  viewport={this.state.viewport}
+  data={this.state.points}
+  hour={this.state.highlightedHour || this.state.selectedHour}
+  onHover={this._onHover}
+  settings={this.state.settings}
 />
 ```
 

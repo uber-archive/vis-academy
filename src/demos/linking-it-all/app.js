@@ -118,32 +118,32 @@ export default class App extends Component {
   }
 
   render() {
-    const {viewport, hoveredObject, 
-      points, settings, status, x, y,
-      highlightedHour, selectedHour
-    } = this.state;
     return (
       <div>
-        {hoveredObject &&
-          <div style={{...tooltipStyle, left: x, top: y}}>
-            <div>{hoveredObject.id}</div>
+        {this.state.hoveredObject &&
+          <div style={{
+            ...tooltipStyle,
+            left: this.state.x,
+            top: this.state.y
+          }}>
+            <div>{this.state.hoveredObject.id}</div>
           </div>}
         <LayerControls
-          settings={settings}
+          settings={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
           onChange={this.updateLayerSettings}
         />
         <MapGL
-          {...viewport}
+          {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
           onViewportChange={this._onViewportChange.bind(this)}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
-            viewport={viewport}
-            data={points}
-            hour={highlightedHour || selectedHour}
+            viewport={this.state.viewport}
+            data={this.state.points}
+            hour={this.state.highlightedHour || this.state.selectedHour}
             onHover={this._onHover.bind(this)}
-            settings={settings}/>
+            settings={this.state.settings}/>
         </MapGL>
         <Charts {...this.state}
           highlight={(highlightedHour) => this.setState({highlightedHour})}
@@ -153,7 +153,7 @@ export default class App extends Component {
             })
           }
         />
-        <Spinner status={status} />
+        <Spinner status={this.state.status} />
       </div>
     );
   }
