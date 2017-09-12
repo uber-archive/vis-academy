@@ -7,16 +7,18 @@
 React-Vis has many methods to [handle interaction](http://uber.github.io/react-vis/#/documentation/general-principles/interaction). 
 We're already using the state of our app to store our data and interaction with the deck.gl components, so let's use it for react-vis interaction as well. 
 
-In app.js, let's add this property to our initial state,
+In app.js, let's create a method to handle this interaction:
 
 ```js
-constructor(props) {
+export default class App extends Component {
 
-  super(props);
-  this.state = {
-    // all previous properties
-    highlightedHour: null
-  };
+// ...
+
+_onHighlight(highlightedHour) {
+  this.setState({highlightedHour});
+}
+
+// ...
 
 }
 ```
@@ -25,7 +27,7 @@ then in the render method:
 
 ```js
 <Charts {...this.state}
-  highlight={(highlightedHour) => this.setState({highlightedHour})}
+  highlight={hour => this._onHighlight(hour)}
 />
 ```
 
@@ -47,8 +49,8 @@ Then, before the return statement:
 
 ```js
 const data = pickups.map(d => ({
-  ...d, color: d.hour === selectedHour ? '#19CDD7' : '#125C77'
-});
+  ...d, color: d.hour === highlightedHour ? '#19CDD7' : '#125C77'
+}));
 ```
 
 And finally, in the VerticalBarSeries component:
@@ -57,11 +59,11 @@ And finally, in the VerticalBarSeries component:
 <VerticalBarSeries
   colorType="literal"
   data={data}
-  onValueMouseOver={(d) => highlight(d.hour)}
+  onValueMouseOver={d => highlight(d.hour)}
 />
 ```
 
-<!-- INJECT:"HoverInteraction" -->
+<!-- INJECT:"HoverInteraction" inline -->
 
 We are getting which hour is highlighted from the state of the parent component, and a callback method to change it. 
 
@@ -74,23 +76,6 @@ When I prepared the dataset for the series, pickups, I provided an x and a y val
 onValueMouseOver passes the object which corresponds to the mark which is highlighted, with all its properties. I can then pass the hour property to that highlight callback. 
 
 I also changed the colorType to be "literal". There are many ways to pass color to a react-vis series, but if we pass explicit color values in the dataset, we must signal it to the series. 
-
-```js
-<XYPlot
-    margin={{left: 40, right: 0, top: 0, bottom: 20}}
-    height={140}
-    width={280}
-  >
-  <LineSeries data={pickups} color='#0080FF' />
-  <LineSeries data={dropoffs} color='#FF0080' />
-  <XAxis
-    tickValues={[0, 6, 12, 18, 24]}
-    tickFormat={(d) => (d % 24) >= 12 ? (d % 12 || 12) + 'PM' : (d % 12 || 12) + 'AM'}
-  />
-  <YAxis tickFormat={(d) => (d / 100).toFixed(0) + '%'}
-  />
-</XYPlot>
-```
 
 ## 2. Fine-tuning: handling mousing out of the chart and clicks. 
 
@@ -108,13 +93,19 @@ But eventually we'd like to leave a bar selected while we mouse over elsewhere o
 Let's go back to app.js and make the following changes:
 
 ```js
-constructor(props) {
+export default class App extends Component {
 
-  super(props);
-  this.state = {
-    // all previous properties
-    selectedHour: null
-  };
+// ...
+
+  _onSelect(selectedHour) {
+    this.setState({selectedHour:
+      selectedHour === this.state.selectedHour ?
+        null :
+        selectedHour
+      });
+  }
+
+// ...
 
 }
 ```
@@ -123,12 +114,8 @@ and in the render method:
 
 ```js
   <Charts {...this.state}
-    highlight={(highlightedHour) => this.setState({highlightedHour})}
-    select={(hour) =>
-      this.setState({
-        selectedHour: hour === this.state.selectedHour ? null : hour
-      })
-    }
+    highlight={hour => this._onHighlight(hour)}
+    select={hour => this._onSelect(hour)}
   />
 ```
 
@@ -163,8 +150,8 @@ And in the VerticalBarSeries component:
   <VerticalBarSeries
     colorType="literal"
     data={data}
-    onValueMouseOver={(d) => highlight(d.hour)}
-    onValueClick={(d) => select(d.hour)}
+    onValueMouseOver={d => highlight(d.hour)}
+    onValueClick={d => select(d.hour)}
     style={{cursor: 'pointer'}}
   />
 ```

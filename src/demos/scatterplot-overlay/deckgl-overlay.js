@@ -7,30 +7,26 @@ const DROPOFF_COLOR = [255, 0, 128];
 export default class DeckGLOverlay extends Component {
 
   render() {
-    const {viewport, data, onHover, settings} = this.props;
-
-    if (!data) {
+    if (!this.props.data) {
       return null;
     }
 
     const layers = [
       new ScatterplotLayer({
         id: 'scatterplot',
-        data,
         getPosition: d => d.position,
         getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
         getRadius: d => 1,
         opacity: 0.5,
         pickable: true,
-        onHover,
-        radiusScale: settings.radiusScale,
         radiusMinPixels: 0.25,
-        radiusMaxPixels: 30
+        radiusMaxPixels: 30,
+        ...this.props
       })
     ];
 
     return (
-      <DeckGL {...viewport} layers={ layers } />
+      <DeckGL {...this.props.viewport} layers={layers} />
     );
   }
 }

@@ -41,7 +41,7 @@ in your app.js file, change your _processData method by this one:
             pickup: false
           });
         }
-
+        
         const prevPickups = accu.pickupObj[pickupHour] || 0;
         const prevDropoffs = accu.dropoffObj[dropoffHour] || 0;
 
@@ -103,28 +103,33 @@ towards the top of the file with your other imports, and update the render metho
 
 ```js
   render() {
-    const {viewport, points, settings, status} = this.state;
-
     return (
       <div>
-        {this._renderTooltip()}
+        {this.state.hoveredObject &&
+          <div style={{
+            ...tooltipStyle,
+            left: this.state.x,
+            top: this.state.y
+          }}>
+            <div>{this.state.hoveredObject.id}</div>
+          </div>}
         <LayerControls
-          settings={settings}
-          propTypes={LAYER_CONTROLS}
-          onChange={this.updateLayerSettings.bind(this)}/>
+          settings={this.state.settings}
+          propTypes={HEXAGON_CONTROLS}
+          onChange={settings => this._updateLayerSettings(settings)}/>
         <MapGL
-          {...viewport}
+          {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange.bind(this)}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
-            viewport={viewport}
-            data={points}
-            onHover={this._onHover.bind(this)}
-            settings={settings}/>
+            viewport={this.state.viewport}
+            data={this.state.points}
+            onHover={hover => this._onHover(hover)}
+            settings={this.state.settings}/>
         </MapGL>
         <Charts {...this.state} />
-        <Spinner status={status} />
+        <Spinner status={this.state.status} />
       </div>
     );
   }
@@ -162,7 +167,6 @@ export default function Charts({pickups}) {
     </XYPlot>  
   </div>);
 }
-
 ```
 
 This code produces this output: 
@@ -187,7 +191,7 @@ We can do that by changing the way the ticks are represented in the axes.
 
 ```js
 <YAxis
-  tickFormat={(d) => (d / 100).toFixed(0) + '%'}
+  tickFormat={d => (d / 100).toFixed(0) + '%'}
 />
 ```
 
@@ -249,10 +253,10 @@ Finally, we can set *tickInnerSize* to 0 to only have ticks going from the axis 
 
 ```js
 <XAxis
-  tickFormat={(h) => (h % 24) >= 12 ?
+  tickFormat={h => (h % 24) >= 12 ?
     (h % 12 || 12) + 'PM' :
-    (h % 12 || 12) + 'AM';
-  }}
+    (h % 12 || 12) + 'AM'
+  }
   tickSizeInner={0}
   tickValues={[0, 6, 12, 18, 24]}
 />
@@ -315,17 +319,17 @@ export default function Charts({pickups}) {
       yDomain={[0, 1000]}
     >
     <YAxis
-      tickFormat={(d) => (d / 100).toFixed(0) + '%'}
+      tickFormat={d => (d / 100).toFixed(0) + '%'}
     />
     <VerticalBarSeries 
       color="#125C77"
       data={pickups} 
     />
     <XAxis
-      tickFormat={(h) => (h % 24) >= 12 ?
+      tickFormat={h => (h % 24) >= 12 ?
         (h % 12 || 12) + 'PM' :
-        (h % 12 || 12) + 'AM';
-      }}
+        (h % 12 || 12) + 'AM'
+      }
       tickSizeInner={0}
       tickValues={[0, 6, 12, 18, 24]}
     />

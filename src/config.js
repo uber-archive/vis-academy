@@ -14,24 +14,15 @@ export const PROJECTS = {
   'react-vis': 'https://uber.github.io/react-vis',
 };
 
-export const HOME_HEADING = PROJECT_DESC;
-
 export const HOME_RIGHT = (
   <div>
-
-    <h2>Welcome to the visualization tutorials!</h2>
-
+    <h2>Uber Visualization tutorial</h2>
     <p className='m-bottom'>
-      In the following pages, we're going to learn how to use 3 of Uber's open source visualization libraries: React Map GL, Deck GL and React Vis. All of these libraries have a different function and work in the React ecosystem. We're going to build an app using each library separately.
+      This tutorial will show you how to build an app that showcases three of Uber visualization libraries: ReactMapGL for maps, DeckGL to create WebGL-based data overlays and React-Vis> for simple charts.
+      </p>
+    <p className='m-bottom'>
+      You will learn how to use these libraries separately, but also how they can be combined to work together.
     </p>
-
-    <p>
-      React Map GL is a React wrapper on Mapbox: it allows you to render and interact with Mapbox maps in React applications.
-      Deck GL is an interface to use WebGL in React. With DeckGL, users build layers of visualized elements that they can superimpose. DeckGL works especially well with React Map GL, but is not limited to maps.
-      React Vis is Uber's charting library. It provides an abstraction to create, interact and style a variety of charts.
-      For the purpose of this tutorial, we're going to use a dataset of taxi pickups and dropoffs in New York, where this information is public.
-    </p>
-
   </div>
 );
 

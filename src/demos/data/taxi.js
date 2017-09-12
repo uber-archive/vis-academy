@@ -1,4 +1,4 @@
-VendorID,tpep_pickup_datetime,tpep_dropoff_datetime,passenger_count,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude,fare_amount,tip_amount,total_amount
+const data = `VendorID,tpep_pickup_datetime,tpep_dropoff_datetime,passenger_count,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude,fare_amount,tip_amount,total_amount
 2,2015-01-15 15:33:26 +00:00,2015-01-15 15:52:27 +00:00,1,2.89,-73.96710205,40.80395889,-73.96305084,40.77251816,15,0,15.8
 2,2015-01-15 18:05:53 +00:00,2015-01-15 18:13:58 +00:00,1,1.1,-73.96154022,40.77421188,-73.94589233,40.77362823,7,0,8.8
 2,2015-01-15 14:04:10 +00:00,2015-01-15 15:02:46 +00:00,5,16.1,-73.99071503,40.7285881,-73.80666351,40.65282059,52,14.33,72.46
@@ -9997,4 +9997,12 @@ VendorID,tpep_pickup_datetime,tpep_dropoff_datetime,passenger_count,trip_distanc
 1,2015-01-15 22:12:29 +00:00,2015-01-15 22:19:57 +00:00,1,2,-74.00585938,40.74208069,-74.0136261,40.71749878,9,0,10.3
 2,2015-01-15 21:55:37 +00:00,2015-01-15 22:08:56 +00:00,1,1.92,-73.98204803,40.7692337,-74.00080872,40.7480278,10.5,1,12.8
 2,2015-01-15 20:28:10 +00:00,2015-01-15 20:41:30 +00:00,3,1.85,-73.98207855,40.76473999,-73.95909882,40.77198029,10.5,2.2,14
-1,2015-01-15 20:29:18 +00:00,2015-01-15 20:40:53 +00:00,2,2.4,-73.97306061,40.78549194,-73.99123383,40.75609589,10.5,0,11.8
+1,2015-01-15 20:29:18 +00:00,2015-01-15 20:40:53 +00:00,2,2.4,-73.97306061,40.78549194,-73.99123383,40.75609589,10.5,0,11.8`;
+
+const rows = data.split('\n');
+const fields = rows[0].split(',');
+const dataRows = rows.slice(1);
+
+export default dataRows.map(r => r.split(',').reduce((prev, curr, i) => {
+  prev[fields[i]] = curr; return prev;
+}, {}));

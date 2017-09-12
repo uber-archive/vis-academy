@@ -2,88 +2,53 @@
 import React, {Component} from 'react';
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay';
-import LayerControls from './layer-controls';
+import {
+  LayerControls,
+  HEXAGON_CONTROLS
+} from './layer-controls';
 import Charts from './charts';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
+import taxiData from '../data/taxi';
 
-import taxiData from '../data/taxi.csv';
-
-const MAPBOX_STYLE = 'mapbox://styles/uberdata/cive485h000192imn6c6cc8fc';
+const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
-
-const LAYER_CONTROLS = {
-  showHexagon: {
-    displayName: 'Show Hexagon',
-    type: 'boolean',
-    value: false
-  },
-  radius: {
-    displayName: 'Hexagon Radius',
-    type: 'range',
-    value: 250,
-    step: 50,
-    min: 50,
-    max: 1000
-  },
-  coverage: {
-    displayName: 'Hexagon Coverage',
-    type: 'range',
-    value: 0.7,
-    step: 0.1,
-    min: 0,
-    max: 1
-  },
-  upperPercentile: {
-    displayName: 'Hexagon Upper Percentile',
-    type: 'range',
-    value: 100,
-    step: 0.1,
-    min: 80,
-    max: 100
-  },
-  radiusScale: {
-    displayName: 'Scatterplot Radius',
-    type: 'range',
-    value: 30,
-    step: 10,
-    min: 10,
-    max: 200
-  }
-};
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      ...props,
       viewport: {
-        ...DeckGLOverlay.defaultViewport,
-        width: 500,
-        height: 500
+        width: window.innerWidth,
+        height: window.innerHeight,
+        longitude: -74,
+        latitude: 40.7,
+        zoom: 11,
+        maxZoom: 16,
+        ...props.viewport
       },
-      points: [],
-      settings: Object.keys(LAYER_CONTROLS).reduce((accu, key) => ({
+      settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
         ...accu,
-        [key]: LAYER_CONTROLS[key].value
+        [key]: HEXAGON_CONTROLS[key].value
       }), {}),
-
-      // hoverInfo
-      x: 0,
-      y: 0,
-      hoveredObject: null,
       status: 'LOADING',
-      hour: null
+      selectedHour: null
     };
+    this._resize = this._resize.bind(this);
   }
 
   componentDidMount() {
     this._processData();
-    window.addEventListener('resize', this._resize.bind(this));
+    window.addEventListener('resize', this._resize);
     this._resize();
   }
-
+  
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._resize);
+  }
   _processData() {
     if (taxiData) {
       this.setState({status: 'LOADED'});
@@ -140,12 +105,20 @@ export default class App extends Component {
     }
   }
 
-  updateLayerSettings(settings) {
-    this.setState({settings});
+  _onHighlight(highlightedHour) {
+    this.setState({highlightedHour});
   }
 
   _onHover({x, y, object}) {
     this.setState({x, y, hoveredObject: object});
+  }
+
+  _onSelect(selectedHour) {
+    this.setState({selectedHour:
+      selectedHour === this.state.selectedHour ?
+        null :
+        selectedHour
+      });
   }
 
   _onViewportChange(viewport) {
@@ -161,43 +134,46 @@ export default class App extends Component {
     });
   }
 
+  _updateLayerSettings(settings) {
+    this.setState({settings});
+  }
+
   render() {
-    const {viewport, hoveredObject, 
-      points, settings, status, x, y,
-      highlightedHour, selectedHour
-    } = this.state;
     return (
       <div>
-        {hoveredObject &&
-          <div style={{...tooltipStyle, left: x, top: y}}>
-            <div>{hoveredObject.id}</div>
+        {this.state.hoveredObject &&
+          <div style={{
+            ...tooltipStyle,
+            left: this.state.x,
+            top: this.state.y
+          }}>
+            <div>{this.state.hoveredObject.id}</div>
           </div>}
-        <LayerControls
-          settings={settings}
-          propTypes={LAYER_CONTROLS}
-          onChange={this.updateLayerSettings.bind(this)}
-        />
+        {this.props.noControls ? null : <LayerControls
+          settings={this.state.settings}
+          propTypes={HEXAGON_CONTROLS}
+          onChange={settings => this._updateLayerSettings(settings)}
+        />}
         <MapGL
-          {...viewport}
+          {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange.bind(this)}
+          onViewportChange={viewport => {
+            this._onViewportChange(viewport);
+          }}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
-            viewport={viewport}
-            data={points}
-            hour={highlightedHour || selectedHour}
-            onHover={this._onHover.bind(this)}
-            settings={settings}/>
+            viewport={this.state.viewport}
+            data={this.state.points}
+            hour={this.state.highlightedHour || this.state.selectedHour}
+            onHover={hover => this._onHover(hover)}
+            {...this.state.settings}
+          />
         </MapGL>
         <Charts {...this.state}
-          highlight={(highlightedHour) => this.setState({highlightedHour})}
-          select={(hour) =>
-            this.setState({
-              selectedHour: hour === this.state.selectedHour ? null : hour
-            })
-          }
+          highlight={hour => this._onHighlight(hour)}
+          select={hour => this._onSelect(hour)}
         />
-        <Spinner status={status} />
+        <Spinner status={this.state.status} />
       </div>
     );
   }

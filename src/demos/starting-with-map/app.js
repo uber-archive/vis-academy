@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import MapGL from 'react-map-gl';
 
-const MAPBOX_STYLE = 'mapbox://styles/uberdata/cive485h000192imn6c6cc8fc';
+const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
@@ -20,15 +20,16 @@ export default class App extends Component {
         maxZoom: 16
       }
     };
+    this._resize = this._resize.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this._resize.bind(this));
+    window.addEventListener('resize', this._resize);
     this._resize();
   }
-
+  
   componentWillUnmount() {
-    window.removeEventListener('resize', this._resize.bind(this));
+    window.removeEventListener('resize', this._resize);
   }
 
   _onViewportChange(viewport) {
@@ -45,14 +46,14 @@ export default class App extends Component {
   }
 
   render() {
-    const {viewport} = this.state;
     return (
       <div>
         <MapGL
-          {...viewport}
+          {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange.bind(this)}
-          mapboxApiAccessToken={MAPBOX_TOKEN} />
+          onViewportChange={viewport => this._onViewportChange.bind(viewport)}
+          mapboxApiAccessToken={MAPBOX_TOKEN}>
+        </MapGL>
       </div>
     );
   }

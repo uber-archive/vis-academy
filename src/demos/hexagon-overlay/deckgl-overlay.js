@@ -32,46 +32,40 @@ export default class DeckGLOverlay extends Component {
   }
 
   render() {
-    const {viewport, data, onHover, settings} = this.props;
-
-    if (!data) {
+    if (!this.props.data) {
       return null;
     }
 
     const layers = [
-      !settings.showHexagon ? new ScatterplotLayer({
+      !this.props.showHexagon ? new ScatterplotLayer({
         id: 'scatterplot',
-        data,
         getPosition: d => d.position,
         getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
         getRadius: d => 1,
         opacity: 0.5,
         pickable: true,
-        onHover,
-        radiusScale: settings.radiusScale,
         radiusMinPixels: 0.25,
-        radiusMaxPixels: 30
+        radiusMaxPixels: 30,
+        ...this.props
       }) : null,
-      settings.showHexagon ? new HexagonLayer({
+      this.props.showHexagon ? new HexagonLayer({
         id: 'heatmap',
         colorRange: HEATMAP_COLORS,
-        coverage: settings.coverage,
-        data,
         elevationRange,
         elevationScale: 10,
         extruded: true,
         getPosition: d => d.position,
         lightSettings: LIGHT_SETTINGS,
-        onHover,
         opacity: 1,
         pickable: true,
-        radius: settings.radius,
-        upperPercentile: settings.upperPercentile
+        ...this.props
       }) : null
     ];
 
-    return (
-      <DeckGL {...viewport} layers={ layers } onWebGLInitialized={this._initialize} />
-    );
+    return (<DeckGL
+      {...this.props.viewport}
+      layers={layers}
+      onWebGLInitialized={this._initialize}
+    />);
   }
 }

@@ -28,6 +28,10 @@ npm start
 
 A page should automatically be opened in your browser, with a pretty simple app (for now!).
 
+Note that the repository you cloned also contains all the content and code of this tutorial, and you may run it locally if you want (repeat the last two steps from above from vis-tutorial/).
+
+In the pages of this tutorial, you can use the back quote key ` (typically located below ESC) to see the code examples in full page.
+
 ## 3. Start Coding!
 
 You can now open your text editor with the following file:

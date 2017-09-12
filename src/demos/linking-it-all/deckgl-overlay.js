@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
-
 import DeckGL, {ScatterplotLayer, HexagonLayer} from 'deck.gl';
 
 const PICKUP_COLOR = [0, 128, 255];
 const DROPOFF_COLOR = [255, 0, 128];
 
 const HEATMAP_COLORS = [
-  [213,62,79],
-  [252,141,89],
-  [254,224,139],
-  [230,245,152],
-  [153,213,148],
-  [50,136,189]
+  [213, 62, 79],
+  [252, 141, 89],
+  [254, 224, 139],
+  [230, 245, 152],
+  [153, 213, 148],
+  [50, 136, 189]
 ].reverse();
 
 const LIGHT_SETTINGS = {
@@ -27,66 +26,52 @@ const elevationRange = [0, 1000];
 
 export default class DeckGLOverlay extends Component {
 
-  static get defaultViewport() {
-    return {
-      longitude: -74,
-      latitude: 40.7,
-      zoom: 11,
-      maxZoom: 16,
-      pitch: 0,
-      bearing: 0
-    };
-  }
-
   _initialize(gl) {
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LEQUAL);
   }
 
   render() {
-    const {viewport, data, hour = null, onHover, settings} = this.props;
-
-    if (!data) {
+    if (!this.props.data) {
       return null;
     }
 
-    const filteredData = hour === null ? data :
-      data.filter(d => d.hour === hour); 
+    const filteredData = this.props.hour === null ? this.props.data :
+      this.props.data.filter(d => d.hour === this.props.hour);
 
     const layers = [
-      !settings.showHexagon ? new ScatterplotLayer({
+      !this.props.showHexagon ? new ScatterplotLayer({
         id: 'scatterplot',
-        data: filteredData,
         getPosition: d => d.position,
         getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
         getRadius: d => 1,
         opacity: 0.5,
         pickable: true,
-        onHover,
-        radiusScale: 30,
         radiusMinPixels: 0.25,
-        radiusMaxPixels: 30
+        radiusMaxPixels: 30,
+        ...this.props,
+        data: filteredData
       }) : null,
-      settings.showHexagon ? new HexagonLayer({
+      this.props.showHexagon ? new HexagonLayer({
         id: 'heatmap',
         colorRange: HEATMAP_COLORS,
-        coverage: settings.coverage,
-        data: filteredData,
         elevationRange,
         elevationScale: 10,
         extruded: true,
         getPosition: d => d.position,
         lightSettings: LIGHT_SETTINGS,
-        onHover,
         opacity: 1,
         pickable: true,
-        radius: settings.radius,
-        upperPercentile: settings.upperPercentile
-      }): null
+        ...this.props,
+        data: filteredData
+      }) : null
     ];
 
-    return (
-      <DeckGL {...viewport} layers={ layers } onWebGLInitialized={this._initialize} />
-    );
+    return (<DeckGL
+      {...this.props.viewport}
+      layers={layers}
+      onWebGLInitialized={this._initialize}
+    />);
   }
 }
+
