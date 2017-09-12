@@ -10,7 +10,7 @@ import Charts from './charts';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
 
-import taxiData from '../data/taxi.csv';
+import taxiData from '../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
@@ -22,22 +22,21 @@ export default class App extends Component {
     super(props);
     this.state = {
       viewport: {
-        ...DeckGLOverlay.defaultViewport,
-        width: 500,
-        height: 500
+        width: window.innerWidth,
+        height: window.innerHeight,
+        longitude: -74,
+        latitude: 40.7,
+        zoom: 11,
+        maxZoom: 16
       },
-      points: [],
       settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
         ...accu,
         [key]: HEXAGON_CONTROLS[key].value
       }), {}),
 
-      // hoverInfo
-      x: 0,
-      y: 0,
-      hoveredObject: null,
       status: 'LOADING'
     };
+    this._resize = this._resize.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +45,10 @@ export default class App extends Component {
     this._resize();
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._resize);
+  }
+  
   _processData() {
     if (taxiData) {
       this.setState({status: 'LOADED'});
@@ -102,19 +105,25 @@ export default class App extends Component {
     }
   }
 
-  updateLayerSettings = settings => this.setState({settings})
+  _onHover({x, y, object}) {
+    this.setState({x, y, hoveredObject: object});
+  }
 
-  _onHover = ({x, y, object}) => this.setState({x, y, hoveredObject: object})
-
-  _onViewportChange = (viewport) => this.setState({
+  _onViewportChange(viewport) {
+    this.setState({
       viewport: {...this.state.viewport, ...viewport}
-  })
+    });
+  }
 
   _resize() {
     this._onViewportChange({
       width: window.innerWidth,
       height: window.innerHeight
     });
+  }
+
+  _updateLayerSettings(settings) {
+    this.setState({settings});
   }
 
   render() {
@@ -131,17 +140,18 @@ export default class App extends Component {
         <LayerControls
           settings={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
-          onChange={this.updateLayerSettings}/>
+          onChange={settings => this._updateLayerSettings(settings)}/>
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
             viewport={this.state.viewport}
             data={this.state.points}
-            onHover={this._onHover}
-            settings={this.state.settings}/>
+            onHover={hover => this._onHover(hover)}
+             {...this.state.settings}
+          />
         </MapGL>
         <Charts {...this.state} />
         <Spinner status={this.state.status} />

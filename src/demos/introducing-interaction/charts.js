@@ -40,17 +40,17 @@ export default function Charts({
       onMouseLeave={() => highlight(null)}
     >
     <YAxis
-      tickFormat={(d) => (d / 100).toFixed(0) + '%'}
+      tickFormat={d => (d / 100).toFixed(0) + '%'}
     />
     <VerticalBarSeries
       colorType="literal"
       data={data}
-      onValueMouseOver={(d) => highlight(d.hour)}
-      onValueClick={(d) => select(d.hour)}
+      onValueMouseOver={d => highlight(d.hour)}
+      onValueClick={d => select(d.hour)}
       style={{cursor: 'pointer'}}
     />
     <XAxis
-      tickFormat={(h) => (h % 24) >= 12 ?
+      tickFormat={h => (h % 24) >= 12 ?
         (h % 12 || 12) + 'PM' :
         (h % 12 || 12) + 'AM'
       }

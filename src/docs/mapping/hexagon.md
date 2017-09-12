@@ -38,7 +38,7 @@ const layers = [
 ];
 ```
 ### Color Value
-By default, hexagon color is based on number of points it containst. `getColorValue` gives you the option to color the hexagons based
+By default, hexagon color is based on number of points it contains. `getColorValue` gives you the option to color the hexagons based
  on your choice of value aggregation. For example, You can pass in getColorValue to color the bins by avg/mean/max of a specific attributes of each point.
 
 <p class="inline-images">

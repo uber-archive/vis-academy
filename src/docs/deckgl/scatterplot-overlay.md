@@ -23,7 +23,7 @@ and then import the file into your `app.js` component. If you cloned our
 tutorial repo as-is, your import statement should look like this:
 
 ```js
-import taxiData from '../data/taxi.csv';
+import taxiData from '../data/taxi';
 ```
 
 Now we need to process this data into a usable format. Since we are only going
@@ -63,6 +63,7 @@ export default class App extends Component {
     }
   }
 
+  // ...
 }
 ```
 
@@ -78,16 +79,14 @@ import DeckGL, {ScatterplotLayer} from 'deck.gl';
 export default class DeckGLOverlay extends Component {
 
   render() {
-    const {viewport, data} = this.props;
-
-    if (!data) {
+    if (!this.props.data) {
       return null;
     }
 
     const layers = [];
 
     return (
-      <DeckGL {...viewport} layers={ layers } />
+      <DeckGL {...this.props.viewport} layers={layers} />
     );
   }
 }
@@ -99,11 +98,9 @@ to render our `deck.gl` overlay. You'll notice that `layers` is being passed to
 separately. Let's edit the function and initialize a `ScatterplotLayer` in `render()` function.
 
 ```js
-
   const layers = [
     new ScatterplotLayer({
       id: 'scatterplot',
-      data,
       getPosition: d => d.position,
       getColor: d => [0, 128, 255],
       getRadius: d => 1,
@@ -111,10 +108,10 @@ separately. Let's edit the function and initialize a `ScatterplotLayer` in `rend
       pickable: false,
       radiusScale: 3,
       radiusMinPixels: 0.25,
-      radiusMaxPixels: 30
+      radiusMaxPixels: 30,
+      ...this.props
     })
   ];
-
 ````
 
 Once we add the code to initialize a `ScatterplotLayer`, we will have
@@ -123,13 +120,11 @@ the dots by `pickup` or `dropoff`. First lets define colors outside the componen
 under the imports.
 
 ```js
-
 import React, {Component} from 'react';
 import DeckGL, {ScatterplotLayer} from 'deck.gl';
 
 const PICKUP_COLOR = [0, 128, 255];
 const DROPOFF_COLOR = [255, 0, 128];
-
 ```
 
 Then let's edit our `ScatterplotLayer` to have the color depends on pickup or dropoff by changing
@@ -176,7 +171,6 @@ export default class App extends Component {
       </div>
     );
   }
-
 }
 ```
 
@@ -202,7 +196,7 @@ import DeckGLOverlay from './deckgl-overlay';
 import {LayerControls, SCATTERPLOT_CONTROLS} from './layer-controls';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
-import taxiData from '../data/taxi.csv';
+import taxiData from '../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
@@ -232,14 +226,15 @@ export default class App extends Component {
       hoveredObject: null,
       status: 'LOADING'
     };
+    this._resize = this._resize.bind(this);
   }
 
   componentDidMount() {
-    this._processData(this.props);
+    this._processData();
     window.addEventListener('resize', this._resize);
     this._resize();
   }
-
+  
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
@@ -266,13 +261,15 @@ export default class App extends Component {
     }
   }
 
-  updateLayerSettings = (settings) => this.setState({settings})
+  _onHover({x, y, object}) {
+    this.setState({x, y, hoveredObject: object});
+  }
 
-  _onHover = ({x, y, object}) => this.setState({x, y, hoveredObject: object})
-
-  _onViewportChange = (viewport) => this.setState({
+  _onViewportChange(viewport) {
+    this.setState({
       viewport: {...this.state.viewport, ...viewport}
-    })
+    });
+  }
 
   _resize() {
     this._onViewportChange({
@@ -281,8 +278,11 @@ export default class App extends Component {
     });
   }
 
+  _updateLayerSettings(settings) {
+    this.setState({settings});
+  }
+
   render() {
-    const {viewport, points, settings, status, x, y, hoveredObject} = this.state;
     return (
       <div>
         {this.state.hoveredObject &&
@@ -296,22 +296,22 @@ export default class App extends Component {
         <LayerControls
           settings={this.state.settings}
           propTypes={SCATTERPLOT_CONTROLS}
-          onChange={this.updateLayerSettings}/>
+          onChange={settings => this._updateLayerSettings(settings)}/>
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
             viewport={this.state.viewport}
             data={this.state.points}
-            onHover={this._onHover}
-            settings={this.state.settings}/>
+            onHover={hover => this._onHover(hover)}
+            {...this.state.settings}
+          />
         </MapGL>
         <Spinner status={this.state.status} />
       </div>
     );
   }
 }
-
 ```

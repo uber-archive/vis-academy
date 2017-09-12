@@ -5,7 +5,7 @@ import DeckGLOverlay from './deckgl-overlay';
 import {LayerControls, SCATTERPLOT_CONTROLS} from './layer-controls';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
-import taxiData from '../data/taxi.csv';
+import taxiData from '../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
@@ -35,14 +35,15 @@ export default class App extends Component {
       hoveredObject: null,
       status: 'LOADING'
     };
+    this._resize = this._resize.bind(this);
   }
 
   componentDidMount() {
-    this._processData(this.props);
+    this._processData();
     window.addEventListener('resize', this._resize);
     this._resize();
   }
-
+  
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
@@ -69,13 +70,15 @@ export default class App extends Component {
     }
   }
 
-  updateLayerSettings = (settings) => this.setState({settings})
+  _onHover({x, y, object}) {
+    this.setState({x, y, hoveredObject: object});
+  }
 
-  _onHover = ({x, y, object}) => this.setState({x, y, hoveredObject: object})
-
-  _onViewportChange = (viewport) => this.setState({
+  _onViewportChange(viewport) {
+    this.setState({
       viewport: {...this.state.viewport, ...viewport}
-    })
+    });
+  }
 
   _resize() {
     this._onViewportChange({
@@ -84,8 +87,11 @@ export default class App extends Component {
     });
   }
 
+  _updateLayerSettings(settings) {
+    this.setState({settings});
+  }
+
   render() {
-    const {viewport, points, settings, status, x, y, hoveredObject} = this.state;
     return (
       <div>
         {this.state.hoveredObject &&
@@ -99,17 +105,18 @@ export default class App extends Component {
         <LayerControls
           settings={this.state.settings}
           propTypes={SCATTERPLOT_CONTROLS}
-          onChange={this.updateLayerSettings}/>
+          onChange={settings => this._updateLayerSettings(settings)}/>
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
             viewport={this.state.viewport}
             data={this.state.points}
-            onHover={this._onHover}
-            settings={this.state.settings}/>
+            onHover={hover => this._onHover(hover)}
+            {...this.state.settings}
+          />
         </MapGL>
         <Spinner status={this.state.status} />
       </div>

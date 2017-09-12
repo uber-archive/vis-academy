@@ -1,1 +1,11 @@
 @import "~react-vis/dist/main.scss";
+
+.Hero {
+  .btn {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  h2 {
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+}

@@ -73,11 +73,10 @@ import MapGL from 'react-map-gl';
 export default class App extends Component {
 
   render() {
-    const {viewport} = this.state;
     return (
       <div>
         <MapGL
-          {...viewport}
+          {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
           // This is needed to use mapbox styles
           mapboxApiAccessToken={MAPBOX_TOKEN}>
@@ -104,9 +103,11 @@ need to define it.
 ```js
 export default class App extends Component {
 
-  _onViewportChange = viewport => this.setState({
-    viewport: {...this.state.viewport, ...viewport}
-  })
+  _onViewportChange(viewport) {
+    this.setState({
+      viewport: {...this.state.viewport, ...viewport}
+    });
+  }
 
 }
 ```
@@ -118,7 +119,7 @@ return (
     <MapGL
       // ...
       // Callback for viewport changes, addressed below
-      onViewportChange={this._onViewportChange}
+      onViewportChange={viewport => this._onViewportChange(viewport)}
       // ...
       />
   </div>
@@ -135,14 +136,24 @@ Let's quickly add a resize handler that updates our viewport with the new dimens
 ```js
 export default class App extends Component {
 
+  constructor(props) {
+    //...
+    this._resize = this._resize.bind(this);
+  }
+
   componentDidMount() {
     window.addEventListener('resize', this._resize);
     this._resize();
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._resize);
+  }
+
   _resize() {
     this._onViewportChange({
-      width: window.innerWidth
+      width: window.innerWidth,
+      height: window.innerHeight
     });
   }
 
@@ -177,20 +188,23 @@ export default class App extends Component {
         maxZoom: 16
       }
     };
+    this._resize = this._resize.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('resize', this._resize);
     this._resize();
   }
-
+  
   componentWillUnmount() {
-    window.removeEventListener('resize', this._resize.bind(this));
+    window.removeEventListener('resize', this._resize);
   }
 
-  _onViewportChange = viewport => this.setState({
+  _onViewportChange(viewport) {
+    this.setState({
       viewport: {...this.state.viewport, ...viewport}
-  })
+    });
+  }
 
   _resize() {
     this._onViewportChange({
@@ -200,14 +214,14 @@ export default class App extends Component {
   }
 
   render() {
-    const {viewport} = this.state;
     return (
       <div>
         <MapGL
-          {...viewport}
+          {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange}
-          mapboxApiAccessToken={MAPBOX_TOKEN} />
+          onViewportChange={viewport => this._onViewportChange.bind(viewport)}
+          mapboxApiAccessToken={MAPBOX_TOKEN}>
+        </MapGL>
       </div>
     );
   }
