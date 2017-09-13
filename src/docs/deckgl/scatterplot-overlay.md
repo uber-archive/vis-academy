@@ -98,21 +98,21 @@ to render our `deck.gl` overlay. You'll notice that `layers` is being passed to
 separately. Let's edit the function and initialize a `ScatterplotLayer` in `render()` function.
 
 ```js
-  const layers = [
-    new ScatterplotLayer({
-      id: 'scatterplot',
-      getPosition: d => d.position,
-      getColor: d => [0, 128, 255],
-      getRadius: d => 1,
-      opacity: 0.5,
-      pickable: false,
-      radiusScale: 3,
-      radiusMinPixels: 0.25,
-      radiusMaxPixels: 30,
-      ...this.props
-    })
-  ];
-````
+const layers = [
+  new ScatterplotLayer({
+    id: 'scatterplot',
+    getPosition: d => d.position,
+    getColor: d => [0, 128, 255],
+    getRadius: d => 1,
+    opacity: 0.5,
+    pickable: false,
+    radiusScale: 3,
+    radiusMinPixels: 0.25,
+    radiusMaxPixels: 30,
+    ...this.props
+  })
+];
+```
 
 Once we add the code to initialize a `ScatterplotLayer`, we will have
 a working map. We can further edit our `ScatterplotLayer` to color
