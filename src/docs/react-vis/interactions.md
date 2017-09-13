@@ -5,7 +5,7 @@
 ## 1. Interact with bar charts on hover
 
 React-Vis has many methods to [handle interaction](https://uber.github.io/react-vis/documentation/general-principles/interaction).
-We're already using the state of our app to store our data and interaction with the deck.gl components, so let's use it for react-vis interaction as well. 
+We're already using the state of our app to store our data and interaction with the deck.gl components, so let's use it for react-vis interaction as well.
 
 In app.js, let's add a method to handle this interaction:
 
@@ -91,7 +91,7 @@ _onSelect(selectedHour) {
 }
 ```
 
-and in the render method:
+and update the `Charts` component in our render method:
 
 ```js
 <Charts {...this.state}
@@ -100,7 +100,7 @@ and in the render method:
 />
 ```
 
-Now, back to charts.js: let's change the beginning of Charts
+Now, back to `charts.js`: let's change the beginning of the component:
 
 ```js
 export default function Charts({
