@@ -2,8 +2,3 @@ node_modules/
 
 *.log*
 .DS_Store
-docs/appcache/manifest.appcache
-docs/appcache/manifest.html
-docs/bundle-6bb1dfe73158c06fb2c4.js
-docs/styles-6bb1dfe73158c06fb2c4.css
-docs/sw.js
