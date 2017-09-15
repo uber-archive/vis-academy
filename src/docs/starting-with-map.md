@@ -1,5 +1,10 @@
 <!-- INJECT:"StartingWithMap" heading -->
 
+<ul class='insert learning-objectives'>
+<li>Create a map in a React application,</li>
+<li>Add interaction to the map (zoom, pan, resize window)</li>
+</ul>
+
 # Starting With a Map
 
 [react-map-gl](https://github.com/uber/react-map-gl) is a `React` wrapper around
@@ -161,6 +166,13 @@ export default class App extends Component {
 ```
 We leverage the `onViewportChange` callback to make sure there's only one place
 where viewport state is actually being updated.
+
+<ul class='insert takeaways'>
+<li>We can use the ReactMapGL's MapGL component to use a map in React.</li>
+<li>MapGL behaves just as another React component with props and callbacks.</li>
+<li>Basic settings of the map are stored in the __viewport__ prop.</li>
+<li>the __onViewportChange__ prop can be used to update the viewport when a user interacts with the map.</li>
+</ul>
 
 ## 6. Completed Code
 

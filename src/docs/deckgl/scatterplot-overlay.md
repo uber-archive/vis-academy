@@ -1,9 +1,11 @@
 <!-- INJECT:"ScatterplotOverlay" heading -->
 
-# Add a Scatterplot Overlay with Deck.GL
+<ul class='insert learning-objectives'>
+<li>Plot data on a map</li>
+<li>First contact with Deck.GL</li>
+</ul>
 
-**NOTE** This step follows from the completed code of the previous section,
-[Starting With A Map](https://uber-common.github.io/vis-tutorial/#/react-map/starting-with-map).
+# Add a Scatterplot Overlay with Deck.GL
 
 As cool as having a map is, an empty map is not that useful. Let's see if we
 can add a `Scatterplot` overlay with the Taxi data set to the map we created in the previous example.
@@ -177,6 +179,21 @@ export default class App extends Component {
 With this, you should have a working `deck.gl` overlay that displays the taxi
 data as a scatterplot overlay.
 
+
+<ul class="insert takeaways">
+  <li>the Deck.GL __DeckGL__ component can be used to plot _layers_ over a map.</li>
+  <li>Each layer can have different parameters that control the result, including a dataset.</li>
+</ul>
+
+<ul class="insert further-readings">
+  <li>[Deck.GL](http://uber.github.io/deck.gl) and its extensive documentation</li>
+  <li>[Gallery of Deck.GL overlays](https://uber-common.github.io/vis-tutorial/#/documentation/data-overlays-gallery/mapping-types)</li>
+</ul>
+
+## Optional section
+
+Feel free to skip to [lesson 3](https://uber-common.github.io/vis-tutorial/#/documentation/3-more-data-overlays-hexagons) or even [lesson 4](https://uber-common.github.io/vis-tutorial/#/documentation/4-a-basic-chart). 
+
 ## 4. Adding Polish
 
 If you check out the source code for this step, you'll see extra code that add
@@ -185,6 +202,7 @@ loading spinner.
 
 The control for the settings panel is already provided in your starting code. It's a typical React component, so there's no use going through the details in this tutorial. 
 
+## 5. code of app.js
 
 Here's the complete app.js file including the control panel: 
 

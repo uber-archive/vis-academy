@@ -32,7 +32,17 @@ Note that the repository you cloned also contains all the content and code of th
 
 In the pages of this tutorial, you can use the back quote key ` (typically located below ESC) to see the code examples in full page.
 
-## 3. Start Coding!
+## 3. How this tutorial works
+
+In this tutorial, you will build a full geospatial application from scratch, with maps, WebGL data overlays and interactive charts. 
+
+In each lesson, we'll highlight what we'll cover, then we'll go through the code examples - copying the examples is how we'll build the app step by step. Some parts of the lessons are skippable - you can move to the next session and still have a functional app at the end. 
+
+Feel free to explore and experiment as you copy the code examples, you can find working code that correspond to the start of each lesson in the repository.
+
+We'll end each lesson with key takeaways and further reading.
+
+## 4. Start Coding!
 
 You can now open your text editor with the following file:
 

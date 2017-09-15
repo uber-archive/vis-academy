@@ -9,3 +9,44 @@
     font-size: 1rem;
   }
 }
+
+ul.insert {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    line-height: 1.45;
+    overflow: auto;
+	  padding: 42px 16px 16px 32px;
+    position: relative;
+}
+   
+ul.insert:before {
+  font-size: 1.5em;
+  font-weight: 600;
+  position: absolute;
+  top: 8px;
+}
+
+
+.learning-objectives {
+	background-color: #dbfffd;
+}
+
+.learning-objectives:before {
+	content: 'Learning Objectives';
+}
+
+.takeaways {
+  background-color: #e2ffdb;
+}
+   
+.takeaways:before {
+	content: 'Takeaways';
+}
+
+.further-readings {
+  background-color: #FDFFDF;
+}
+   
+.further-readings:before {
+	content: 'To go further';
+}

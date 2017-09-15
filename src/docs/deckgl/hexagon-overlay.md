@@ -1,5 +1,10 @@
 <!-- INJECT:"HexagonOverlay" heading -->
 
+<ul class="insert learning-objectives">
+  <li>Discover more types of Deck.GL overlays</li>
+  <li>See how Deck.GL can handle several layers at once</li>
+</ul>
+
 # Add a Hexagon Overlay with Deck.GL
 [View code](https://github.com/uber-common/vis-tutorial/tree/master/demos/hexagon-overlay)
 
@@ -108,7 +113,13 @@ export default class DeckGLOverlay extends Component {
 }
 ```
 
-With this, your `deckgl-overlay.js` should be ready to  render a functional `HexagonLayer`.
+With this, your `deckgl-overlay.js` should be ready to render a functional `HexagonLayer`.
+
+<ul class="insert takeaways">
+  <li>The HexagonLayer can display aggregated, 3D hexagons</li>
+  <li>Deck.GL can display any number of layers at once</li>
+  <li>It's possible to deactivate any of these layers at run time by replacing it by null</li>
+</ul>
 
 Let's go over some properties of the `HexagonLayer`:
 
