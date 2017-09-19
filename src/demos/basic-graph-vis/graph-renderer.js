@@ -18,7 +18,6 @@ export default class GraphRenderer extends PureComponent {
   _renderNodeLayer() {
     const {
       nodes,
-      scale,
       getNodePosition,
       getNodeSize,
       getNodeColor
@@ -37,7 +36,6 @@ export default class GraphRenderer extends PureComponent {
   _renderEdgeLayer() {
     const {
       edges,
-      scale,
       getEdgePosition,
       getEdgeColor,
       getEdgeWidth
@@ -55,13 +53,13 @@ export default class GraphRenderer extends PureComponent {
   }
 
   render() {
-    const {height, offset, scale, width} = this.props;
+    const {height, width} = this.props;
     
     const glViewport = new OrthographicViewport({
-      width: width * scale,
-      height: height * scale,
-      left: (-width / 2 - offset.x) * scale,
-      top: (-height / 2 - offset.y) * scale
+      width,
+      height,
+      left: (-width / 2),
+      top: (-height / 2)
     });
 
     return (

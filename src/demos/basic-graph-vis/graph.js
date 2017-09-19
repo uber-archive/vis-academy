@@ -36,7 +36,11 @@ export default class Graph {
   }
 
   findConnectedEdges(id) {
-    return this.edges.filter(e => e.source.id === id || e.target.id === id);
+    return this.edges.filter(e => e.source === id || e.target === id);
+  }
+
+  getDegree(id) {
+    return this.findConnectedEdges(id).length;
   }
 
   resetNodes() {

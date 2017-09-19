@@ -8,8 +8,10 @@ import Graph from './graph';
 import GraphRenderer from './graph-renderer'
 
 function randomPosition(width, height) {
-  const x = Math.random() * width;
-  const y = Math.random() * height;
+  const halfWidth = width / 2;
+  const halfHeight = height / 2;
+  const x = Math.random() * width - halfWidth;
+  const y = Math.random() * height - halfHeight;
   return [x, y];
 }
 
@@ -20,15 +22,7 @@ export default class App extends Component {
     const width = window.innerWidth;
     const height = window.innerHeight;
     this.state = {
-      viewport: {
-        width,
-        height,
-        scale: 1,
-        offset: {
-          x: -1 * width / 2,
-          y: -1 * height / 2
-        }
-      }
+      viewport: {width, height}
     };
 
     // bind methods
@@ -68,7 +62,7 @@ export default class App extends Component {
 
   // node accessors
   _getNodeColor(node) {
-    return [94, 94, 94, 256];
+    return [94, 94, 94];
   }
 
   _getNodeSize(node){
@@ -81,11 +75,11 @@ export default class App extends Component {
 
   // edge accessors
   _getEdgeColor(edge) {
-    return [64, 64, 64, 256];
+    return [64, 64, 64];
   }
 
   _getEdgeWidth() {
-    return 5;
+    return 2;
   }
 
   _getEdgePosition(edge) {
@@ -107,8 +101,6 @@ export default class App extends Component {
           /* viewport related */
           width={viewport.width}
           height={viewport.height}
-          offset={viewport.offset}
-          scale={viewport.scale}
           /* nodes related */
           nodes={this._graph.nodes}
           getNodeColor={this._getNodeColor}

@@ -19,7 +19,6 @@ export default class GraphRenderer extends PureComponent {
     const {
       alpha,
       nodes,
-      scale,
       getNodePosition,
       getNodeSize,
       getNodeColor
@@ -28,12 +27,14 @@ export default class GraphRenderer extends PureComponent {
     return new ScatterplotLayer({
       id: 'node-layer',
       data: nodes,
-      getPosition: getNodePosition,
+      getPosition: node => getNodePosition(node),
+      // getPosition: getNodePosition,
+      // ^^^ this doesn't work?
       getRadius: getNodeSize,
       getColor: getNodeColor,
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
-        getPosition: {alpha, scale}
+        getPosition: alpha
       }
     });
   }
@@ -42,7 +43,6 @@ export default class GraphRenderer extends PureComponent {
     const {
       alpha,
       edges,
-      scale,
       getEdgePosition,
       getEdgeColor,
       getEdgeWidth
@@ -57,30 +57,30 @@ export default class GraphRenderer extends PureComponent {
       strokeWidth: getEdgeWidth(),
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
-          getSourcePosition: {alpha, scale},
-          getTargetPosition: {alpha, scale}
+        getSourcePosition: () => {
+          console.log('edge update triggered');
+          return alpha;
+        },
+        getTargetPosition: () => {
+          console.log('edge update triggered');
+          return alpha;
         }
+      }
     });
   }
 
   render() {
-    const {height, offset, scale, width} = this.props;
+    const {height, width} = this.props;
     
     const glViewport = new OrthographicViewport({
-      width: width * scale,
-      height: height * scale,
-      left: (-width / 2 - offset.x) * scale,
-      top: (-height / 2 - offset.y) * scale
+      width,
+      height,
+      left: (-width / 2),
+      top: (-height / 2)
     });
 
     return (
-      <div
-        id="graph-renderer"
-        ref={interactionLayer => {
-          this._container = interactionLayer;
-        }}
-        style={{pointerEvents: 'all'}}
-      >
+      <div id="graph-renderer">
         <DeckGL
           width={width}
           height={height}

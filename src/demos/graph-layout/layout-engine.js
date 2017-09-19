@@ -2,17 +2,16 @@ import * as d3 from 'd3-force';
 
 const defaultOptions = {
   alpha: 0.3,
-  edgeStrength: 3,
+  edgeStrength: 1,
   nBodyStrength: -900,
-  nBodyDistanceMin: 10,
-  nBodyDistanceMax: 200,
+  nBodyDistanceMin: 100,
+  nBodyDistanceMax: 400,
   pickingRange: 20
 };
 
 export default class LayoutEngine {
   constructor(props) {
     // custom graph data
-    this._graph = props.graph;
     this._d3Graph = {nodes: [], edges: []};
     this._nodeMap = {};
     this._edgeMap = {};
@@ -40,7 +39,8 @@ export default class LayoutEngine {
           .strength(nBodyStrength)
           .distanceMin(nBodyDistanceMin)
           .distanceMax(nBodyDistanceMax)
-      );
+      )
+      .force("center", d3.forceCenter());
     this._simulator.on('tick', this._ticked);
   }
 
@@ -51,13 +51,9 @@ export default class LayoutEngine {
   };
 
   _strength(d3Edge) {
-    if (d3Edge.alpha) {
-      const {edgeStrength} = this._options;
-      return edgeStrength;
-    }
     const sourceDegree = this._graph.getDegree(d3Edge.source.id);
     const targetDegree = this._graph.getDegree(d3Edge.target.id);
-    return 1 / Math.min(sourceDegree, targetDegree);
+    return 1 / Math.min(sourceDegree, targetDegree, 1);
   };
 
   registerCallbacks({onUpdate}) {
@@ -68,11 +64,10 @@ export default class LayoutEngine {
     this._onUpdate = null;
     this._onDone = null;
     this._simulator.on('tick', null);
-    this._simulator.on('end', null);
   }
 
   start() {
-    const {alpha} = this._options;
+    const {alpha} = defaultOptions;
     this._simulator.nodes(this._d3Graph.nodes).force(
       'edge',
       d3
@@ -92,11 +87,7 @@ export default class LayoutEngine {
       const oldD3Node = this._nodeMap[node.id];
       const newD3Node = oldD3Node
         ? oldD3Node
-        : {
-            id: node.id,
-            x: 0,
-            y: 0
-          };
+        : {id: node.id};
       newNodeMap[node.id] = newD3Node;
       return newD3Node;
     });
@@ -110,8 +101,8 @@ export default class LayoutEngine {
         ? oldD3Edge
         : {
             id: edge.id,
-            source: edge.sourceId,
-            target: edge.targetId
+            source: edge.source,
+            target: edge.target
           };
       newEdgeMap[edge.id] = newD3Edge;
       return newD3Edge;
@@ -127,7 +118,7 @@ export default class LayoutEngine {
   getNodePosition(node) {
     const d3Node = this._nodeMap[node.id];
     if (d3Node) {
-      return [d3Node.x, d3Node.y, 0];
+      return [d3Node.x, d3Node.y];
     }
     return [0, 0];
   };
