@@ -1,9 +1,11 @@
 /* global window */
 import React, {Component} from 'react';
 
+// data
+import SAMPLE_GRAPH from '../data/sample-graph';
+// components
 import Graph from './graph';
 import GraphRenderer from './graph-renderer'
-import SAMPLE_GRAPH from './sample-graph';
 import LayoutEngine from './layout-engine';
 
 export default class App extends Component {
