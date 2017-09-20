@@ -18,18 +18,30 @@ export default class GraphRenderer extends PureComponent {
   _renderNodeLayer() {
     const {
       nodes,
-      getNodeColor,
       getNodePosition,
-      getNodeSize
+      getNodeSize,
+      getNodeColor,
+      onHoverNode,
+      // update triggers
+      colorUpdateTrigger,
+      positionUpdateTrigger,
     } = this.props;
 
     return new ScatterplotLayer({
       id: 'node-layer',
       data: nodes,
-      getPosition: getNodePosition,
+      getPosition: node => getNodePosition(node),
+      // getPosition: getNodePosition,
+      // ^^^ this doesn't work?
       getRadius: getNodeSize,
       getColor: getNodeColor,
-      projectionMode: COORDINATE_SYSTEM.IDENTITY
+      onHover: onHoverNode,
+      pickable: true,
+      projectionMode: COORDINATE_SYSTEM.IDENTITY,
+      updateTriggers: {
+        getPosition: positionUpdateTrigger,
+        getColor: colorUpdateTrigger
+      }
     });
   }
 
@@ -38,7 +50,10 @@ export default class GraphRenderer extends PureComponent {
       edges,
       getEdgeColor,
       getEdgePosition,
-      getEdgeWidth
+      getEdgeWidth,
+      // update triggers
+      colorUpdateTrigger,
+      positionUpdateTrigger,
     } = this.props;
 
     return new LineLayer({
@@ -48,7 +63,12 @@ export default class GraphRenderer extends PureComponent {
       getTargetPosition: e => getEdgePosition(e).targetPosition,
       getColor: getEdgeColor,
       strokeWidth: getEdgeWidth(),
-      projectionMode: COORDINATE_SYSTEM.IDENTITY
+      projectionMode: COORDINATE_SYSTEM.IDENTITY,
+      updateTriggers: {
+        getSourcePosition: positionUpdateTrigger,
+        getTargetPosition: positionUpdateTrigger,
+        getColor: colorUpdateTrigger
+      }
     });
   }
 
@@ -63,13 +83,7 @@ export default class GraphRenderer extends PureComponent {
     });
 
     return (
-      <div
-        id="graph-renderer"
-        ref={interactionLayer => {
-          this._container = interactionLayer;
-        }}
-        style={{pointerEvents: 'all'}}
-      >
+      <div id="graph-renderer">
         <DeckGL
           width={width}
           height={height}

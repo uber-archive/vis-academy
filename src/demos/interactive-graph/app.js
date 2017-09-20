@@ -15,7 +15,8 @@ export default class App extends Component {
     const width = window.innerWidth;
     const height = window.innerHeight;
     this.state = {
-      viewport: {width, height}
+      viewport: {width, height},
+      hoveredNodeID: null
     };
     this._engine = new LayoutEngine();
 
@@ -24,6 +25,7 @@ export default class App extends Component {
     this._getEdgeWidth = this._getEdgeWidth.bind(this);
     this._getNodeColor = this._getNodeColor.bind(this);
     this._getNodeSize = this._getNodeSize.bind(this);
+    this._onHoverNode = this._onHoverNode.bind(this);
     this._reRender = this._reRender.bind(this);
   }
 
@@ -68,16 +70,45 @@ export default class App extends Component {
 
   // node accessors
   _getNodeColor(node) {
-    return [94, 94, 94];
+    return node.isHighlighted ?
+      [256, 0, 0] : [94, 94, 94];
   }
 
   _getNodeSize(node){
     return 10;
   }
 
+  _onHoverNode(node) {
+    // check if is hovering on a node
+    const isHoveringOnNode = node.object !== undefined;
+    if (isHoveringOnNode) {
+      // highlight the selected node and connected edges
+      const hoveredNodeID = node.object.id;
+      node.object.isHighlighted = true;
+      const connectedEdges = this._graph.findConnectedEdges(hoveredNodeID);
+      connectedEdges.forEach(e => {
+        e.isHighlighted = true;
+      });
+      // update component state
+      this.setState({hoveredNodeID});
+    } else {
+      // unset highlighted nodes and edges
+      const {hoveredNodeID} = this.state;
+      const node = this._graph.findNode(hoveredNodeID);
+      node.isHighlighted = false;
+      const connectedEdges = this._graph.findConnectedEdges(hoveredNodeID);
+      connectedEdges.forEach(e => {
+        e.isHighlighted = false;
+      });
+      // update component state
+      this.setState({hoveredNodeID: null});
+    }
+  }
+
   // edge accessors
   _getEdgeColor(edge) {
-    return [64, 64, 64];
+    return edge.isHighlighted ?
+      [256, 0, 0] : [64, 64, 64];
   }
 
   _getEdgeWidth() {
@@ -89,7 +120,7 @@ export default class App extends Component {
       return null;
     }
 
-    const {viewport} = this.state;
+    const {viewport, hoveredNodeID} = this.state;
     return (
       <GraphRenderer
         /* viewport related */
@@ -97,11 +128,13 @@ export default class App extends Component {
         height={viewport.height}
         /* update triggers */
         positionUpdateTrigger={this._engine.alpha()}
+        colorUpdateTrigger={hoveredNodeID}
         /* nodes related */
         nodes={this._graph.nodes}
         getNodeColor={this._getNodeColor}
         getNodeSize={this._getNodeSize}
         getNodePosition={this._engine.getNodePosition}
+        onHoverNode={this._onHoverNode}
         /* edges related */
         edges={this._graph.edges}
         getEdgeColor={this._getEdgeColor}

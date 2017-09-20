@@ -96,23 +96,21 @@ export default class App extends Component {
 
     const {viewport} = this.state;
     return (
-      <div>
-        <GraphRenderer
-          /* viewport related */
-          width={viewport.width}
-          height={viewport.height}
-          /* nodes related */
-          nodes={this._graph.nodes}
-          getNodeColor={this._getNodeColor}
-          getNodeSize={this._getNodeSize}
-          getNodePosition={this._getNodePosition}
-          /* edges related */
-          edges={this._graph.edges}
-          getEdgeColor={this._getEdgeColor}
-          getEdgeWidth={this._getEdgeWidth}
-          getEdgePosition={this._getEdgePosition}
-        />
-      </div>
+      <GraphRenderer
+        /* viewport related */
+        width={viewport.width}
+        height={viewport.height}
+        /* nodes related */
+        nodes={this._graph.nodes}
+        getNodeColor={this._getNodeColor}
+        getNodeSize={this._getNodeSize}
+        getNodePosition={this._getNodePosition}
+        /* edges related */
+        edges={this._graph.edges}
+        getEdgeColor={this._getEdgeColor}
+        getEdgeWidth={this._getEdgeWidth}
+        getEdgePosition={this._getEdgePosition}
+      />
     );
   }
 }

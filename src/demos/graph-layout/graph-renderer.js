@@ -17,11 +17,12 @@ export default class GraphRenderer extends PureComponent {
 
   _renderNodeLayer() {
     const {
-      alpha,
-      nodes,
+      getNodeColor,
       getNodePosition,
       getNodeSize,
-      getNodeColor
+      nodes,
+      // update triggers
+      positionUpdateTrigger
     } = this.props;
 
     return new ScatterplotLayer({
@@ -32,20 +33,22 @@ export default class GraphRenderer extends PureComponent {
       // ^^^ this doesn't work?
       getRadius: getNodeSize,
       getColor: getNodeColor,
+      pickable: true,
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
-        getPosition: alpha
+        getPosition: positionUpdateTrigger
       }
     });
   }
 
   _renderEdgeLayer() {
     const {
-      alpha,
       edges,
-      getEdgePosition,
       getEdgeColor,
-      getEdgeWidth
+      getEdgePosition,
+      getEdgeWidth,
+      // update triggers
+      positionUpdateTrigger
     } = this.props;
 
     return new LineLayer({
@@ -57,14 +60,8 @@ export default class GraphRenderer extends PureComponent {
       strokeWidth: getEdgeWidth(),
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
-        getSourcePosition: () => {
-          console.log('edge update triggered');
-          return alpha;
-        },
-        getTargetPosition: () => {
-          console.log('edge update triggered');
-          return alpha;
-        }
+        getSourcePosition: positionUpdateTrigger,
+        getTargetPosition: positionUpdateTrigger
       }
     });
   }
