@@ -313,6 +313,8 @@ React-Vis has a many forms available for your charts. Here we're going to use Li
 
 To learn about various React-Vis series, checkout [their docs](https://uber.github.io/react-vis/documentation/series-reference/arc-series).
 
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/add-charts)
+
 Final charts.js code:
 
 ```js

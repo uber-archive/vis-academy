@@ -26,8 +26,7 @@ export const layerControl = {
 
 export const charts = {
   background: 'white',
-  borderRadius: 3,
-  boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+  border: '1px solid #C0C0C0',
   fontFamily: 'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
   fontSize: '12px',
   lineHeight: 1.833,

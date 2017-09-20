@@ -204,7 +204,7 @@ The control for the settings panel is already provided in your starting code. It
 
 ## 5. code of app.js
 
-Here's the complete app.js file including the control panel: 
+Here's the complete [app.js](https://github.com/uber-common/vis-tutorial/blob/master/src/demos/scatterplot-overlay/app.js) file including the control panel: 
 
 ```js
 /* global window */

@@ -115,6 +115,8 @@ export default class DeckGLOverlay extends Component {
 
 With this, your `deckgl-overlay.js` should be ready to render a functional `HexagonLayer`.
 
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/hexagon-overlay) 
+
 <ul class="insert takeaways">
   <li>The HexagonLayer can display aggregated, 3D hexagons</li>
   <li>Deck.GL can display any number of layers at once</li>

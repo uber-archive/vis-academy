@@ -75,6 +75,8 @@ And as you can see, interactions on the bar chart are now visible on our deck.gl
   <li>There's no limit to what you can achieve!</li>
 </ul>
 
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/linking-it-all)
+
 # Congratulations!
 
 You've built your own interactive mapping application combining Mapbox-powered maps in react, WebGL layers and versatile charts!

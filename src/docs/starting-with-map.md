@@ -176,7 +176,8 @@ where viewport state is actually being updated.
 
 ## 6. Completed Code
 
-Our completed component should now look like this:
+Our completed component [app.js](https://github.com/uber-common/vis-tutorial/blob/master/src/demos/starting-with-map/app.js) should now look like this:
+
 ```js
 /* global window */
 import React, {Component} from 'react';

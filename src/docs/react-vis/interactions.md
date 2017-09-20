@@ -157,3 +157,5 @@ If the user clicks on a bar twice, it will be unselected.
     [React-Vis interaction documentation](https://uber.github.io/react-vis/documentation/general-principles/interaction)
   </li>
 </ul>
+
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/introducing-interaction)
