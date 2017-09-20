@@ -1,5 +1,9 @@
 <!-- INJECT:"AddCharts" heading -->
 
+<ul class="insert learning-objectives">
+  <li>Create a simple chart</li>
+</ul>
+
 # Adding Charts with React-Vis
 
 [React-Vis](http://uber.github.io/react-vis) is the Uber library for rendering charts with React.
@@ -11,7 +15,6 @@ In React Vis, creating a chart has a nice React-y feeling of assembling componen
 We're going to need extra data for the charts.
 
 in your app.js file, change your _processData method by this one: 
-
 ```js
   _processData() {
     if (taxiData) {
@@ -216,9 +219,23 @@ We could actually pass a yDomain prop in the YAxis and the VerticalBarSeries com
 
 To read more about axes in React-Vis, consult the [Axes docs](https://uber.github.io/react-vis/documentation/api-reference/axes).
 
-## 3. Fine tune our chart
+<ul class="insert takeaways">
+  <li>With the React-Vis component __XYPlot__ you can insert charts in your application.</li>
+  <li>And again, these charts work like other React components - with props and callbacks.</li>
+  <li>XYPlot can have various children like XAxis or BarSeries.</li>
+  <li>Series-type components need to have a _data_ prop.</li>
+</ul>
 
-**For the rest of the tutorial, you can now jump to the next section.**
+<ul class="insert further-readings">
+  <li>[Visualization guidelines](https://uber-common.github.io/vis-tutorial/#documentation/visualization-guidelines/do-clear-simple-charts) - beyond technique, advice on how to build meaningful charts</li>
+  <li>[React-Vis](https://uber.github.io/react-vis/) and its documentation</li>
+</ul>
+
+## Optional section
+
+Feel free to skip to [lesson 5](https://uber-common.github.io/vis-tutorial/#/documentation/5-interactions)
+
+## 3. Fine tune our chart
 
 The rest of this document will guide you through further fine-tuning improvements we can do to our chart, as the difference between a good chart and a great chart lie in the details.
 
@@ -295,6 +312,8 @@ React-Vis has a many forms available for your charts. Here we're going to use Li
 <!-- INSERT:"BasicLineChart" -->
 
 To learn about various React-Vis series, checkout [their docs](https://uber.github.io/react-vis/documentation/series-reference/arc-series).
+
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/add-charts)
 
 Final charts.js code:
 

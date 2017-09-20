@@ -1,4 +1,7 @@
 <!-- INJECT:"LinkingItAll" heading -->
+<ul class="insert learning-objectives">
+  <li>Enable our chart to interact with our data overlays</li>
+</ul>
 
 # Linking it all
 
@@ -66,6 +69,13 @@ const layers = [
 ```
 
 And as you can see, interactions on the bar chart are now visible on our deck.gl part!
+
+<ul class="insert takeaways">
+  <li>React-Vis and Deck.GL components can interact with each other and their parent, just like any other React component!</li>
+  <li>There's no limit to what you can achieve!</li>
+</ul>
+
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/linking-it-all)
 
 # Congratulations!
 

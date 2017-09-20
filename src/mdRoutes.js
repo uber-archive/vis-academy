@@ -21,65 +21,66 @@ import confusing from 'docs/guidelines/axes.md';
 export default [{
   name: 'Documentation',
   path: '/documentation',
-  data: [{
-    name: 'Setup',
-    markdown: setup,
-  }, {
-    name: 'React Map Gl',
-    children: [{
-      name: 'Starting with a Map',
-      markdown: startingMap,
-    }],
-  }, {
-    name: 'Mapping Guidelines',
-    children: [{
-      name: 'Mapping types',
-      markdown: mappingSimple,
+  data: [
+    {
+      name: 'Setup',
+      markdown: setup
+    },
+    {
+      name: '1. Starting with a Map',
+      markdown: startingMap
+    },
+    {
+      name: '2. Map data overlays - scatterplot',
+      markdown: deckScatterplot
+    },
+    {
+      name: '3. More data overlays - hexagons',
+      markdown: deckHexagon
+    },
+    {
+      name: '4. A basic chart',
+      markdown: basicCharts
+    },
+    {
+      name: '5. Interacting with charts',
+      markdown: interactions
+    },
+    {
+      name: '6. Linking if all',
+      markdown: linkingAll
+    }, 
+    {
+      name: 'Data overlays gallery',
+      children: [{
+        name: 'Mapping types',
+        markdown: mappingSimple,
+      }, {
+        name: 'Scatterplot',
+        markdown: mappingScatterplot,
+      }, {
+        name: 'Arc',
+        markdown: mappingArc,
+      }, {
+        name: 'Hexagon',
+        markdown: mappingHexagon,
+      }]
     }, {
-      name: 'Scatterplot',
-      markdown: mappingScatterplot,
-    }, {
-      name: 'Arc',
-      markdown: mappingArc,
-    }, {
-      name: 'Hexagon',
-      markdown: mappingHexagon,
-    }]
-  }, {
-    name: 'Deck GL',
-    children: [{
-      name: 'Scatterplot Overlay',
-      markdown: deckScatterplot,
-    }, {
-      name: 'Hexagon Overlay',
-      markdown: deckHexagon,
-    }],
-  }, {
-    name: 'React Vis',
-    children: [{
-      name: 'Basic Charts',
-      markdown: basicCharts,
-    }, {
-      name: 'Interactions',
-      markdown: interactions,
-    }, {
-      name: 'Linking It All',
-      markdown: linkingAll,
-    }],
-  }, {
-    name: 'Visualization Guidelines',
-    children: [{
-      name: 'Do: Clear simple charts',
-      markdown: simpleCharts,
-    }, {
-      name: 'Do: Use hierarchy',
-      markdown: hierarchy,
-    }, {
-      name: 'Don\'t: Too much to see',
-      markdown: tooMuch,
-    }, {
-      name: 'Don\'t: Confusing axes',
-      markdown: confusing,
-    }],
-  }],
-}]
+      name: 'Visualization Guidelines',
+      children: [{
+        name: 'Do: Clear simple charts',
+        markdown: simpleCharts,
+      }, {
+        name: 'Do: Use hierarchy',
+        markdown: hierarchy,
+      }, {
+        name: 'Don\'t: Too much to see',
+        markdown: tooMuch,
+      }, {
+        name: 'Don\'t: Confusing axes',
+        markdown: confusing,
+      }]
+    }
+  ]
+}];
+

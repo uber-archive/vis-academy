@@ -1,5 +1,9 @@
 <!-- INJECT:"IntroducingInteraction" heading -->
 
+<ul class="insert learning-objectives">
+  <li>Implement mouse interactions in a chart</li>
+</ul>
+
 # Introducing interaction
 
 ## 1. Interact with bar charts on hover
@@ -143,3 +147,15 @@ And in the VerticalBarSeries component:
 We can change the style of the cursor to pointer by passing a style property, that's a nice way to signal that an element is clickable.
 
 If the user clicks on a bar twice, it will be unselected.
+
+<ul class="insert takeaways">
+  <li>XYPlot and Series components can take callbacks as props to handle mouse events</li>
+</ul>
+
+<ul class="insert further-readings">
+  <li>
+    [React-Vis interaction documentation](https://uber.github.io/react-vis/documentation/general-principles/interaction)
+  </li>
+</ul>
+
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/introducing-interaction)
