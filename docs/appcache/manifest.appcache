@@ -1,35 +1,35 @@
 CACHE MANIFEST
-#ver:9/13/2017, 5:02:48 PM
+#ver:9/20/2017, 10:58:01 AM
 #plugin:4.8.3
 
 CACHE:
-../bundle-1ad593bb09ac02e9c34b.js
-../styles-1ad593bb09ac02e9c34b.css
+../bundle-11a47d3daaf7ea3a2c52.js
+../styles-11a47d3daaf7ea3a2c52.css
 ../
-../favicon.ico
-../fonts/uber.woff
-../fonts/uber.ttf
-../fonts/uber.svg
-../images/icon-high-precision.svg
 ../images/footer-pattern.gif
+../fonts/uber.woff
+../favicon.ico
+../fonts/uber.svg
+../fonts/uber.ttf
+../images/icon-high-precision.svg
 ../images/icon-layers.svg
 ../images/uber-logo.png
-../images/hero.jpg
 ../images/icon-react.svg
-../images/mg_arc_1.png
+../images/hero.jpg
 ../images/mg_arc_2.png
-../images/mg_hex_1.png
 ../images/mg_choropleth.png
-../images/mg_hex_3.png
+../images/mg_hex_1.png
+../images/mg_arc_1.png
 ../images/mg_hex_2.png
-../images/mg_hex_4.png
+../images/mg_hex_3.png
 ../images/mg_hex_3d.png
-../images/mg_path.png
+../images/mg_hex_4.png
 ../images/mg_hex_5.png
 ../images/mg_hex_6.png
-../images/mg_scatterplot_2.png
-../images/mg_scatterplot_1.png
+../images/mg_path.png
 ../images/path.jpg
+../images/mg_scatterplot_1.png
+../images/mg_scatterplot_2.png
 
 NETWORK:
 *
