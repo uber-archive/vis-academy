@@ -22,16 +22,6 @@ function Hero() {
         pitch: 36.3576011413799
       }}
     />
-    <a
-      href="#/documentation"
-      className="btn"
-      style={{
-        position: 'absolute',
-        bottom: '1rem',
-        left: '260px',
-        transform: 'translate(-50%)'
-      }}
-    >{'Get started'}</a>
   </div>);
 }
 

@@ -18,9 +18,15 @@ import hierarchy from 'docs/guidelines/hierarchy.md';
 import tooMuch from 'docs/guidelines/toomuch.md';
 import confusing from 'docs/guidelines/axes.md';
 
+// graph vis
+import setupGraph from 'docs/graph/setup.md';
+import graphRender from 'docs/graph/render.md';
+import layoutEngine from 'docs/graph/layout-engine.md';
+import interactionHover from 'docs/graph/interaction-hover.md';
+
 export default [{
-  name: 'Documentation',
-  path: '/documentation',
+  name: 'Geospatial Visualization',
+  path: '/geospatial-vis',
   data: [
     {
       name: 'Setup',
@@ -80,6 +86,27 @@ export default [{
         name: 'Don\'t: Confusing axes',
         markdown: confusing,
       }]
+    }
+  ]
+}, {
+  name: 'Graph Visualization',
+  path: '/graph-vis',
+  data: [
+    {
+      name: 'Setup',
+      markdown: setupGraph
+    },
+    {
+      name: '1. Starting with a Graph',
+      markdown: graphRender
+    },
+    {
+      name: '2. Plug in layout engine',
+      markdown: layoutEngine
+    },
+    {
+      name: '5. Interacting with graph',
+      markdown: interactionHover
     }
   ]
 }];
