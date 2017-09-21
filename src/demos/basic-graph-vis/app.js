@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 
 // data
-import SAMPLE_GRAPH from '../data/sample-graph';
+import SAMPLE_GRAPH from '../data/sample-graph2';
 
 // components
 import Graph from './graph';
