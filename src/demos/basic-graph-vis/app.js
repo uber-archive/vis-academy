@@ -47,15 +47,11 @@ export default class App extends Component {
       SAMPLE_GRAPH.nodes.forEach(node => {
         this._graph.addNode({
           id: node.id,
-          position: randomPosition(width, height),
-          isHighlighted: false
+          position: randomPosition(width, height)
         });
       });
       SAMPLE_GRAPH.edges.forEach(edge => {
-        this._graph.addEdge({
-          ...edge,
-          isHighlighted: false
-        });
+        this._graph.addEdge(edge);
       });
     }
   }

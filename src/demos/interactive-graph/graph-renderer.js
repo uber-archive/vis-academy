@@ -7,15 +7,26 @@ import DeckGL, {
   COORDINATE_SYSTEM
 } from 'deck.gl';
 
-export default class GraphRenderer extends PureComponent {
+export default class GraphRender extends PureComponent {
 
   constructor(props) {
     super(props);
-    this._renderNodeLayer = this._renderNodeLayer.bind(this);
-    this._renderEdgeLayer = this._renderEdgeLayer.bind(this);
+    this.creatViewport = this.creatViewport.bind(this);
+    this.createNodeLayer = this.createNodeLayer.bind(this);
+    this.createEdgeLayer = this.createEdgeLayer.bind(this);
   }
 
-  _renderNodeLayer() {
+  creatViewport() {
+    const {height, width} = this.props;
+    return new OrthographicViewport({
+      width,
+      height,
+      left: (-width / 2),
+      top: (-height / 2)
+    });
+  }
+
+  createNodeLayer() {
     const {
       nodes,
       getNodePosition,
@@ -45,7 +56,7 @@ export default class GraphRenderer extends PureComponent {
     });
   }
 
-  _renderEdgeLayer() {
+  createEdgeLayer() {
     const {
       edges,
       getEdgeColor,
@@ -74,23 +85,15 @@ export default class GraphRenderer extends PureComponent {
 
   render() {
     const {height, width} = this.props;
-    
-    const glViewport = new OrthographicViewport({
-      width,
-      height,
-      left: (-width / 2),
-      top: (-height / 2)
-    });
-
     return (
       <div id="graph-renderer">
         <DeckGL
           width={width}
           height={height}
-          viewport={glViewport}
+          viewport={this.creatViewport()}
           layers={[
-            this._renderEdgeLayer(),
-            this._renderNodeLayer()
+            this.createEdgeLayer(),
+            this.createNodeLayer()
           ]}
         />
       </div>
