@@ -1,146 +1,126 @@
 /* global window */
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 
 // data
-import SAMPLE_GRAPH from '../data/sample-graph2';
+import SAMPLE_GRAPH from '../data/sample-graph2'
 // components
-import Graph from './graph';
+import Graph from './graph'
 import GraphRenderer from './graph-renderer'
-import LayoutEngine from './layout-engine';
+import LayoutEngine from './layout-engine'
 
 export default class App extends Component {
-
   constructor(props) {
-    super(props);
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    super(props)
+    const width = window.innerWidth
+    const height = window.innerHeight
     this.state = {
-      viewport: {width, height},
-      hoveredNodeID: null
-    };
-    this._engine = new LayoutEngine();
+      viewport: { width, height },
+      hoveredNodeID: null,
+    }
 
-    // bind methods
-    this._getEdgeColor = this._getEdgeColor.bind(this);
-    this._getEdgeWidth = this._getEdgeWidth.bind(this);
-    this._getNodeColor = this._getNodeColor.bind(this);
-    this._getNodeSize = this._getNodeSize.bind(this);
-    this._onHoverNode = this._onHoverNode.bind(this);
-    this._reRender = this._reRender.bind(this);
+    this._engine = new LayoutEngine()
   }
 
   componentWillMount() {
     this._engine.registerCallbacks({
-     onUpdate: this._reRender
-    });
-    this._processData();
+      onUpdate: this._reRender,
+    })
+    this.processData()
   }
 
   componentWillUnmount() {
-    this._engine.unregisterCallbacks();
+    this._engine.unregisterCallbacks()
   }
 
-  _reRender() {
-    this.forceUpdate();
+  reRender = () => {
+    this.forceUpdate()
   }
 
-  _processData() {
-    this._graph = new Graph();
+  processData = () => {
+    this._graph = new Graph()
     // load data
     if (SAMPLE_GRAPH) {
-      const {viewport} = this.state;
-      const {width, height} = viewport;
+      const { viewport } = this.state
+      const { width, height } = viewport
       SAMPLE_GRAPH.nodes.forEach(node => {
         this._graph.addNode({
           id: node.id,
-          isHighlighted: false
-        });
-      });
+          isHighlighted: false,
+        })
+      })
       SAMPLE_GRAPH.edges.forEach(edge => {
         this._graph.addEdge({
           ...edge,
-          isHighlighted: false
-        });
-      });
+          isHighlighted: false,
+        })
+      })
       // update engine
-      this._engine.update(this._graph);
-      this._engine.start();
+      this._engine.update(this._graph)
+      this._engine.start()
     }
   }
 
   // node accessors
-  _getNodeColor(node) {
-    return node.isHighlighted ?
-      [256, 0, 0] : [94, 94, 94];
+  getNodeColor = node => {
+    return node.isHighlighted ? [256, 0, 0] : [94, 94, 94]
   }
 
-  _getNodeSize(node){
-    return 10;
-  }
+  getNodeSize = node => 10
 
-  _onHoverNode(node) {
+  onHoverNode = node => {
     // check if is hovering on a node
-    const isHoveringOnNode = node.object !== undefined;
+    const isHoveringOnNode = node.object !== undefined
     if (isHoveringOnNode) {
       // highlight the selected node and connected edges
-      const hoveredNodeID = node.object.id;
-      node.object.isHighlighted = true;
-      const connectedEdges = this._graph.findConnectedEdges(hoveredNodeID);
+      const hoveredNodeID = node.object.id
+      node.object.isHighlighted = true
+      const connectedEdges = this._graph.findConnectedEdges(hoveredNodeID)
       connectedEdges.forEach(e => {
-        e.isHighlighted = true;
-      });
+        e.isHighlighted = true
+      })
       // update component state
-      this.setState({hoveredNodeID});
+      this.setState({ hoveredNodeID })
     } else {
       // unset highlighted nodes and edges
-      const {hoveredNodeID} = this.state;
-      const node = this._graph.findNode(hoveredNodeID);
-      node.isHighlighted = false;
-      const connectedEdges = this._graph.findConnectedEdges(hoveredNodeID);
+      const { hoveredNodeID } = this.state
+      const node = this._graph.findNode(hoveredNodeID)
+      node.isHighlighted = false
+      const connectedEdges = this._graph.findConnectedEdges(hoveredNodeID)
       connectedEdges.forEach(e => {
-        e.isHighlighted = false;
-      });
+        e.isHighlighted = false
+      })
       // update component state
-      this.setState({hoveredNodeID: null});
+      this.setState({ hoveredNodeID: null })
     }
   }
 
   // edge accessors
-  _getEdgeColor(edge) {
-    return edge.isHighlighted ?
-      [256, 0, 0] : [64, 64, 64];
-  }
+  getEdgeColor = edge => (edge.isHighlighted ? [256, 0, 0] : [64, 64, 64])
 
-  _getEdgeWidth() {
-    return 2;
-  }
+  getEdgeWidth = () => 2
 
   render() {
     if (this._graph.isEmpty()) {
-      return null;
+      return null
     }
 
-    const {viewport, hoveredNodeID} = this.state;
+    const { viewport, hoveredNodeID } = this.state
     return (
       <GraphRenderer
-        /* viewport related */
         width={viewport.width}
         height={viewport.height}
-        /* update triggers */
         positionUpdateTrigger={this._engine.alpha()}
         colorUpdateTrigger={hoveredNodeID}
-        /* nodes related */
         nodes={this._graph.nodes}
-        getNodeColor={this._getNodeColor}
-        getNodeSize={this._getNodeSize}
+        getNodeColor={this.getNodeColor}
+        getNodeSize={this.getNodeSize}
         getNodePosition={this._engine.getNodePosition}
-        onHoverNode={this._onHoverNode}
-        /* edges related */
+        onHoverNode={this.onHoverNode}
         edges={this._graph.edges}
-        getEdgeColor={this._getEdgeColor}
-        getEdgeWidth={this._getEdgeWidth}
+        getEdgeColor={this.getEdgeColor}
+        getEdgeWidth={this.getEdgeWidth}
         getEdgePosition={this._engine.getEdgePosition}
       />
-    );
+    )
   }
 }
