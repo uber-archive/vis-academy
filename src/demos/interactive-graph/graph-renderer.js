@@ -9,13 +9,6 @@ import DeckGL, {
 
 export default class GraphRender extends PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.creatViewport = this.creatViewport.bind(this);
-    this.createNodeLayer = this.createNodeLayer.bind(this);
-    this.createEdgeLayer = this.createEdgeLayer.bind(this);
-  }
-
   creatViewport() {
     const {height, width} = this.props;
     return new OrthographicViewport({
@@ -29,9 +22,9 @@ export default class GraphRender extends PureComponent {
   createNodeLayer() {
     const {
       nodes,
+      getNodeColor,
       getNodePosition,
       getNodeSize,
-      getNodeColor,
       onHoverNode,
       // update triggers
       colorUpdateTrigger,

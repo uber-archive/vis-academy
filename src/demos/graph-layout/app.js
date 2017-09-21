@@ -18,31 +18,24 @@ export default class App extends Component {
       viewport: {width, height}
     };
     this._engine = new LayoutEngine();
-
-    // bind methods
-    this._getEdgeColor = this._getEdgeColor.bind(this);
-    this._getEdgeWidth = this._getEdgeWidth.bind(this);
-    this._getNodeColor = this._getNodeColor.bind(this);
-    this._getNodeSize = this._getNodeSize.bind(this);
-    this._reRender = this._reRender.bind(this);
   }
 
   componentWillMount() {
     this._engine.registerCallbacks({
-     onUpdate: this._reRender
+     onUpdate: this.reRender
     });
-    this._processData();
+    this.processData();
   }
 
   componentWillUnmount() {
     this._engine.unregisterCallbacks();
   }
 
-  _reRender() {
+  reRender() {
     this.forceUpdate();
   }
 
-  _processData() {
+  processData() {
     this._graph = new Graph();
     // load data
     if (SAMPLE_GRAPH) {
@@ -67,22 +60,12 @@ export default class App extends Component {
   }
 
   // node accessors
-  _getNodeColor(node) {
-    return [94, 94, 94];
-  }
-
-  _getNodeSize(node){
-    return 10;
-  }
+  getNodeColor = node => [94, 94, 94]
+  getNodeSize = node => 10
 
   // edge accessors
-  _getEdgeColor(edge) {
-    return [64, 64, 64];
-  }
-
-  _getEdgeWidth() {
-    return 2;
-  }
+  getEdgeColor = edge => [64, 64, 64]
+  getEdgeWidth = () => 2
 
   render() {
     if (this._graph.isEmpty()) {
@@ -99,13 +82,13 @@ export default class App extends Component {
         positionUpdateTrigger={this._engine.alpha()}
         /* nodes related */
         nodes={this._graph.nodes}
-        getNodeColor={this._getNodeColor}
-        getNodeSize={this._getNodeSize}
+        getNodeColor={this.getNodeColor}
+        getNodeSize={this.getNodeSize}
         getNodePosition={this._engine.getNodePosition}
         /* edges related */
         edges={this._graph.edges}
-        getEdgeColor={this._getEdgeColor}
-        getEdgeWidth={this._getEdgeWidth}
+        getEdgeColor={this.getEdgeColor}
+        getEdgeWidth={this.getEdgeWidth}
         getEdgePosition={this._engine.getEdgePosition}
       />
     );

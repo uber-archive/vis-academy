@@ -19,12 +19,6 @@ module.exports = {
     }]
   },
 
-  resolve: {
-    alias: {
-      'mapbox-gl$': resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js')
-    }
-  },
-
   plugins: [
 
     new webpack.DefinePlugin({

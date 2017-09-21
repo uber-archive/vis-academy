@@ -24,21 +24,13 @@ export default class App extends Component {
     this.state = {
       viewport: {width, height}
     };
-
-    // bind methods
-    this._getEdgeColor = this._getEdgeColor.bind(this);
-    this._getEdgeWidth = this._getEdgeWidth.bind(this);
-    this._getEdgePosition = this._getEdgePosition.bind(this);
-    this._getNodeColor = this._getNodeColor.bind(this);
-    this._getNodeSize = this._getNodeSize.bind(this);
-    this._getNodePosition = this._getNodePosition.bind(this);
   }
 
   componentWillMount() {
-    this._processData();
+    this.processData();
   }
 
-  _processData() {
+  processData() {
     this._graph = new Graph();
     // load data
     if (SAMPLE_GRAPH) {
@@ -57,33 +49,17 @@ export default class App extends Component {
   }
 
   // node accessors
-  _getNodeColor(node) {
-    return [94, 94, 94];
-  }
-
-  _getNodeSize(node){
-    return 10;
-  }
-
-  _getNodePosition(node) {
-    return this._graph.findNode(node.id).position;
-  }
+  getNodeColor = node => [94, 94, 94]
+  getNodeSize = node => 10
+  getNodePosition = node => this._graph.findNode(node.id).position
 
   // edge accessors
-  _getEdgeColor(edge) {
-    return [64, 64, 64];
-  }
-
-  _getEdgeWidth() {
-    return 2;
-  }
-
-  _getEdgePosition(edge) {
-    return {
-      sourcePosition: this._graph.findNode(edge.source).position,
-      targetPosition: this._graph.findNode(edge.target).position
-    };
-  }
+  getEdgeColor = edge => [64, 64, 64]
+  getEdgeWidth = () => 2
+  getEdgePosition = edge => ({
+    sourcePosition: this._graph.findNode(edge.source).position,
+    targetPosition: this._graph.findNode(edge.target).position
+  })
 
   render() {
     if (this._graph.isEmpty()) {
@@ -98,14 +74,14 @@ export default class App extends Component {
         height={viewport.height}
         /* nodes related */
         nodes={this._graph.nodes}
-        getNodeColor={this._getNodeColor}
-        getNodeSize={this._getNodeSize}
-        getNodePosition={this._getNodePosition}
+        getNodeColor={this.getNodeColor}
+        getNodeSize={this.getNodeSize}
+        getNodePosition={this.getNodePosition}
         /* edges related */
         edges={this._graph.edges}
-        getEdgeColor={this._getEdgeColor}
-        getEdgeWidth={this._getEdgeWidth}
-        getEdgePosition={this._getEdgePosition}
+        getEdgeColor={this.getEdgeColor}
+        getEdgeWidth={this.getEdgeWidth}
+        getEdgePosition={this.getEdgePosition}
       />
     );
   }
