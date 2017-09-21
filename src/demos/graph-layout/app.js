@@ -3,19 +3,21 @@ import React, {Component} from 'react';
 
 // data
 import SAMPLE_GRAPH from '../data/sample-graph2';
+
 // components
 import Graph from './graph';
-import GraphRenderer from './graph-renderer'
+import GraphRender from './graph-render'
 import LayoutEngine from './layout-engine';
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
-    const width = window.innerWidth;
-    const height = window.innerHeight;
     this.state = {
-      viewport: {width, height}
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
     };
     this._engine = new LayoutEngine();
   }
@@ -31,10 +33,6 @@ export default class App extends Component {
     this._engine.unregisterCallbacks();
   }
 
-  reRender() {
-    this.forceUpdate();
-  }
-
   processData() {
     this._graph = new Graph();
     // load data
@@ -42,22 +40,18 @@ export default class App extends Component {
       const {viewport} = this.state;
       const {width, height} = viewport;
       SAMPLE_GRAPH.nodes.forEach(node => {
-        this._graph.addNode({
-          id: node.id,
-          isHighlighted: false
-        });
+        this._graph.addNode(node);
       });
       SAMPLE_GRAPH.edges.forEach(edge => {
-        this._graph.addEdge({
-          ...edge,
-          isHighlighted: false
-        });
+        this._graph.addEdge(edge);
       });
       // update engine
       this._engine.update(this._graph);
       this._engine.start();
     }
   }
+
+  reRender = () => this.forceUpdate()
 
   // node accessors
   getNodeColor = node => [94, 94, 94]
@@ -74,7 +68,7 @@ export default class App extends Component {
 
     const {viewport} = this.state;
     return (
-      <GraphRenderer
+      <GraphRender
         /* viewport related */
         width={viewport.width}
         height={viewport.height}

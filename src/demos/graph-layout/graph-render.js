@@ -7,7 +7,7 @@ import DeckGL, {
   COORDINATE_SYSTEM
 } from 'deck.gl';
 
-export default class GraphRenderer extends PureComponent {
+export default class GraphRender extends PureComponent {
 
   creatViewport() {
     const {height, width} = this.props;
@@ -74,7 +74,7 @@ export default class GraphRenderer extends PureComponent {
     const {height, width} = this.props;
 
     return (
-      <div id="graph-renderer">
+      <div id="graph-render">
         <DeckGL
           width={width}
           height={height}

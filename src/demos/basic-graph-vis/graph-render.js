@@ -19,45 +19,30 @@ export default class GraphRender extends PureComponent {
     });
   }
 
-  createNodeLayer() {
+  renderNodeLayer() {
     const {
       nodes,
       getNodeColor,
       getNodePosition,
-      getNodeSize,
-      onHoverNode,
-      // update triggers
-      colorUpdateTrigger,
-      positionUpdateTrigger,
+      getNodeSize
     } = this.props;
 
     return new ScatterplotLayer({
       id: 'node-layer',
       data: nodes,
-      getPosition: node => getNodePosition(node),
-      // getPosition: getNodePosition,
-      // ^^^ this doesn't work?
+      getPosition: getNodePosition,
       getRadius: getNodeSize,
       getColor: getNodeColor,
-      onHover: onHoverNode,
-      pickable: true,
-      projectionMode: COORDINATE_SYSTEM.IDENTITY,
-      updateTriggers: {
-        getPosition: positionUpdateTrigger,
-        getColor: colorUpdateTrigger
-      }
+      projectionMode: COORDINATE_SYSTEM.IDENTITY
     });
   }
 
-  createEdgeLayer() {
+  renderEdgeLayer() {
     const {
       edges,
       getEdgeColor,
       getEdgePosition,
-      getEdgeWidth,
-      // update triggers
-      colorUpdateTrigger,
-      positionUpdateTrigger,
+      getEdgeWidth
     } = this.props;
 
     return new LineLayer({
@@ -67,26 +52,22 @@ export default class GraphRender extends PureComponent {
       getTargetPosition: e => getEdgePosition(e).targetPosition,
       getColor: getEdgeColor,
       strokeWidth: getEdgeWidth(),
-      projectionMode: COORDINATE_SYSTEM.IDENTITY,
-      updateTriggers: {
-        getSourcePosition: positionUpdateTrigger,
-        getTargetPosition: positionUpdateTrigger,
-        getColor: colorUpdateTrigger
-      }
+      projectionMode: COORDINATE_SYSTEM.IDENTITY
     });
   }
 
   render() {
     const {height, width} = this.props;
+    
     return (
-      <div id="graph-renderer">
+      <div id="graph-render">
         <DeckGL
           width={width}
           height={height}
           viewport={this.creatViewport()}
           layers={[
-            this.createEdgeLayer(),
-            this.createNodeLayer()
+            this.renderEdgeLayer(),
+            this.renderNodeLayer()
           ]}
         />
       </div>

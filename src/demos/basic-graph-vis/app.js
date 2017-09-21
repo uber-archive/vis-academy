@@ -3,9 +3,10 @@ import React, {Component} from 'react';
 
 // data
 import SAMPLE_GRAPH from '../data/sample-graph';
+
 // components
 import Graph from './graph';
-import GraphRenderer from './graph-renderer'
+import GraphRender from './graph-render'
 
 function randomPosition(width, height) {
   const halfWidth = width / 2;
@@ -19,10 +20,11 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    const width = window.innerWidth;
-    const height = window.innerHeight;
     this.state = {
-      viewport: {width, height}
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
     };
   }
 
@@ -68,7 +70,7 @@ export default class App extends Component {
 
     const {viewport} = this.state;
     return (
-      <GraphRenderer
+      <GraphRender
         /* viewport related */
         width={viewport.width}
         height={viewport.height}

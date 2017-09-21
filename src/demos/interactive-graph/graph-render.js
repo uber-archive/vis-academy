@@ -7,7 +7,7 @@ import DeckGL, {
   COORDINATE_SYSTEM
 } from 'deck.gl';
 
-export default class GraphRenderer extends PureComponent {
+export default class GraphRender extends PureComponent {
 
   creatViewport() {
     const {height, width} = this.props;
@@ -19,30 +19,45 @@ export default class GraphRenderer extends PureComponent {
     });
   }
 
-  renderNodeLayer() {
+  createNodeLayer() {
     const {
       nodes,
       getNodeColor,
       getNodePosition,
-      getNodeSize
+      getNodeSize,
+      onHoverNode,
+      // update triggers
+      colorUpdateTrigger,
+      positionUpdateTrigger,
     } = this.props;
 
     return new ScatterplotLayer({
       id: 'node-layer',
       data: nodes,
-      getPosition: getNodePosition,
+      getPosition: node => getNodePosition(node),
+      // getPosition: getNodePosition,
+      // ^^^ this doesn't work?
       getRadius: getNodeSize,
       getColor: getNodeColor,
-      projectionMode: COORDINATE_SYSTEM.IDENTITY
+      onHover: onHoverNode,
+      pickable: true,
+      projectionMode: COORDINATE_SYSTEM.IDENTITY,
+      updateTriggers: {
+        getPosition: positionUpdateTrigger,
+        getColor: colorUpdateTrigger
+      }
     });
   }
 
-  renderEdgeLayer() {
+  createEdgeLayer() {
     const {
       edges,
       getEdgeColor,
       getEdgePosition,
-      getEdgeWidth
+      getEdgeWidth,
+      // update triggers
+      colorUpdateTrigger,
+      positionUpdateTrigger,
     } = this.props;
 
     return new LineLayer({
@@ -52,22 +67,26 @@ export default class GraphRenderer extends PureComponent {
       getTargetPosition: e => getEdgePosition(e).targetPosition,
       getColor: getEdgeColor,
       strokeWidth: getEdgeWidth(),
-      projectionMode: COORDINATE_SYSTEM.IDENTITY
+      projectionMode: COORDINATE_SYSTEM.IDENTITY,
+      updateTriggers: {
+        getSourcePosition: positionUpdateTrigger,
+        getTargetPosition: positionUpdateTrigger,
+        getColor: colorUpdateTrigger
+      }
     });
   }
 
   render() {
     const {height, width} = this.props;
-    
     return (
-      <div id="graph-renderer">
+      <div id="graph-render">
         <DeckGL
           width={width}
           height={height}
           viewport={this.creatViewport()}
           layers={[
-            this.renderEdgeLayer(),
-            this.renderNodeLayer()
+            this.createEdgeLayer(),
+            this.createNodeLayer()
           ]}
         />
       </div>
