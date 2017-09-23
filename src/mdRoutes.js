@@ -20,6 +20,7 @@ import confusing from 'docs/guidelines/axes.md';
 
 // graph vis
 import setupGraph from 'docs/graph/setup.md';
+import startGraph from 'docs/graph/starting-with-graph.md';
 import graphRender from 'docs/graph/render.md';
 import layoutEngine from 'docs/graph/layout-engine.md';
 import interactionHover from 'docs/graph/interaction-hover.md';
@@ -97,15 +98,19 @@ export default [{
       markdown: setupGraph
     },
     {
-      name: '1. Starting with a Graph',
+      name: '1. Graph Render',
       markdown: graphRender
     },
     {
-      name: '2. Plug in layout engine',
+      name: '2. Basic Graph Application',
+      markdown: startGraph
+    },
+    {
+      name: '3. Plugin layout engine',
       markdown: layoutEngine
     },
     {
-      name: '5. Interacting with graph',
+      name: '4. Interacting with graph',
       markdown: interactionHover
     }
   ]
