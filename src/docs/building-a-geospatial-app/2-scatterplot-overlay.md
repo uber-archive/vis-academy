@@ -1,4 +1,4 @@
-<!-- INJECT:"ScatterplotOverlay" heading -->
+<!-- INJECT:"GeospatialAppScatterplotOverlay" heading -->
 
 <ul class='insert learning-objectives'>
 <li>Plot data on a map</li>
@@ -19,9 +19,7 @@ which we will use.
 
 ## 1. Add Taxi Data
 
-Download the Taxi data we have in the repository
-[here](https://github.com/uber-common/vis-tutorial/blob/master/demos/data/taxi.csv),
-and then import the file into your `app.js` component. If you cloned our
+Import the taxi data into your `app.js` component. If you cloned our
 tutorial repo as-is, your import statement should look like this:
 
 ```js
@@ -187,12 +185,12 @@ data as a scatterplot overlay.
 
 <ul class="insert further-readings">
   <li>[Deck.GL](http://uber.github.io/deck.gl) and its extensive documentation</li>
-  <li>[Gallery of Deck.GL overlays](https://uber-common.github.io/vis-tutorial/#/documentation/data-overlays-gallery/mapping-types)</li>
+  <li>[Gallery of Deck.GL overlays](https://uber-common.github.io/vis-tutorial/#/data-overlays-gallery/mapping-types)</li>
 </ul>
 
 ## Optional section
 
-Feel free to skip to [lesson 3](https://uber-common.github.io/vis-tutorial/#/documentation/3-more-data-overlays-hexagons) or even [lesson 4](https://uber-common.github.io/vis-tutorial/#/documentation/4-a-basic-chart). 
+Feel free to skip to [lesson 3](https://uber-common.github.io/vis-tutorial/#/3-more-data-overlays-hexagons) or even [lesson 4](https://uber-common.github.io/vis-tutorial/#/4-a-basic-chart). 
 
 ## 4. Adding Polish
 
@@ -204,7 +202,7 @@ The control for the settings panel is already provided in your starting code. It
 
 ## 5. code of app.js
 
-Here's the complete [app.js](https://github.com/uber-common/vis-tutorial/blob/master/src/demos/scatterplot-overlay/app.js) file including the control panel: 
+Here's the complete [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/building-a-geospatial-app/2-scatterplot-overlay/app.js) file including the control panel: 
 
 ```js
 /* global window */

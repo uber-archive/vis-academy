@@ -1,4 +1,4 @@
-<!-- INJECT:"LinkingItAll" heading -->
+<!-- INJECT:"GeospatialAppLinkingItAll" heading -->
 <ul class="insert learning-objectives">
   <li>Enable our chart to interact with our data overlays</li>
 </ul>
@@ -75,7 +75,7 @@ And as you can see, interactions on the bar chart are now visible on our deck.gl
   <li>There's no limit to what you can achieve!</li>
 </ul>
 
-Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/linking-it-all)
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-academy/tree/master/src/demos/building-a-geospatial-app/6-linking-it-all)
 
 # Congratulations!
 

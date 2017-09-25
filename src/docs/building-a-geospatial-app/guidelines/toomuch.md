@@ -6,7 +6,7 @@ For this example, we're going to represent the unemployment rates of all US stat
 
 While we could create 52 time series, that doesn't work so well.
 
-<!-- INJECT:"TooMuch" -->
+<!-- INJECT:"GeospatialAppTooMuch" -->
 
 Our legend component is begging for mercy! It's not dimensioned for that many items. Besides, the default React-Vis palette has 20 different colors and will cycle through them unless another palette is specified.
 
@@ -15,14 +15,14 @@ Here are a few strategies to deal with that:
 
 We could show only a few highlighted territories:
 
-<!-- INJECT:"NotTooMuch" -->
+<!-- INJECT:"GeospatialAppNotTooMuch" -->
 
 The chart remains highly legible as long as we don't try to make our user distinguish any 2 pairs of lines.
 
 We could also use small multiples:
 
-<!-- INJECT:"SmallMultiples" -->
+<!-- INJECT:"GeospatialAppSmallMultiples" -->
 
 Or even make it look like a map: same idea as above - we make 52 mini-charts, but this time we simply position them absolutely in accordance to the approximate geographic position of the territory:
 
-<!-- INJECT:"SmallMultiplesMap" -->
+<!-- INJECT:"GeospatialAppSmallMultiplesMap" -->

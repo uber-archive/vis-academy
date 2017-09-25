@@ -45,7 +45,7 @@ const basicStyle = {
 const dropoffs = data.map(d => ({hour: d.hour, x: d.hour + 0.5, y: d.dropoffs}));
 const pickups = data.map(d => ({hour: d.hour, x: d.hour + 0.5, y: d.pickups}));
 
-export function BarChartBasic() {
+export function GeospatialAppBarChartBasic() {
   return (<div className="bar-chart-basic"
     style={basicStyle}>
     <XYPlot height={140} width={480}>
@@ -55,7 +55,7 @@ export function BarChartBasic() {
     </XYPlot></div>);
 }
 
-export function BarChartMargins() {
+export function GeospatialAppBarChartMargins() {
   return (<div className="bar-chart-margins"
     style={basicStyle}>
     <XYPlot height={140} width={280}
@@ -66,7 +66,7 @@ export function BarChartMargins() {
     </XYPlot></div>);
 }
 
-export function BarChartXDomain() {
+export function GeospatialAppBarChartXDomain() {
   return (<div className="bar-chart-x-domain"
     style={basicStyle}>
     <XYPlot height={140} width={280}
@@ -78,7 +78,7 @@ export function BarChartXDomain() {
     </XYPlot></div>);
 }
 
-export function BarChartFormattedAxis() {
+export function GeospatialAppBarChartFormattedAxis() {
   return (<div className="bar-chart-formatted-axis"
     style={basicStyle}>
     <XYPlot height={140} width={280}
@@ -94,7 +94,7 @@ export function BarChartFormattedAxis() {
     </XYPlot></div>);
 }
 
-export function BarChartYDomain() {
+export function GeospatialAppBarChartYDomain() {
   return (<div className="bar-chart-y-domain"
     style={basicStyle}>
     <XYPlot height={140} width={280}
@@ -107,7 +107,7 @@ export function BarChartYDomain() {
     </XYPlot></div>);
 }
 
-export function BarChartCustomColor() {
+export function GeospatialAppBarChartCustomColor() {
   return (<div className="bar-chart-custom-color"
     style={basicStyle}>
     <XYPlot height={140} width={280}
@@ -126,7 +126,7 @@ export function BarChartCustomColor() {
     </XYPlot></div>);
 }
 
-export function BasicLineChart() {
+export function GeospatialAppBasicLineChart() {
   return (<div className="line-chart-basic"
     style={basicStyle}>
     <XYPlot height={140} width={480}
@@ -144,7 +144,7 @@ export function BasicLineChart() {
   </div>);
 }
 
-export class HoverInteraction extends Component {
+export class GeospatialAppHoverInteraction extends Component {
   constructor() {
     super();
     this.state = {highlightedHour: null};

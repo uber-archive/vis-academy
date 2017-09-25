@@ -47,7 +47,7 @@ const unemployment = [{"area":"Alabama","values":[{"x":1167609600000,"y":3.9},{"
 
 const coords = {"Alaska":{"code":"AK","x":0,"y":0},"Maine":{"code":"ME","x":11,"y":0},"Vermont":{"code":"VT","x":10,"y":1},"N. Hampshire":{"code":"NH","x":11,"y":1},"Washington":{"code":"WA","x":1,"y":2},"Idaho":{"code":"ID","x":2,"y":2},"Montana":{"code":"MT","x":3,"y":2},"North Dakota":{"code":"ND","x":4,"y":2},"Minnesota":{"code":"MN","x":5,"y":2},"Illinois":{"code":"IL","x":6,"y":2},"Wisconsin":{"code":"WI","x":7,"y":2},"Michigan":{"code":"MI","x":8,"y":2},"New York":{"code":"NY","x":9,"y":2},"Rhode Island":{"code":"RI","x":10,"y":2},"Massachusetts":{"code":"MA","x":11,"y":2},"Oregon":{"code":"OR","x":1,"y":3},"Nevada":{"code":"NV","x":2,"y":3},"Wyoming":{"code":"WY","x":3,"y":3},"South Dakota":{"code":"SD","x":4,"y":3},"Iowa":{"code":"IA","x":5,"y":3},"Indiana":{"code":"IN","x":6,"y":3},"Ohio":{"code":"OH","x":7,"y":3},"Pennsylvania":{"code":"PA","x":8,"y":3},"New Jersey":{"code":"NJ","x":9,"y":3},"Connecticut":{"code":"CT","x":10,"y":3},"California":{"code":"CA","x":1,"y":4},"Utah":{"code":"UT","x":2,"y":4},"Colorado":{"code":"CO","x":3,"y":4},"Nebraska":{"code":"NE","x":4,"y":4},"Missouri":{"code":"MO","x":5,"y":4},"Kentucky":{"code":"KY","x":6,"y":4},"West Virginia":{"code":"WV","x":7,"y":4},"Virginia":{"code":"VA","x":8,"y":4},"Maryland":{"code":"MD","x":9,"y":4},"Delaware":{"code":"DE","x":10,"y":4},"Arizona":{"code":"AZ","x":2,"y":5},"New Mexico":{"code":"NM","x":3,"y":5},"Kansas":{"code":"KS","x":4,"y":5},"Arkansas":{"code":"AR","x":5,"y":5},"Tennessee":{"code":"TN","x":6,"y":5},"North Carolina":{"code":"NC","x":7,"y":5},"South Carolina":{"code":"SC","x":8,"y":5},"D. of Columbia":{"code":"DC","x":9,"y":5},"Oklahoma":{"code":"OK","x":4,"y":6},"Louisiana":{"code":"LA","x":5,"y":6},"Mississippi":{"code":"MS","x":6,"y":6},"Alabama":{"code":"AL","x":7,"y":6},"Georgia":{"code":"GA","x":8,"y":6},"Hawaii":{"code":"HI","x":0,"y":7},"Texas":{"code":"TX","x":4,"y":7},"Florida":{"code":"FL","x":9,"y":7},"Puerto Rico":{"code":"PR","x":11,"y":7}};
 
-export function DontSimpleChart() {
+export function GeospatialAppDontSimpleChart() {
   return (<div className="guideline-chart">
     <XYPlot width={600} height={300}>
       <VerticalBarSeries data={data.map(d => ({x: d.hour, y: d.pickups}))} />
@@ -55,7 +55,7 @@ export function DontSimpleChart() {
   </div>);
 }
 
-export function LessSimpleChart() {
+export function GeospatialAppLessSimpleChart() {
   return (<div className="guideline-chart">
     <XYPlot width={600} height={300} xDomain={[0, 24]}>
       <XAxis 
@@ -68,7 +68,7 @@ export function LessSimpleChart() {
   </div>);
 }
 
-export function ChartWithContext() {
+export function GeospatialAppChartWithContext() {
   return (<div className="guideline-chart">
     <h1 style={{fontSize: '2em', borderBottom: "none"}}>Distribution of pickups over time</h1>
     <p>As a percentage of all trips that day</p>
@@ -178,7 +178,7 @@ function MediumChart({variable, label, index = null, onNearestX, onMouseLeave}) 
   </div>);
 }
 
-export function SameFourCharts() {
+export function GeospatialAppSameFourCharts() {
   return (<div className="guideline-chart">
       {[
         {variable: 'total', label: 'Revenue per hour'},
@@ -189,7 +189,7 @@ export function SameFourCharts() {
     </div>);
 }
 
-export function HasHierarchy() {
+export function GeospatialAppHasHierarchy() {
   return (<div className="guideline-chart">
         <MediumChart variable="total" label="Revenue per hour" />
         <div style={{marginLeft: 40, marginTop: 16, display: 'flex', justifyContent: 'space-between'}}>
@@ -230,7 +230,7 @@ export class HasHierarchyInteractive extends Component {
   }
 }
 
-export function DontDualAxes() {
+export function GeospatialAppDontDualAxes() {
   const yMaxTotal = Math.max(...data.map(d => d.total));
   const yMaxPerTrip = Math.max(...data.map(d => d.total / d.dropoffs));
 
@@ -255,7 +255,7 @@ export function DontDualAxes() {
   </div>)
 }
 
-export function DoTwoCharts() {
+export function GeospatialAppDoTwoCharts() {
   const yMaxTotal = Math.max(...data.map(d => d.total));
   return (<div className="guideline-chart">
     <h2 style={{marginTop: 4}}>Revenue per hour</h2>
@@ -286,7 +286,7 @@ export function DoTwoCharts() {
   </div>);
 }
 
-export class TwoCharts extends Component {
+export class GeospatialAppTwoCharts extends Component {
   constructor(props) {
     super(props);
     this.state={index: -1};
@@ -370,7 +370,7 @@ export class TwoCharts extends Component {
   }
 }
 
-export function TooMuch() {
+export function GeospatialAppTooMuch() {
   const years = [2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017];
   return (<div className="guideline-chart">
     <h2 style={{marginTop: 4}}>Unemployment Rates by Territory</h2>
@@ -385,7 +385,7 @@ export function TooMuch() {
   </XYPlot></div>);
 }
 
-export function NotTooMuch() {
+export function GeospatialAppNotTooMuch() {
   const years = [2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017];
   const colors = {
     Michigan: '#19CDD7',
@@ -424,7 +424,7 @@ export function NotTooMuch() {
   </XYPlot></div>);
 }
 
-export function SmallMultiples() {
+export function GeospatialAppSmallMultiples() {
   return (<div className="guideline-chart">
     <h2 style={{marginTop: 4}}>Unemployment Rates by Territory</h2>
     <p>2007-2017, seasonally adjusted</p>
@@ -447,7 +447,7 @@ export function SmallMultiples() {
     </div>);
 }
 
-export function SmallMultiplesMap() {
+export function GeospatialAppSmallMultiplesMap() {
   return (<div className="guideline-chart">
     <h2 style={{marginTop: 4}}>Unemployment Rates by Territory</h2>
     <p>2007-2017, seasonally adjusted</p>

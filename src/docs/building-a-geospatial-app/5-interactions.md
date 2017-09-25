@@ -1,4 +1,4 @@
-<!-- INJECT:"IntroducingInteraction" heading -->
+<!-- INJECT:"GeospatialAppInteraction" heading -->
 
 <ul class="insert learning-objectives">
   <li>Implement mouse interactions in a chart</li>
@@ -8,7 +8,7 @@
 
 ## 1. Interact with bar charts on hover
 
-React-Vis has many methods to [handle interaction](https://uber.github.io/react-vis/documentation/general-principles/interaction).
+React-Vis has many methods to [handle interaction](https://uber.github.io/react-vis/general-principles/interaction).
 We're already using the state of our app to store our data and interaction with the deck.gl components, so let's use it for react-vis interaction as well.
 
 In app.js, let's add a method to handle this interaction:
@@ -58,7 +58,7 @@ And finally, in the VerticalBarSeries component:
   onValueMouseOver={d => highlight(d.hour)}
 />
 ```
-<!-- INJECT:"HoverInteraction" inline -->
+<!-- INJECT:"GeospatialAppHoverInteraction" inline -->
 
 We are getting which hour is highlighted from the state of the parent component, and a callback method to change it.
 
@@ -154,8 +154,8 @@ If the user clicks on a bar twice, it will be unselected.
 
 <ul class="insert further-readings">
   <li>
-    [React-Vis interaction documentation](https://uber.github.io/react-vis/documentation/general-principles/interaction)
+    [React-Vis interaction documentation](https://uber.github.io/react-vis/general-principles/interaction)
   </li>
 </ul>
 
-Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/introducing-interaction)
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-academy/tree/master/src/demos/building-a-geospatial-app/5-interaction)
