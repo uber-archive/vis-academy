@@ -45,18 +45,18 @@ export default class App extends Component {
 
   processData = () => {
     if (sampleGraph) {
-      const {viewport} = this.state
-      const {width, height} = viewport
+      const {viewport} = this.state;
+      const {width, height} = viewport;
       sampleGraph.nodes.forEach(node =>
         this._graph.addNode({
           id: node.id,
-          isHighlighted: false,
+          isHighlighted: false
         })
       );
       sampleGraph.edges.forEach(edge =>
         this._graph.addEdge({
           ...edge,
-          isHighlighted: false,
+          isHighlighted: false
         })
       );
       // update engine
