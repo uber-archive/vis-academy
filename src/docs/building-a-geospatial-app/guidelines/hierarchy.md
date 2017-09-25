@@ -2,11 +2,11 @@
 
 When putting several charts on one screen, a very common pattern is to present everything at the same level:
 
-<!-- INJECT:"SameFourCharts" -->
+<!-- INJECT:"GeospatialAppSameFourCharts" -->
 
 Instead, consider this arrangement:
 
-<!-- INJECT:"HasHierarchy" -->
+<!-- INJECT:"GeospatialAppHasHierarchy" -->
 
 The information is the same and the charts display the exact same data. However, it's much more legible. 
 In arranging these 4 charts, we chose the most important series and gave it extra prominence. 
@@ -18,4 +18,4 @@ We don't need to provide full detail for the secondary series. Any more informat
 
 To go further, we can add interaction that will link the charts together. If we have one overarching component, then we can expose its state to its children by passing them actions that will update that state. The values from that central state will also be passed to the children, so if the user interacts with any of the charts, that can be reflected on all of them:
 
-<!-- INJECT:"HasHierarchyInteractive" -->
+<!-- INJECT:"GeospatialAppHasHierarchyInteractive" -->

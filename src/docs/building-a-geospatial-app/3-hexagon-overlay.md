@@ -1,4 +1,4 @@
-<!-- INJECT:"HexagonOverlay" heading -->
+<!-- INJECT:"GeospatialAppHexagonOverlay" heading -->
 
 <ul class="insert learning-objectives">
   <li>Discover more types of Deck.GL overlays</li>
@@ -6,10 +6,10 @@
 </ul>
 
 # Add a Hexagon Overlay with Deck.GL
-[View code](https://github.com/uber-common/vis-tutorial/tree/master/demos/hexagon-overlay)
+[View code](https://github.com/uber-common/vis-academy/tree/master/demos/building-a-geospatial-app/3-hexagon-overlay)
 
 **NOTE** This step follows from the **completed** code of the previous section,
-[Scatterplot Overlay](https://uber-common.github.io/vis-tutorial/#/deck/scatterplot-overlay).
+[Scatterplot Overlay](#/building-a-geospatial-app/2-scatterplot-overlay.md).
 
 `Scatterplot` can plot raw points, but to visualize distribution of these
 points, we need a layer that can aggregate points into a geo grid.
@@ -115,7 +115,7 @@ export default class DeckGLOverlay extends Component {
 
 With this, your `deckgl-overlay.js` should be ready to render a functional `HexagonLayer`.
 
-Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/hexagon-overlay) 
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-academy/tree/master/src/demos/building-a-geospatial-app/hexagon-overlay) 
 
 <ul class="insert takeaways">
   <li>The HexagonLayer can display aggregated, 3D hexagons</li>
@@ -125,7 +125,7 @@ Here's a link to the [complete code of this step](https://github.com/uber-common
 
 Let's go over some properties of the `HexagonLayer`:
 
-[Deck.gl documentation of Hexagon Layer](https://uber.github.io/deck.gl/#/documentation/layer-catalog/hexagon-layer)
+[Deck.gl documentation of Hexagon Layer](https://uber.github.io/deck.gl/#/layer-catalog/hexagon-layer)
 
 Let's go over just some properties of the `HexagonLayer` above:
 

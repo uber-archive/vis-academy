@@ -1,4 +1,4 @@
-<!-- INJECT:"StartingWithMap" heading -->
+<!-- INJECT:"GeospatialAppStartingWithMap" heading -->
 
 <ul class='insert learning-objectives'>
 <li>Create a map in a React application,</li>
@@ -12,13 +12,13 @@ the powerful `MapboxGL` mapping library. `react-map-gl` makes it super easy to
 drop a mapping component into your application.
 
 Checkout the complete code for this step
-[here](https://github.com/uber-common/vis-tutorial/tree/master/demos/starting-with-map).
+[here](https://github.com/uber-common/vis-academy/tree/master/demos/building-a-geospatial-app/1-starting-with-map).
 
 ## 1. Start with a bare React Component
 
 **HOLD UP!!!** If you got here without reading the **Setup** step, it is
 highly recommended that you do so, or your application might not work.
-[GO HERE](https://uber-common.github.io/vis-tutorial/#/setup) and go through it now.
+[GO HERE]((#/building-a-geospatial-app/0-setup.md) and go through it now.
 
 The app component in the starting code above currently looks like this:
 ```js
@@ -176,7 +176,7 @@ where viewport state is actually being updated.
 
 ## 6. Completed Code
 
-Our completed component [app.js](https://github.com/uber-common/vis-tutorial/blob/master/src/demos/starting-with-map/app.js) should now look like this:
+Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/building-a-geospatial-app/1-starting-with-map/app.js) should now look like this:
 
 ```js
 /* global window */

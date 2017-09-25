@@ -1,4 +1,4 @@
-<!-- INJECT:"AddCharts" heading -->
+<!-- INJECT:"GeospatialAppBasicCharts" heading -->
 
 <ul class="insert learning-objectives">
   <li>Create a simple chart</li>
@@ -148,7 +148,7 @@ First, we are going to create a simple bar chart of pickups by hour.
 To do this, we are going to use the pickup variable we prepared above. This is an array of objects of the form: {x, y}.
 x is going to be the hour, and y is going to be the number of dropoffs we want to plot.
 
-Then, we are going to create our barchart using the following React-Vis components: [XYPlot](http://uber.github.io/react-vis/#/documentation/api-reference/xy-plot), [XAxis](http://uber.github.io/react-vis/#/documentation/api-reference/axes), [YAxis](http://uber.github.io/react-vis/#/documentation/api-reference/axes), and [VerticalBarSeries](http://uber.github.io/react-vis/#/documentation/series-reference/bar-series).
+Then, we are going to create our barchart using the following React-Vis components: [XYPlot](http://uber.github.io/react-vis/#/api-reference/xy-plot), [XAxis](http://uber.github.io/react-vis/#/api-reference/axes), [YAxis](http://uber.github.io/react-vis/#/api-reference/axes), and [VerticalBarSeries](http://uber.github.io/react-vis/#/series-reference/bar-series).
 
 In your charts.js file, update the Charts component as follows:
 
@@ -178,7 +178,7 @@ export default function Charts({pickups}) {
 
 This code produces this output:
 
-<!-- INSERT:"BarChartBasic" -->
+<!-- INSERT:"GeospatialAppBarChartBasic" -->
 
 In just 8 lines of React-vis code we have a bar chart with axes!
 
@@ -215,9 +215,9 @@ We could actually pass a yDomain prop in the YAxis and the VerticalBarSeries com
 >
 ```
 
-<!-- INSERT:"BarChartYDomain" -->
+<!-- INSERT:"GeospatialAppBarChartYDomain" -->
 
-To read more about axes in React-Vis, consult the [Axes docs](https://uber.github.io/react-vis/documentation/api-reference/axes).
+To read more about axes in React-Vis, consult the [Axes docs](https://uber.github.io/react-vis/api-reference/axes).
 
 <ul class="insert takeaways">
   <li>With the React-Vis component __XYPlot__ you can insert charts in your application.</li>
@@ -233,7 +233,7 @@ To read more about axes in React-Vis, consult the [Axes docs](https://uber.githu
 
 ## Optional section
 
-Feel free to skip to [lesson 5](https://uber-common.github.io/vis-tutorial/#/documentation/5-interactions)
+Feel free to skip to [lesson 5](#/5-interactions.md)
 
 ## 3. Fine tune our chart
 
@@ -251,7 +251,7 @@ XYPlot has a property, margin, which defines the interior spacing. Its default v
 >
 ```
 
-You can read more about margins and other properties in the [XYPlot](https://uber.github.io/react-vis/documentation/api-reference/xy-plot) docs.
+You can read more about margins and other properties in the [XYPlot](https://uber.github.io/react-vis/api-reference/xy-plot) docs.
 
 ### b. x-axis customization
 
@@ -284,11 +284,11 @@ Finally, we can set *tickInnerSize* to 0 to only have ticks going from the axis 
 />
 ```
 
-<!-- INSERT:"BarChartFormattedAxis" -->
+<!-- INSERT:"GeospatialAppBarChartFormattedAxis" -->
 
 ### c. Color
 
-React-Vis has many options to [style color](http://uber.github.io/react-vis/#/documentation/general-principles/colors). For now, let's just choose another blue
+React-Vis has many options to [style color](http://uber.github.io/react-vis/#/general-principles/colors). For now, let's just choose another blue
 
 ```js
 <VerticalBarSeries
@@ -297,7 +297,7 @@ React-Vis has many options to [style color](http://uber.github.io/react-vis/#/do
 />
 ```
 
-<!-- INSERT:"BarChartCustomColor" -->
+<!-- INSERT:"GeospatialAppBarChartCustomColor" -->
 
 ### d. More than bars: lines, scatterplots...
 
@@ -309,11 +309,11 @@ React-Vis has a many forms available for your charts. Here we're going to use Li
   <MarkSeries data={dropoffs} color="#f08" opacity="0.5" size="3" />
 </XYPlot>
 ```
-<!-- INSERT:"BasicLineChart" -->
+<!-- INSERT:"GeospatialAppBasicLineChart" -->
 
-To learn about various React-Vis series, checkout [their docs](https://uber.github.io/react-vis/documentation/series-reference/arc-series).
+To learn about various React-Vis series, checkout [their docs](https://uber.github.io/react-vis/series-reference/arc-series).
 
-Here's a link to the [complete code of this step](https://github.com/uber-common/vis-tutorial/tree/master/src/demos/add-charts)
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-academy/tree/master/src/demos/building-a-geospatial-app/4-basic-charts)
 
 Final charts.js code:
 

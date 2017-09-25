@@ -30,8 +30,6 @@ A page should automatically be opened in your browser, with a pretty simple app 
 
 Note that the repository you cloned also contains all the content and code of this tutorial, and you may run it locally if you want (repeat the last two steps from above from vis-tutorial/).
 
-In the pages of this tutorial, you can use the back quote key ` (typically located below ESC) to see the code examples in full page.
-
 ## 3. How this tutorial works
 
 In this tutorial, you will build a full geospatial application from scratch, with maps, WebGL data overlays and interactive charts. 
@@ -47,9 +45,9 @@ We'll end each lesson with key takeaways and further reading.
 You can now open your text editor with the following file:
 
 ```
-src/demos/starting-code/app.js
+src/demos/building-a-geospatial-app/starting-code/app.js
 ```
 
 It's an empty component! `starting-code` will be the folder that holds all your
 changes as you go through the tutorial. You can now head to the next step:
-[Starting With A Map](#/documentation/react-map-gl/starting-with-a-map).
+[Starting With A Map](#/building-a-geospatial-app/1-starting-with-a-map).
