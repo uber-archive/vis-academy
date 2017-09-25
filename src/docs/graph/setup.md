@@ -7,8 +7,8 @@ In order to do live coding, you can use the example starting code we provide.
 Clone our tutorial repository and go through the usual setup steps. NOTE: you
 need to be running node **>=v6** locally.
 ```
-git clone https://github.com/uber-common/vis-tutorial.git
-cd vis-tutorial/src/demos/graph-starting-code
+git clone https://github.com/uber-common/vis-academy.git
+cd vis-academy/src/demos/graph-starting-code
 
 yarn # or npm install (slower)
 npm start
