@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 
 // data
-import SAMPLE_GRAPH from '../data/sample-graph2';
+import sampleGraph from '../../data/sample-graph2';
 
 // components
 import Graph from './graph';
@@ -19,38 +19,46 @@ export default class App extends Component {
       },
       hoveredNodeID: null
     };
+    this._graph = new Graph();
     this._engine = new LayoutEngine();
   }
 
-  componentWillMount() {
-    this._engine.registerCallbacks({
-      onUpdate: this.reRender
-    });
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize);
+    this._engine.registerCallbacks(this.reRender);
     this.processData();
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
     this._engine.unregisterCallbacks();
   }
 
+  onResize = () => {
+    this.setState({
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
+    });
+  }
+
   processData = () => {
-    this._graph = new Graph();
-    // load data
-    if (SAMPLE_GRAPH) {
+    if (sampleGraph) {
       const {viewport} = this.state
       const {width, height} = viewport
-      SAMPLE_GRAPH.nodes.forEach(node => {
+      sampleGraph.nodes.forEach(node =>
         this._graph.addNode({
           id: node.id,
           isHighlighted: false,
-        });
-      });
-      SAMPLE_GRAPH.edges.forEach(edge => {
+        })
+      );
+      sampleGraph.edges.forEach(edge =>
         this._graph.addEdge({
           ...edge,
           isHighlighted: false,
-        });
-      });
+        })
+      );
       // update engine
       this._engine.update(this._graph);
       this._engine.start();
@@ -97,15 +105,19 @@ export default class App extends Component {
     const {viewport, hoveredNodeID} = this.state;
     return (
       <GraphRender
+        /* viewport related */
         width={viewport.width}
         height={viewport.height}
-        positionUpdateTrigger={this._engine.alpha()}
+        /* update triggers */
         colorUpdateTrigger={hoveredNodeID}
+        positionUpdateTrigger={this._engine.alpha()}
+        /* nodes related */
         nodes={this._graph.nodes}
         getNodeColor={this.getNodeColor}
         getNodeSize={this.getNodeSize}
         getNodePosition={this._engine.getNodePosition}
         onHoverNode={this.onHoverNode}
+        /* edges related */
         edges={this._graph.edges}
         getEdgeColor={this.getEdgeColor}
         getEdgeWidth={this.getEdgeWidth}

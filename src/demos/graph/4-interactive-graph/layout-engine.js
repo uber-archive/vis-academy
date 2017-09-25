@@ -10,16 +10,12 @@ const defaultOptions = {
 };
 
 export default class LayoutEngine {
+
   constructor(props) {
     // custom graph data
     this._d3Graph = {nodes: [], edges: []};
     this._nodeMap = {};
     this._edgeMap = {};
-    this._ticked = this._ticked.bind(this);
-    this._strength = this._strength.bind(this);
-    this.alpha = this.alpha.bind(this);
-    this.getNodePosition = this.getNodePosition.bind(this);
-    this.getEdgePosition = this.getEdgePosition.bind(this);
     // instantiate d3 force layout simulator
     const {nBodyStrength, nBodyDistanceMin, nBodyDistanceMax} = defaultOptions;
     const g = this._d3Graph;
@@ -41,28 +37,27 @@ export default class LayoutEngine {
           .distanceMax(nBodyDistanceMax)
       )
       .force("center", d3.forceCenter());
-    this._simulator.on('tick', this._ticked);
+    this._simulator.on('tick', this.ticked);
   }
 
-  _ticked() {
-    if (this._onUpdate) {
-      this._onUpdate();
+  ticked = () => {
+    if (this._onUpdateCallback) {
+      this._onUpdateCallback();
     }
-  };
+  }
 
-  _strength(d3Edge) {
+  _strength = d3Edge => {
     const sourceDegree = this._graph.getDegree(d3Edge.source.id);
     const targetDegree = this._graph.getDegree(d3Edge.target.id);
     return 1 / Math.min(sourceDegree, targetDegree, 1);
-  };
+  }
 
-  registerCallbacks({onUpdate}) {
-    this._onUpdate = onUpdate;
+  registerCallbacks(onUpdate) {
+    this._onUpdateCallback = onUpdate;
   }
 
   unregisterCallbacks() {
-    this._onUpdate = null;
-    this._onDone = null;
+    this._onUpdateCallback = null;
     this._simulator.on('tick', null);
   }
 
@@ -111,19 +106,17 @@ export default class LayoutEngine {
     this._d3Graph.edges = newD3Edges;
   }
 
-  alpha() {
-    return this._simulator.alpha();
-  }
+  alpha = () => this._simulator.alpha()
 
-  getNodePosition(node) {
+  getNodePosition = node => {
     const d3Node = this._nodeMap[node.id];
     if (d3Node) {
       return [d3Node.x, d3Node.y];
     }
     return [0, 0];
-  };
+  }
 
-  getEdgePosition(edge) {
+  getEdgePosition = edge => {
     const d3Edge = this._edgeMap[edge.id];
     if (d3Edge) {
       return {
@@ -135,5 +128,5 @@ export default class LayoutEngine {
       sourcePosition: [0, 0],
       targetPosition: [0, 0]
     };
-  };
+  }
 }

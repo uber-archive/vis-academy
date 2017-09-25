@@ -37,7 +37,6 @@ export default class GraphRender extends PureComponent {
       // ^^^ this doesn't work?
       getRadius: getNodeSize,
       getColor: getNodeColor,
-      pickable: true,
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
         getPosition: positionUpdateTrigger

@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 
 // data
-import SAMPLE_GRAPH from '../data/sample-graph2';
+import sampleGraph from '../../data/sample-graph2';
 
 // components
 import Graph from './graph';
@@ -24,47 +24,63 @@ export default class App extends Component {
       viewport: {
         width: window.innerWidth,
         height: window.innerHeight
-      }
+      },
+      graph: new Graph()
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize);
     this.processData();
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  onResize = () => {
+    this.setState({
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
+    });
+  }
+
   processData() {
-    this._graph = new Graph();
-    // load data
-    if (SAMPLE_GRAPH) {
+    if (sampleGraph) {
       const {viewport} = this.state;
       const {width, height} = viewport;
-      SAMPLE_GRAPH.nodes.forEach(node => {
-        this._graph.addNode({
+      const newGraph = new Graph();
+      sampleGraph.nodes.forEach(node =>
+        newGraph.addNode({
           id: node.id,
           position: randomPosition(width, height)
-        });
-      });
-      SAMPLE_GRAPH.edges.forEach(edge => {
-        this._graph.addEdge(edge);
-      });
+        })
+      );
+      sampleGraph.edges.forEach(edge =>
+        newGraph.addEdge(edge)
+      );
+      this.setState({graph: newGraph});
     }
   }
 
   // node accessors
   getNodeColor = node => [94, 94, 94]
   getNodeSize = node => 10
-  getNodePosition = node => this._graph.findNode(node.id).position
+  getNodePosition =
+    node => this.state.graph.findNode(node.id).position
 
   // edge accessors
   getEdgeColor = edge => [64, 64, 64]
   getEdgeWidth = () => 2
   getEdgePosition = edge => ({
-    sourcePosition: this._graph.findNode(edge.source).position,
-    targetPosition: this._graph.findNode(edge.target).position
+    sourcePosition: this.state.graph.findNode(edge.source).position,
+    targetPosition: this.state.graph.findNode(edge.target).position
   })
 
   render() {
-    if (this._graph.isEmpty()) {
+    if (this.state.graph.isEmpty()) {
       return null;
     }
 
@@ -75,12 +91,12 @@ export default class App extends Component {
         width={viewport.width}
         height={viewport.height}
         /* nodes related */
-        nodes={this._graph.nodes}
+        nodes={this.state.graph.nodes}
         getNodeColor={this.getNodeColor}
         getNodeSize={this.getNodeSize}
         getNodePosition={this.getNodePosition}
         /* edges related */
-        edges={this._graph.edges}
+        edges={this.state.graph.edges}
         getEdgeColor={this.getEdgeColor}
         getEdgeWidth={this.getEdgeWidth}
         getEdgePosition={this.getEdgePosition}

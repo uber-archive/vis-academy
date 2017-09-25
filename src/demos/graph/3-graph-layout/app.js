@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 
 // data
-import SAMPLE_GRAPH from '../data/sample-graph2';
+import sampleGraph from '../../data/sample-graph2';
 
 // components
 import Graph from './graph';
@@ -17,36 +17,46 @@ export default class App extends Component {
       viewport: {
         width: window.innerWidth,
         height: window.innerHeight
-      }
+      },
+      graph: new Graph()
     };
     this._engine = new LayoutEngine();
   }
 
-  componentWillMount() {
-    this._engine.registerCallbacks({
-     onUpdate: this.reRender
-    });
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize);
+    this._engine.registerCallbacks(this.reRender);
     this.processData();
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
     this._engine.unregisterCallbacks();
   }
 
+  onResize = () => {
+    this.setState({
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
+    });
+  }
+
   processData() {
-    this._graph = new Graph();
-    // load data
-    if (SAMPLE_GRAPH) {
+    if (sampleGraph) {
       const {viewport} = this.state;
       const {width, height} = viewport;
-      SAMPLE_GRAPH.nodes.forEach(node => {
-        this._graph.addNode(node);
-      });
-      SAMPLE_GRAPH.edges.forEach(edge => {
-        this._graph.addEdge(edge);
-      });
+      const newGraph = new Graph();
+      sampleGraph.nodes.forEach(node =>
+        newGraph.addNode(node)
+      );
+      sampleGraph.edges.forEach(edge =>
+        newGraph.addEdge(edge)
+      );
+      this.setState({graph: newGraph});
       // update engine
-      this._engine.update(this._graph);
+      this._engine.update(newGraph);
       this._engine.start();
     }
   }
@@ -62,7 +72,7 @@ export default class App extends Component {
   getEdgeWidth = () => 2
 
   render() {
-    if (this._graph.isEmpty()) {
+    if (this.state.graph.isEmpty()) {
       return null;
     }
 
@@ -75,12 +85,12 @@ export default class App extends Component {
         /* update triggers */
         positionUpdateTrigger={this._engine.alpha()}
         /* nodes related */
-        nodes={this._graph.nodes}
+        nodes={this.state.graph.nodes}
         getNodeColor={this.getNodeColor}
         getNodeSize={this.getNodeSize}
         getNodePosition={this._engine.getNodePosition}
         /* edges related */
-        edges={this._graph.edges}
+        edges={this.state.graph.edges}
         getEdgeColor={this.getEdgeColor}
         getEdgeWidth={this.getEdgeWidth}
         getEdgePosition={this._engine.getEdgePosition}
