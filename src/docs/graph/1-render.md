@@ -169,6 +169,36 @@ export default class GraphRender extends Component {
   // ...
 }
 ```
+
+## 5. Put it all together
+
+Navigate to bottom of graph-rener.js and add the `render` function.
+
+```js
+export default class GraphRender extends PureComponent {
+  // ...
+
+  render() {
+    const {height, width} = this.props;
+    return (
+      <div id="graph-render">
+        <DeckGL
+          width={width}
+          height={height}
+          viewport={this.creatViewport()}
+          layers={[
+            this.renderEdgeLayer(),
+            this.renderNodeLayer()
+          ]}
+        />
+      </div>
+    );
+  }
+}
+```
+
+render() is simply render the deck.gl instance with the viewport and layers we created.
+
 <ul class='insert takeaways'>
 <li>GraphRender component contains viewport, node layer, and edge layer.</li>
 <li>The setting of nodes and edges can be controlled by the properties passed into this component.</li>

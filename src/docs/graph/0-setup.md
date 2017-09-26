@@ -7,7 +7,7 @@ Clone our tutorial repository and go through the usual setup steps. NOTE: you
 need to be running node **>=v6** locally.
 ```
 git clone https://github.com/uber-common/vis-academy.git
-cd vis-academy/src/demos/graph/1-starting-code
+cd vis-academy/src/demos/graph/0-starting-code
 
 yarn # or npm install (slower)
 npm start
@@ -31,12 +31,23 @@ We'll end each lesson with key takeaways and further reading.
 
 ## 4. Start Coding!
 
-You can now open your text editor with the following file:
+You should see the project sturcture of `0-starting-code` folder like this:
+
+// picture of the projecture
+
+This folder contains all the files you need to scaffold a simple app:
+ - ./src: will be the folder that holds all your changes as you go through the tutorial.
+ - ./index.html: the wireframe of the app
+ - ./package.json: 
+ - ./webpack.config.js: some basic webpack server settings.
+ - ./README.md: readme about this app.
+ - ./root.js: the entry point of the app.
+
+Now You can open your text editor with the following file:
 
 ```
-src/demos/graph/1-starting-code/src/app.js
+src/demos/graph/0-starting-code/src/app.js
 ```
 
-It's an empty component! `1-starting-code` will be the folder that holds all your
-changes as you go through the tutorial. You can now head to the next step:
+Next, you can head to the next step:
 [Graph Render](#/graph-vis/render).

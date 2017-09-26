@@ -68,6 +68,7 @@ To speedup the rendering, we want the component rerender without 'diffing' the c
 One trick we can do here is to call 'forceUpdate()' method to rerender the component.
 
 ```js
+// step0: import layout engine
 import LayoutEngine from './layout-engine';
 
 export default class App extends Component {
@@ -89,12 +90,14 @@ export default class App extends Component {
     // ...
     if (sampleGraph) {
       // ...
-      sampleGraph.nodes.forEach(node => {
-        this._graph.addNode(node);
+      const newGraph = new Graph();
+      newGraph.nodes.forEach(node => {
+        newGraph.addNode(node);
       });
       sampleGraph.edges.forEach(edge => {
-        this._graph.addEdge(edge);
+        newGraph.addEdge(edge);
       });
+      this.setState({graph: newGraph});
       // step3: update engine
       this._engine.update(this._graph);
       // step4: start the engine
@@ -187,9 +190,13 @@ export default class App extends Component {
 }
 ```
 
+<ul class='insert takeaways'>
+<li></li>
+</ul>
+
 ## Complete code
 
-Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/starting-with-map/app.js) should now look like this:
+Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/app.js) should now look like this:
 
 ```js
 // app.js
