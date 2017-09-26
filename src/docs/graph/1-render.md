@@ -1,9 +1,8 @@
 <ul class='insert learning-objectives'>
   <li>Create a GraphRender component</li>
-  <li>Render a graph with random layout</li>
 </ul>
 
-## 1. Create a Graph Render Component
+## 1. Create a GraphRender Component
 
 Create a new file named `graph-render.js` in `src/` folder where we will put the deck.gl component. First, let's layout the component:
 
@@ -170,6 +169,10 @@ export default class GraphRender extends Component {
   // ...
 }
 ```
+<ul class='insert takeaways'>
+<li>GraphRender component contains viewport, node layer, and edge layer.</li>
+<li>The setting of nodes and edges can be controlled by the properties passed into this component.</li>
+</ul>
 
 ## 5. Complete Code
 

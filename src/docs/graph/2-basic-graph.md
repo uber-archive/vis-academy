@@ -12,7 +12,7 @@ Checkout the complete code for this step
 
 **HOLD UP!!!** If you got here without reading the **Setup** step, it is
 highly recommended that you do so, or your application might not work.
-[GO HERE](https://uber-common.github.io/vis-academy/#/graph/setup) and go through it now.
+[GO HERE](#/graph-vis/setup) and go through it now.
 
 The app component in the starting code above currently looks like this:
 ```js
@@ -45,17 +45,18 @@ import sampleGraph from '../data/sample-graph';
 ```
 
 Now we need to process this data into a usable format. 
-We already prepared a basic graph class [here]() for storing graph data and some basic graph operations.
+We already prepared a basic graph class [here](https://github.com/uber-common/vis-tutorial/blob/master/demos/graph/1-starting-code/graph.js) for storing graph data and some basic graph operations.
 
-We add a `processData` method and call it when component mounts to process
-the data.
+We add a `processData` method and call it when component mounts to process the data.
 
 ```js
 export default class App extends Component {
 
   constructor(props) {
     // ...
-    this._graph = new Graph();
+    this.state = {
+      graph: new Graph
+    };
   }
 
   componentDidMount() {
@@ -65,12 +66,14 @@ export default class App extends Component {
 
   processData() {
     if (sampleGraph) {
+      const newGraph = new Graph();
       sampleGraph.nodes.forEach(node =>
-        this._graph.addNode(node);
+        newGraph.addNode(node)
       );
       sampleGraph.edges.forEach(edge =>
-        this._graph.addEdge(edge);
+        newGraph.addEdge(edge)
       );
+      this.setState({graph: newGraph});
     }
   }
 
@@ -79,6 +82,10 @@ export default class App extends Component {
 ```
 
 ## 3. Random position for nodes
+
+Once we loaded the graph, we need to assign positions to the nodes so they can be plotted.
+In this example, we can just assign random positions to the nodes within the container.
+
 
 ```js
 function randomPosition(width, height) {
@@ -93,18 +100,17 @@ export default class App extends Component {
   // ...
 
   processData() {
-    if (SAMPLE_GRAPH) {
+    if (sampleGraph) {
+      const newGraph = new Graph();
       const {viewport} = this.state;
       const {width, height} = viewport;
-      SAMPLE_GRAPH.nodes.forEach(node =>
-        this._graph.addNode({
+      sampleGraph.nodes.forEach(node =>
+        newGraph.addNode({
           id: node.id,
           position: randomPosition(width, height)
-        });
+        })
       );
-      SAMPLE_GRAPH.edges.forEach(edge =>
-        this._graph.addEdge(edge);
-      );
+      // ...
     }
   }
 
@@ -116,19 +122,29 @@ export default class App extends Component {
 
 ## 4. Viewport State
 
-We now have a fully functional map, and we could stop here. But what happens
-when you resize the window? If you do it right now, you'll notice that the map
-stays the same size. That's a terrible user experience, and we wouldn't want that.
+The next thing will be the state of the viewport, here we only need the size of the window.
+The width and height can be easily retrieved from the global object `window`.
+We set the viewport object on component state because `deck.gl` leaves
+the control of the viewport to the user. We will have to update this viewport
+manually and pass it back into `deck.gl` if the size of the window changes.
+Let's quickly add the viewport state and the resize handler that updates our viewport with the new dimension:
 
-Let's quickly add a resize handler that updates our viewport with the new dimension
 ```js
 export default class App extends Component {
-  // ...
+  constructor(props) {
+    // ...
+    this.state = {
+      // ...
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
+    };
+  }
 
   componentDidMount() {
-    // ...
     window.addEventListener('resize', this.onResize);
-    this.onResize();
+    // ...
   }
 
   componentWillUnmount() {
@@ -142,28 +158,32 @@ export default class App extends Component {
     });
   }
 
+  // ...
 }
 ```
 
 ## 5. Connect everything together
 
+The last step, we now can connect the accessors of nodes and edges with the `GraphRender` component.
+To simplify the application, the color accessor and size/width accessor will only return constant values.
+`getNodePosition` will simply return the `position` property of the node.
+`getEdgePosition` will try to find the source/target node and return its position.
+
 ```js
 export default class App extends Component {
-
   // ...
 
   // node accessors
   getNodeColor = node => [94, 94, 94]
   getNodeSize = node => 10
-  getNodePosition =
-    node => this._graph.findNode(node.id).position
+  getNodePosition = node => node.position
 
   // edge accessors
   getEdgeColor = edge => [64, 64, 64]
   getEdgeWidth = () => 2
   getEdgePosition = edge => ({
-    sourcePosition: this._graph.findNode(edge.source).position,
-    targetPosition: this._graph.findNode(edge.target).position
+    sourcePosition: this.state.graph.findNode(edge.source).position,
+    targetPosition: this.state.graph.findNode(edge.target).position
   })
 
   render() {
@@ -191,15 +211,14 @@ export default class App extends Component {
 ```
 
 <ul class='insert takeaways'>
-<li>We can use the ReactMapGL's MapGL component to use a map in React.</li>
-<li>MapGL behaves just as another React component with props and callbacks.</li>
-<li>Basic settings of the map are stored in the __viewport__ prop.</li>
-<li>the __onViewportChange__ prop can be used to update the viewport when a user interacts with the map.</li>
+<li>GraphRender behaves just as another React component with props and callbacks.</li>
+<li>Basic settings of the nodes and edges are controlled by the accessors in `app.js`.</li>
+<li>`onResize` method will be triggered and to update the viewport when a user resizes the window.</li>
 </ul>
 
 ## Completed Code
 
-Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/starting-with-map/app.js) should now look like this:
+Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/1-basic-graph/src/app.js) should now look like this:
 
 ```js
 /* global window */
@@ -224,12 +243,22 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      graph: new Graph(),
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
+    };
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
-    this.onResize();
     this.processData();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
   }
 
   onResize() => {
@@ -245,17 +274,19 @@ export default class App extends Component {
     this._graph = new Graph();
     // load data
     if (sampleGraph) {
+      const newGraph = new Graph();
       const {viewport} = this.state;
       const {width, height} = viewport;
-      sampleGraph.nodes.forEach(node => {
-        this._graph.addNode({
+      sampleGraph.nodes.forEach(node =>
+        newGraph.addNode({
           id: node.id,
           position: randomPosition(width, height)
-        });
-      });
+        })
+      );
       sampleGraph.edges.forEach(edge => {
-        this._graph.addEdge(edge);
+        newGraph.addEdge(edge);
       });
+      this.setState({graph: newGraph});
     }
   }
 
@@ -263,7 +294,7 @@ export default class App extends Component {
   getNodeColor = node => [94, 94, 94]
   getNodeSize = node => 10
   getNodePosition =
-    node => this._graph.findNode(node.id).position
+    node => node.position
 
   // edge accessors
   getEdgeColor = edge => [64, 64, 64]
