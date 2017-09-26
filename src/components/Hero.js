@@ -1,5 +1,5 @@
 import React from 'react';
-import App from '../demos/linking-it-all/app.js';
+import App from '../demos/building-a-geospatial-app/6-linking-it-all/app.js';
 
 function Hero() {
   return (<div className="Hero"
@@ -22,6 +22,16 @@ function Hero() {
         pitch: 36.3576011413799
       }}
     />
+    <a
+      href="#/building-a-geospatial-app"
+      className="btn"
+      style={{
+        position: 'absolute',
+        bottom: '1rem',
+        left: '260px',
+        transform: 'translate(-50%)'
+      }}
+    >{'Get started'}</a>
   </div>);
 }
 
