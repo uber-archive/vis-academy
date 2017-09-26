@@ -1,13 +1,70 @@
 @import "~react-vis/dist/main.scss";
+@import "./_variables.scss";
 
-.Hero {
+#Home {
+  background: #E5E5E4;
+  width: 100%;
+  height: calc(100 - 64px);
+  padding: 24px;
+}
+
+.lesson-card {
+  color: #494949;
+  width: 300px;
+  height: 450px;
+  margin: 50px;
+  background: white;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+.lesson-card__name {
+  font-size: 1.5em;
+  text-align: center;
+  width: 100%;
+  margin: 12px 0 8px;
+  border-top: 2px solid #eef;
+  padding-top: 12px;
+}
+
+.btn {
+  font-weight: 500;
+  transition: transform 0.5s, color 0.5s;
+  left: 50%;
+  position: absolute;
+  bottom: 2em;
+  transform: translate(-50%);
+  padding: 0.5em 2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  width: fit-content;
+} 
+
+.lesson-card:hover {
+  background: $primary;
+  color: white;
+  box-shadow: 0 0 50px rgba(0,0,0,0.2);
+  .lesson-card__image {
+    border-width: 4px;
+  }
   .btn {
-    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    transform: translate(-50%) scale(1.25);
   }
-  h2 {
-    margin-bottom: 0;
-    font-size: 1rem;
-  }
+}
+
+footer {
+  left: 0;
+}
+
+img.lesson-card__image {
+  width: 70%;
+  border-radius: 50%;
+  margin-left: 15%;
+  border: 0px solid white;
+  transition: border 0.5s;
 }
 
 ul.insert {
@@ -69,3 +126,4 @@ ul.insert:before {
     line-height: 32px !important;
   }
 }
+
