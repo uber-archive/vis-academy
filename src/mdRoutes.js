@@ -1,85 +1,102 @@
-import setup from 'docs/setup.md';
-import startingMap from 'docs/starting-with-map.md';
+// Building a geospatial app
+import GeospatialAppSetup from
+  'docs/building-a-geospatial-app/0-setup.md';
+import GeospatialAppStartingMap from
+  'docs/building-a-geospatial-app/1-starting-with-map.md';
 
-import mappingSimple from 'docs/mapping/simple.md';
-import mappingScatterplot from 'docs/mapping/scatterplot.md';
-import mappingArc from 'docs/mapping/arc.md';
-import mappingHexagon from 'docs/mapping/hexagon.md';
+import GeospatialAppMappingSimple from
+  'docs/building-a-geospatial-app/mapping/simple.md';
+import GeospatialAppMappingScatterplot from
+  'docs//building-a-geospatial-app/mapping/scatterplot.md';
+import GeospatialAppMappingArc from
+  'docs/building-a-geospatial-app/mapping/arc.md';
+import GeospatialAppMappingHexagon from
+  'docs/building-a-geospatial-app/mapping/hexagon.md';
 
-import deckScatterplot from 'docs/deckgl/scatterplot-overlay.md';
-import deckHexagon from 'docs/deckgl/hexagon-overlay.md';
+import GeospatialAppDeckScatterplot from
+  'docs/building-a-geospatial-app/2-scatterplot-overlay.md';
+import GeospatialAppDeckHexagon from
+  'docs/building-a-geospatial-app/3-hexagon-overlay.md';
 
-import basicCharts from 'docs/react-vis/basic.md';
-import interactions from 'docs/react-vis/interactions.md';
-import linkingAll from 'docs/react-vis/linking-it-all.md';
+import GeospatialAppBasicCharts from
+  'docs/building-a-geospatial-app/4-basic-charts.md';
+import GeospatialAppInteractions from
+  'docs/building-a-geospatial-app/5-interactions.md';
+import GeospatialAppLinkingAll from
+  'docs/building-a-geospatial-app/6-linking-it-all.md';
 
-import simpleCharts from 'docs/guidelines/simple.md';
-import hierarchy from 'docs/guidelines/hierarchy.md';
-import tooMuch from 'docs/guidelines/toomuch.md';
-import confusing from 'docs/guidelines/axes.md';
+import GeospatialAppSimpleCharts from
+  'docs/building-a-geospatial-app/guidelines/simple.md';
+import GeospatialAppHierarchy from
+  'docs/building-a-geospatial-app/guidelines/hierarchy.md';
+import GeospatialAppTooMuch from
+  'docs/building-a-geospatial-app/guidelines/toomuch.md';
+import GeospatialAppConfusing from
+  'docs/building-a-geospatial-app/guidelines/axes.md';
 
 export default [{
-  name: 'Documentation',
-  path: '/documentation',
-  data: [{
-    name: 'Setup',
-    markdown: setup,
-  }, {
-    name: 'React Map Gl',
-    children: [{
-      name: 'Starting with a Map',
-      markdown: startingMap,
-    }],
-  }, {
-    name: 'Mapping Guidelines',
-    children: [{
-      name: 'Mapping types',
-      markdown: mappingSimple,
+  name: 'Building a Geospatial App',
+  path: '/building-a-geospatial-app',
+  data: [
+    {
+      name: 'Setup',
+      markdown: GeospatialAppSetup
+    },
+    {
+      name: '1. Starting with a Map',
+      markdown: GeospatialAppStartingMap
+    },
+    {
+      name: '2. Map data overlays - scatterplot',
+      markdown: GeospatialAppDeckScatterplot
+    },
+    {
+      name: '3. More data overlays - hexagons',
+      markdown: GeospatialAppDeckHexagon
+    },
+    {
+      name: '4. A basic chart',
+      markdown: GeospatialAppBasicCharts
+    },
+    {
+      name: '5. Interacting with charts',
+      markdown: GeospatialAppInteractions
+    },
+    {
+      name: '6. Linking if all',
+      markdown: GeospatialAppLinkingAll
+    }, 
+    {
+      name: 'Data overlays gallery',
+      children: [{
+        name: 'Mapping types',
+        markdown: GeospatialAppMappingSimple,
+      }, {
+        name: 'Scatterplot',
+        markdown: GeospatialAppMappingScatterplot,
+      }, {
+        name: 'Arc',
+        markdown: GeospatialAppMappingArc,
+      }, {
+        name: 'Hexagon',
+        markdown: GeospatialAppMappingHexagon,
+      }]
     }, {
-      name: 'Scatterplot',
-      markdown: mappingScatterplot,
-    }, {
-      name: 'Arc',
-      markdown: mappingArc,
-    }, {
-      name: 'Hexagon',
-      markdown: mappingHexagon,
-    }]
-  }, {
-    name: 'Deck GL',
-    children: [{
-      name: 'Scatterplot Overlay',
-      markdown: deckScatterplot,
-    }, {
-      name: 'Hexagon Overlay',
-      markdown: deckHexagon,
-    }],
-  }, {
-    name: 'React Vis',
-    children: [{
-      name: 'Basic Charts',
-      markdown: basicCharts,
-    }, {
-      name: 'Interactions',
-      markdown: interactions,
-    }, {
-      name: 'Linking It All',
-      markdown: linkingAll,
-    }],
-  }, {
-    name: 'Visualization Guidelines',
-    children: [{
-      name: 'Do: Clear simple charts',
-      markdown: simpleCharts,
-    }, {
-      name: 'Do: Use hierarchy',
-      markdown: hierarchy,
-    }, {
-      name: 'Don\'t: Too much to see',
-      markdown: tooMuch,
-    }, {
-      name: 'Don\'t: Confusing axes',
-      markdown: confusing,
-    }],
-  }],
-}]
+      name: 'Visualization Guidelines',
+      children: [{
+        name: 'Do: Clear simple charts',
+        markdown: GeospatialAppSimpleCharts,
+      }, {
+        name: 'Do: Use hierarchy',
+        markdown: GeospatialAppHierarchy,
+      }, {
+        name: 'Don\'t: Too much to see',
+        markdown: GeospatialAppTooMuch,
+      }, {
+        name: 'Don\'t: Confusing axes',
+        markdown: GeospatialAppConfusing,
+      }]
+    }
+  ]
+}];
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import App from '../demos/linking-it-all/app.js';
+import App from '../demos/building-a-geospatial-app/6-linking-it-all/app.js';
 
 function Hero() {
   return (<div className="Hero"
@@ -23,7 +23,7 @@ function Hero() {
       }}
     />
     <a
-      href="#/documentation"
+      href="#/building-a-geospatial-app"
       className="btn"
       style={{
         position: 'absolute',

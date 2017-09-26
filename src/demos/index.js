@@ -1,25 +1,25 @@
-import StartingWithMap from './starting-with-map/app';
-import ScatterplotOverlay from './scatterplot-overlay/app';
-import HexagonOverlay from './hexagon-overlay/app';
-import AddCharts from './add-charts/app';
-import StartingCode from './starting-code/app';
-import IntroducingInteraction from './introducing-interaction/app';
-import LinkingItAll from './linking-it-all/app';
+// building a geospatial app
+import GeospatialAppStartingWithMap from './building-a-geospatial-app/1-starting-with-map/app';
+import GeospatialAppScatterplotOverlay from './building-a-geospatial-app/2-scatterplot-overlay/app';
+import GeospatialAppHexagonOverlay from './building-a-geospatial-app/3-hexagon-overlay/app';
+import GeospatialAppBasicCharts from './building-a-geospatial-app/4-basic-charts/app';
+import * as GeospatialAppChartExamples from './building-a-geospatial-app/4-basic-charts/examples';
 
-import * as guidelines from './guidelines';
-import * as charts from './charts';
+import GeospatialAppInteraction from './building-a-geospatial-app/5-interaction/app';
+import GeospatialAppLinkingItAll from './building-a-geospatial-app/6-linking-it-all/app';
+
+import * as guidelines from './building-a-geospatial-app/guidelines';
 
 export default {
 
-  StartingCode,
-  StartingWithMap,
-  ScatterplotOverlay,
-  HexagonOverlay,
-  AddCharts,
-  IntroducingInteraction,
-  LinkingItAll,
+  GeospatialAppStartingWithMap,
+  GeospatialAppScatterplotOverlay,
+  GeospatialAppHexagonOverlay,
+  GeospatialAppBasicCharts,
+  ...GeospatialAppChartExamples,
+  GeospatialAppInteraction,
+  GeospatialAppLinkingItAll,
 
-  ...charts,
   ...guidelines,
 
 }

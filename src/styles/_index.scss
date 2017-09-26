@@ -9,3 +9,63 @@
     font-size: 1rem;
   }
 }
+
+ul.insert {
+    line-height: 2;
+    margin: 16px 0 !important;
+    overflow: auto;
+	  padding: 110px 29px 46px 34px !important;
+    position: relative;
+    list-style-type: none;
+
+    background: #F8F8F9;
+    border: 1px solid #C6C6C6;
+    color: #3A3A48;
+}
+   
+ul.insert:before {
+  font-size: 44px;
+  line-height: 52px;
+  font-weight: 400;
+  position: absolute;
+  top: 36px;
+}
+
+.learning-objectives:before {
+	content: 'Learning Objectives';
+}
+
+.takeaways:before {
+	content: 'Takeaways';
+}
+
+.further-readings {
+  background-color: #FDFFDF;
+  color: #333;
+}
+   
+.further-readings:before {
+	content: 'To go further';
+}
+
+.demo:hover {
+  height: 35vh !important;
+}
+
+.markdown-body {
+  h1, h2, h3 {
+    font-weight: 400 !important;
+  }
+  h1 {
+    font-size: 36px !important;
+    line-height: 48px !important;
+  }
+  h2 {
+    font-size: 28px !important;
+    line-height: 36px !important;
+  }
+  h3 {
+    font-size: 24px !important;
+    line-height: 32px !important;
+  }
+}
