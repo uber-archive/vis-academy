@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import sampleGraph from '../../data/sample-graph2';
 
 // components
-import Graph from './graph';
+import Graph from '../graph';
 import GraphRender from './graph-render';
 import LayoutEngine from './layout-engine';
 
@@ -17,9 +17,8 @@ export default class App extends Component {
         width: window.innerWidth,
         height: window.innerHeight
       },
-      hoveredNodeID: null
+      graph: new Graph()
     };
-    this._graph = new Graph();
     this._engine = new LayoutEngine();
   }
 
@@ -47,20 +46,16 @@ export default class App extends Component {
     if (sampleGraph) {
       const {viewport} = this.state;
       const {width, height} = viewport;
+      const newGraph = new Graph();
       sampleGraph.nodes.forEach(node =>
-        this._graph.addNode({
-          id: node.id,
-          isHighlighted: false
-        })
+        newGraph.addNode(node)
       );
       sampleGraph.edges.forEach(edge =>
-        this._graph.addEdge({
-          ...edge,
-          isHighlighted: false
-        })
+        newGraph.addEdge(edge)
       );
+      this.setState({graph: newGraph});
       // update engine
-      this._engine.update(this._graph);
+      this._engine.update(newGraph);
       this._engine.start();
     }
   }
@@ -69,36 +64,14 @@ export default class App extends Component {
 
   // node accessors
   getNodeColor = node => (node.isHighlighted ? [256, 0, 0] : [94, 94, 94])
-
   getNodeSize = node => 10
-
-  onHoverNode = node => {
-    // check if is hovering on a node
-    const hoveredNodeID = node.object && node.object.id;
-    if (hoveredNodeID) {
-      // highlight the selected node and connected edges
-      const connectedEdgeIDs =
-        this._graph.findConnectedEdges(hoveredNodeID).map(e => e.id);
-      this._graph.nodes.forEach(n => n.isHighlighted = n.id === hoveredNodeID);
-      this._graph.edges.forEach(e => e.isHighlighted = connectedEdgeIDs.includes(e.id));
-      // update component state
-      this.setState({hoveredNodeID});
-    } else {
-      // unset all nodes and edges
-      this._graph.nodes.forEach(n => n.isHighlighted = false);
-      this._graph.edges.forEach(e => e.isHighlighted = false);
-      // update component state
-      this.setState({hoveredNodeID: null});
-    }
-  }
 
   // edge accessors
   getEdgeColor = edge => (edge.isHighlighted ? [256, 0, 0] : [64, 64, 64])
-
   getEdgeWidth = () => 2
 
   render() {
-    if (this._graph.isEmpty()) {
+    if (this.state.graph.isEmpty()) {
       return null;
     }
 
@@ -109,16 +82,14 @@ export default class App extends Component {
         width={viewport.width}
         height={viewport.height}
         /* update triggers */
-        colorUpdateTrigger={hoveredNodeID}
         positionUpdateTrigger={this._engine.alpha()}
         /* nodes related */
-        nodes={this._graph.nodes}
+        nodes={this.state.graph.nodes}
         getNodeColor={this.getNodeColor}
         getNodeSize={this.getNodeSize}
         getNodePosition={this._engine.getNodePosition}
-        onHoverNode={this.onHoverNode}
         /* edges related */
-        edges={this._graph.edges}
+        edges={this.state.graph.edges}
         getEdgeColor={this.getEdgeColor}
         getEdgeWidth={this.getEdgeWidth}
         getEdgePosition={this._engine.getEdgePosition}

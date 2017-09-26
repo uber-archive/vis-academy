@@ -1,10 +1,10 @@
 
 export default class Graph {
-  constructor() {
-    this.nodes = [];
-    this.edges = [];
-    this._nodeMap = {};
-    this._edgeMap = {};
+  constructor(graph = null) {
+    this.nodes = (graph && graph.nodes) || [];
+    this.edges = (graph && graph.edges) || [];
+    this._nodeMap = (graph && graph._nodeMap) || {};
+    this._edgeMap = (graph && graph._edgeMap) || {};
   }
 
   addNode(node) {

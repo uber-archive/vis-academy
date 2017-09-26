@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import sampleGraph from '../../data/sample-graph2';
 
 // components
-import Graph from './graph';
+import Graph from '../graph';
 import GraphRender from './graph-render'
 
 function randomPosition(width, height) {
@@ -68,8 +68,7 @@ export default class App extends Component {
   // node accessors
   getNodeColor = node => [94, 94, 94]
   getNodeSize = node => 10
-  getNodePosition =
-    node => this.state.graph.findNode(node.id).position
+  getNodePosition = node => node.position
 
   // edge accessors
   getEdgeColor = edge => [64, 64, 64]

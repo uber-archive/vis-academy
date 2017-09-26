@@ -19,14 +19,16 @@ export default class GraphRender extends PureComponent {
     });
   }
 
-  renderNodeLayer() {
+  createNodeLayer() {
     const {
       nodes,
       getNodeColor,
       getNodePosition,
       getNodeSize,
+      onHoverNode,
       // update triggers
-      positionUpdateTrigger
+      colorUpdateTrigger,
+      positionUpdateTrigger,
     } = this.props;
 
     return new ScatterplotLayer({
@@ -37,21 +39,25 @@ export default class GraphRender extends PureComponent {
       // ^^^ this doesn't work?
       getRadius: getNodeSize,
       getColor: getNodeColor,
+      onHover: onHoverNode,
+      pickable: true,
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
-        getPosition: positionUpdateTrigger
+        getPosition: positionUpdateTrigger,
+        getColor: colorUpdateTrigger
       }
     });
   }
 
-  renderEdgeLayer() {
+  createEdgeLayer() {
     const {
       edges,
       getEdgeColor,
       getEdgePosition,
       getEdgeWidth,
       // update triggers
-      positionUpdateTrigger
+      colorUpdateTrigger,
+      positionUpdateTrigger,
     } = this.props;
 
     return new LineLayer({
@@ -64,14 +70,14 @@ export default class GraphRender extends PureComponent {
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
         getSourcePosition: positionUpdateTrigger,
-        getTargetPosition: positionUpdateTrigger
+        getTargetPosition: positionUpdateTrigger,
+        getColor: colorUpdateTrigger
       }
     });
   }
 
   render() {
     const {height, width} = this.props;
-
     return (
       <div id="graph-render">
         <DeckGL
@@ -79,8 +85,8 @@ export default class GraphRender extends PureComponent {
           height={height}
           viewport={this.creatViewport()}
           layers={[
-            this.renderEdgeLayer(),
-            this.renderNodeLayer()
+            this.createEdgeLayer(),
+            this.createNodeLayer()
           ]}
         />
       </div>
