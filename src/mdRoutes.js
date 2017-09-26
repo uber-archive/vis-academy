@@ -36,6 +36,8 @@ import GeospatialAppConfusing from
 
 export default [{
   name: 'Building a Geospatial App',
+  desc: 'Learn how to create maps, layer data on top of them and draw charts with the Uber vis libraries.',
+  image: '/images/geospatial-app/geospatial-app.png', 
   path: '/building-a-geospatial-app',
   data: [
     {
