@@ -2,10 +2,10 @@
 import React, { Component } from 'react'
 
 // data
-import sampleGraph from '../../data/sample-graph2';
+import sampleGraph from '../../data/sample-graph';
+import Graph from '../../data/graph';
 
 // components
-import Graph from '../graph';
 import GraphRender from './graph-render';
 import LayoutEngine from './layout-engine';
 
