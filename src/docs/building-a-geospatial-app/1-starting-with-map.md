@@ -18,7 +18,7 @@ Checkout the complete code for this step
 
 **HOLD UP!!!** If you got here without reading the **Setup** step, it is
 highly recommended that you do so, or your application might not work.
-[GO HERE]((#/building-a-geospatial-app/0-setup.md) and go through it now.
+[GO HERE](#/building-a-geospatial-app/0-setup.md) and go through it now.
 
 The app component in the starting code above currently looks like this:
 ```js
@@ -208,7 +208,7 @@ export default class App extends Component {
     window.addEventListener('resize', this._resize);
     this._resize();
   }
-  
+
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
