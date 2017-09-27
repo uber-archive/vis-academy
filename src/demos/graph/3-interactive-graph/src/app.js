@@ -44,8 +44,6 @@ export default class App extends Component {
 
   processData = () => {
     if (sampleGraph) {
-      const {viewport} = this.state;
-      const {width, height} = viewport;
       const newGraph = new Graph();
       sampleGraph.nodes.forEach(node =>
         newGraph.addNode(node)
@@ -63,11 +61,11 @@ export default class App extends Component {
   reRender = () => this.forceUpdate()
 
   // node accessors
-  getNodeColor = node => (node.isHighlighted ? [256, 0, 0] : [94, 94, 94])
+  getNodeColor = node => [94, 94, 94]
   getNodeSize = node => 10
 
   // edge accessors
-  getEdgeColor = edge => (edge.isHighlighted ? [256, 0, 0] : [64, 64, 64])
+  getEdgeColor = edge => [64, 64, 64]
   getEdgeWidth = () => 2
 
   render() {
@@ -75,12 +73,11 @@ export default class App extends Component {
       return null;
     }
 
-    const {viewport, hoveredNodeID} = this.state;
     return (
       <GraphRender
         /* viewport related */
-        width={viewport.width}
-        height={viewport.height}
+        width={this.state.viewport.width}
+        height={this.state.viewport.height}
         /* update triggers */
         positionUpdateTrigger={this._engine.alpha()}
         /* nodes related */

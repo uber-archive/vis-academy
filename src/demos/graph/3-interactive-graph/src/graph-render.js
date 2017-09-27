@@ -9,8 +9,9 @@ import DeckGL, {
 
 export default class GraphRender extends PureComponent {
 
-  creatViewport() {
-    const {height, width} = this.props;
+  createViewport() {
+    const width = this.props.width;
+    const height = this.props.height;
     return new OrthographicViewport({
       width,
       height,
@@ -20,65 +21,45 @@ export default class GraphRender extends PureComponent {
   }
 
   createNodeLayer() {
-    const {
-      nodes,
-      getNodeColor,
-      getNodePosition,
-      getNodeSize,
-      onHoverNode,
-      // update triggers
-      positionUpdateTrigger,
-    } = this.props;
-
     return new ScatterplotLayer({
       id: 'node-layer',
-      data: nodes,
-      getPosition: node => getNodePosition(node),
-      // getPosition: getNodePosition,
-      // ^^^ this doesn't work?
-      getRadius: getNodeSize,
-      getColor: getNodeColor,
-      pickable: true,
+      data: this.props.nodes,
+      getPosition: node => this.props.getNodePosition(node),
+      // getPosition: this.props.getNodePosition,
+      getRadius: this.props.getNodeSize,
+      getColor: this.props.getNodeColor,
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
-        getPosition: positionUpdateTrigger
+        getPosition: this.props.positionUpdateTrigger
       }
     });
   }
 
   createEdgeLayer() {
-    const {
-      edges,
-      getEdgeColor,
-      getEdgePosition,
-      getEdgeWidth,
-      // update triggers
-      positionUpdateTrigger,
-    } = this.props;
-
     return new LineLayer({
       id: 'edge-layer',
-      data: edges,
-      getSourcePosition: e => getEdgePosition(e).sourcePosition,
-      getTargetPosition: e => getEdgePosition(e).targetPosition,
-      getColor: getEdgeColor,
-      strokeWidth: getEdgeWidth(),
+      data: this.props.edges,
+      getSourcePosition: e =>
+        this.props.getEdgePosition(e).sourcePosition,
+      getTargetPosition: e =>
+        this.props.getEdgePosition(e).targetPosition,
+      getColor: this.props.getEdgeColor,
+      strokeWidth: this.props.getEdgeWidth(),
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
-        getSourcePosition: positionUpdateTrigger,
-        getTargetPosition: positionUpdateTrigger
+        getSourcePosition: this.props.positionUpdateTrigger,
+        getTargetPosition: this.props.positionUpdateTrigger
       }
     });
   }
 
   render() {
-    const {height, width} = this.props;
     return (
       <div id="graph-render">
         <DeckGL
-          width={width}
-          height={height}
-          viewport={this.creatViewport()}
+          width={this.props.width}
+          height={this.props.height}
+          viewport={this.createViewport()}
           layers={[
             this.createEdgeLayer(),
             this.createNodeLayer()

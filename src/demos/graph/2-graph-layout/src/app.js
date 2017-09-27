@@ -49,8 +49,8 @@ export default class App extends Component {
 
   processData() {
     if (sampleGraph) {
-      const {viewport} = this.state;
-      const {width, height} = viewport;
+      const width = this.state.viewport.width;
+      const height = this.state.viewport.height;
       const newGraph = new Graph();
       sampleGraph.nodes.forEach(node =>
         newGraph.addNode({
@@ -83,12 +83,11 @@ export default class App extends Component {
       return null;
     }
 
-    const {viewport} = this.state;
     return (
       <GraphRender
         /* viewport related */
-        width={viewport.width}
-        height={viewport.height}
+        width={this.state.viewport.width}
+        height={this.state.viewport.height}
         /* nodes related */
         nodes={this.state.graph.nodes}
         getNodeColor={this.getNodeColor}

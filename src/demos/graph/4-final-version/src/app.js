@@ -45,8 +45,6 @@ export default class App extends Component {
 
   processData = () => {
     if (sampleGraph) {
-      const {viewport} = this.state;
-      const {width, height} = viewport;
       const newGraph = new Graph();
       sampleGraph.nodes.forEach(node =>
         newGraph.addNode({
@@ -103,14 +101,13 @@ export default class App extends Component {
       return null;
     }
 
-    const {viewport, hoveredNodeID} = this.state;
     return (
       <GraphRender
         /* viewport related */
-        width={viewport.width}
-        height={viewport.height}
+        width={this.state.viewport.width}
+        height={this.state.viewport.height}
         /* update triggers */
-        colorUpdateTrigger={hoveredNodeID}
+        colorUpdateTrigger={this.state.hoveredNodeID}
         positionUpdateTrigger={this._engine.alpha()}
         /* nodes related */
         nodes={this.state.graph.nodes}

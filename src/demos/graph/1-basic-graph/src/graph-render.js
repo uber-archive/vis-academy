@@ -9,8 +9,9 @@ import DeckGL, {
 
 export default class GraphRender extends PureComponent {
 
-  creatViewport() {
-    const {height, width} = this.props;
+  createViewport() {
+    const width = this.props.width;
+    const height = this.props.height;
     return new OrthographicViewport({
       width,
       height,
@@ -20,51 +21,35 @@ export default class GraphRender extends PureComponent {
   }
 
   renderNodeLayer() {
-    const {
-      nodes,
-      getNodeColor,
-      getNodePosition,
-      getNodeSize
-    } = this.props;
-
     return new ScatterplotLayer({
       id: 'node-layer',
-      data: nodes,
-      getPosition: getNodePosition,
-      getRadius: getNodeSize,
-      getColor: getNodeColor,
+      data: this.props.nodes,
+      getPosition: this.props.getNodePosition,
+      getRadius: this.props.getNodeSize,
+      getColor: this.props.getNodeColor,
       projectionMode: COORDINATE_SYSTEM.IDENTITY
     });
   }
 
   renderEdgeLayer() {
-    const {
-      edges,
-      getEdgeColor,
-      getEdgePosition,
-      getEdgeWidth
-    } = this.props;
-
     return new LineLayer({
       id: 'edge-layer',
-      data: edges,
-      getSourcePosition: e => getEdgePosition(e).sourcePosition,
-      getTargetPosition: e => getEdgePosition(e).targetPosition,
-      getColor: getEdgeColor,
-      strokeWidth: getEdgeWidth(),
+      data: this.props.edges,
+      getSourcePosition: e => this.props.getEdgePosition(e).sourcePosition,
+      getTargetPosition: e => this.props.getEdgePosition(e).targetPosition,
+      getColor: this.props.getEdgeColor,
+      strokeWidth: this.props.getEdgeWidth(),
       projectionMode: COORDINATE_SYSTEM.IDENTITY
     });
   }
 
   render() {
-    const {height, width} = this.props;
-    
     return (
       <div id="graph-render">
         <DeckGL
-          width={width}
-          height={height}
-          viewport={this.creatViewport()}
+          width={this.props.width}
+          height={this.props.height}
+          viewport={this.createViewport()}
           layers={[
             this.renderEdgeLayer(),
             this.renderNodeLayer()
