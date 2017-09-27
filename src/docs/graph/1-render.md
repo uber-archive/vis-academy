@@ -46,7 +46,7 @@ import DeckGL, {
 
 export default class GraphRender extends Component {
 
-  renderNodeLayer() {
+  createNodeLayer() {
     return new ScatterplotLayer({
       id: 'node-layer',
       data: this.props.nodes,
@@ -96,7 +96,7 @@ import DeckGL, {
 export default class GraphRender extends Component {
   // ...
 
-  renderEdgeLayer() {
+  createEdgeLayer() {
     return new LineLayer({
       id: 'edge-layer',
       data: this.props.edges,
@@ -155,7 +155,7 @@ import DeckGL, {
 
 export default class GraphRender extends Component {
   
-  creatViewport() {
+  createViewport() {
     const {height, width} = this.props;
     return new OrthographicViewport({
       width,
@@ -183,10 +183,10 @@ export default class GraphRender extends PureComponent {
         <DeckGL
           width={this.props.width}
           height={this.props.height}
-          viewport={this.creatViewport()}
+          viewport={this.createViewport()}
           layers={[
-            this.renderEdgeLayer(),
-            this.renderNodeLayer()
+            this.createEdgeLayer(),
+            this.createNodeLayer()
           ]}
         />
       </div>
