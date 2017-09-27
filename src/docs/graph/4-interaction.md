@@ -18,6 +18,8 @@ We will use this property to change the color to red when `isHighlighted` is tru
 
 ```js
 export default class App extends Component {
+  // ...
+
   processData = () => {
     // ...
     if (sampleGraph) {
@@ -165,7 +167,6 @@ export default class GraphRender extends PureComponent {
 
   // ...
 }
-
 ```
 
 ## Complete code
