@@ -34,6 +34,13 @@ import GeospatialAppTooMuch from
 import GeospatialAppConfusing from
   'docs/building-a-geospatial-app/guidelines/axes.md';
 
+// graph vis
+import setupGraph from 'docs/graph/0-setup.md';
+import graphRender from 'docs/graph/1-render.md';
+import startGraph from 'docs/graph/2-basic-graph.md';
+import layoutEngine from 'docs/graph/3-layout-engine.md';
+import interactionHover from 'docs/graph/4-interaction.md';
+
 export default [{
   name: 'Building a Geospatial App',
   desc: 'Learn how to create maps, layer data on top of them and draw charts with the Uber vis libraries.',
@@ -98,6 +105,33 @@ export default [{
         name: 'Don\'t: Confusing axes',
         markdown: GeospatialAppConfusing,
       }]
+    }
+  ]
+}, {
+  name: 'Building a Graph Vis',
+  desc: 'Learn how to create a graph visualization with d3-force layout.',
+  image: 'images/graph-vis/cover.png', 
+  path: '/graph-vis',
+  data: [
+    {
+      name: 'Setup',
+      markdown: setupGraph
+    },
+    {
+      name: '1. Graph Render',
+      markdown: graphRender
+    },
+    {
+      name: '2. Basic Graph Application',
+      markdown: startGraph
+    },
+    {
+      name: '3. Plugin Layout Engine',
+      markdown: layoutEngine
+    },
+    {
+      name: '4. Interacting With Graph',
+      markdown: interactionHover
     }
   ]
 }];

@@ -16,8 +16,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: 1000,
+        height: 700
       },
       graph: new Graph(),
       hoveredNodeID: null
@@ -70,7 +70,7 @@ export default class App extends Component {
   reRender = () => this.forceUpdate()
 
   // node accessors
-  getNodeColor = node => (node.isHighlighted ? [256, 0, 0] : [94, 94, 94])
+  getNodeColor = node => (node.isHighlighted ? [255, 0, 0] : [94, 94, 94])
 
   getNodeSize = node => 10
 
@@ -79,10 +79,19 @@ export default class App extends Component {
     const hoveredNodeID = node.object && node.object.id;
     const graph = new Graph(this.state.graph);
     if (hoveredNodeID) {
-      // highlight the selected node and connected edges
-      const connectedEdgeIDs =
-        this.state.graph.findConnectedEdges(hoveredNodeID).map(e => e.id);
-      graph.nodes.forEach(n => n.isHighlighted = n.id === hoveredNodeID);
+      // highlight the selected node, connected edges, and neighbor nodes
+      const connectedEdges = this.state.graph.findConnectedEdges(hoveredNodeID);
+      const connectedEdgeIDs = connectedEdges.map(e => e.id);
+      const hightlightNodes = connectedEdges.reduce((res, e) => {
+        if (!res.includes(e.source)) {
+          res.push(e.source);
+        }
+        if (!res.includes(e.target)) {
+          res.push(e.target);
+        }
+        return res;
+      }, [])
+      graph.nodes.forEach(n => n.isHighlighted = hightlightNodes.includes(n.id));
       graph.edges.forEach(e => e.isHighlighted = connectedEdgeIDs.includes(e.id));
     } else {
       // unset all nodes and edges
@@ -94,7 +103,7 @@ export default class App extends Component {
   }
 
   // edge accessors
-  getEdgeColor = edge => (edge.isHighlighted ? [256, 0, 0] : [64, 64, 64])
+  getEdgeColor = edge => (edge.isHighlighted ? [255, 0, 0] : [64, 64, 64])
 
   getEdgeWidth = () => 2
 
