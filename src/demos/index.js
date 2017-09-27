@@ -10,6 +10,8 @@ import GeospatialAppLinkingItAll from './building-a-geospatial-app/6-linking-it-
 
 import * as guidelines from './building-a-geospatial-app/guidelines';
 
+import * as GraphExamples from './graph';
+
 export default {
 
   GeospatialAppStartingWithMap,
@@ -21,5 +23,6 @@ export default {
   GeospatialAppLinkingItAll,
 
   ...guidelines,
+  ...GraphExamples
 
 }
