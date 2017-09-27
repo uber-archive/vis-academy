@@ -145,7 +145,7 @@ export default class App extends Component {
             ...tooltipStyle,
             transform: `translate(${this.state.x}px, ${this.state.y}px)`
           }}>
-            <div>{this.state.hoveredObject.id}</div>
+            <div>{JSON.stringify(this.state.hoveredObject)}</div>
           </div>}
         {this.props.noControls ? null : <LayerControls
           settings={this.state.settings}

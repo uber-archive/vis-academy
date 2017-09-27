@@ -27,12 +27,12 @@ export default class App extends Component {
         zoom: 11,
         maxZoom: 16
       },
-      
+
       settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
         ...accu,
         [key]: HEXAGON_CONTROLS[key].value
       }), {}),
-      
+
       status: 'LOADING'
     };
     this._resize = this._resize.bind(this);
@@ -97,10 +97,9 @@ export default class App extends Component {
         {this.state.hoveredObject &&
           <div style={{
             ...tooltipStyle,
-            left: this.state.x,
-            top: this.state.y
+            transform: `translate(${this.state.x}px, ${this.state.y}px)`
           }}>
-            <div>{this.state.hoveredObject.id}</div>
+            <div>{JSON.stringify(this.state.hoveredObject)}</div>
           </div>}
         <LayerControls
           settings={this.state.settings}
