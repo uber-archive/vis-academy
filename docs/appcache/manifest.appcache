@@ -1,36 +1,39 @@
 CACHE MANIFEST
-#ver:9/26/2017, 6:17:05 PM
+#ver:2017-9-27 13:49:44
 #plugin:4.8.3
 
 CACHE:
-../bundle-a352ff2af152ca4f73c0.js
-../styles-a352ff2af152ca4f73c0.css
+../bundle-b83b71fc9f3a320f3b1a.js
+../styles-b83b71fc9f3a320f3b1a.css
 ../
 ../favicon.ico
 ../fonts/uber.svg
 ../fonts/uber.ttf
 ../fonts/uber.woff
-../images/icon-high-precision.svg
-../images/icon-layers.svg
+../images/icon-chart.svg
 ../images/footer-pattern.gif
+../images/icon-custom.svg
+../images/icon-layers.svg
+../images/icon-high-precision.svg
 ../images/icon-react.svg
-../images/uber-logo.png
 ../images/hero.jpg
+../images/uber-logo.png
+../images/logo.svg
 ../images/geospatial-app/geospatial-app.png
 ../images/mg_arc_2.png
-../images/mg_choropleth.png
 ../images/mg_arc_1.png
+../images/mg_choropleth.png
 ../images/mg_hex_1.png
 ../images/mg_hex_2.png
-../images/mg_hex_3.png
 ../images/mg_hex_3d.png
+../images/mg_hex_3.png
 ../images/mg_hex_4.png
 ../images/mg_hex_5.png
-../images/mg_hex_6.png
 ../images/mg_path.png
-../images/path.jpg
-../images/mg_scatterplot_2.png
+../images/mg_hex_6.png
 ../images/mg_scatterplot_1.png
+../images/mg_scatterplot_2.png
+../images/path.jpg
 
 NETWORK:
 *
