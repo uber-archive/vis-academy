@@ -14,32 +14,33 @@ In React Vis, creating a chart has a nice React-y feeling of assembling componen
 
 We're going to need extra data for the charts.
 
-in your app.js file, change your _processData method by this one: 
+in your app.js file, replace your _processData method with this one:
 ```js
   _processData() {
     if (taxiData) {
       this.setState({status: 'LOADED'});
       const data = taxiData.reduce((accu, curr) => {
-        const pickupTime = curr.tpep_pickup_datetime || '';
-        const dropoffTime = curr.tpep_dropoff_datetime || '';
 
-        const distance = curr.trip_distance;
-        const amount = curr.total_amount;
+        const pickupHour = new Date(curr.tpep_pickup_datetime).getUTCHours();
+        const dropoffHour = new Date(curr.tpep_dropoff_datetime).getUTCHours();
 
-        const pickupHour = Number(pickupTime.slice(11, 13));
-        const dropoffHour = Number(dropoffTime.slice(11, 13));
+        const pickupLongitude = Number(curr.pickup_longitude);
+        const pickupLatitude = Number(curr.pickup_latitude);
 
-        if (!isNaN(Number(curr.pickup_longitude)) && !isNaN(Number(curr.pickup_latitude))) {
+        if (!isNaN(pickupLongitude) && !isNaN(pickupLatitude)) {
           accu.points.push({
-            position: [Number(curr.pickup_longitude), Number(curr.pickup_latitude)],
+            position: [pickupLongitude, pickupLatitude],
             hour: pickupHour,
             pickup: true
           });
         }
 
-        if (!isNaN(Number(curr.dropoff_longitude)) && !isNaN(Number(curr.dropoff_latitude))) {
+        const dropoffLongitude = Number(curr.dropoff_longitude);
+        const dropoffLatitude = Number(curr.dropoff_latitude);
+
+        if (!isNaN(dropoffLongitude) && !isNaN(dropoffLatitude)) {
           accu.points.push({
-            position: [Number(curr.dropoff_longitude), Number(curr.dropoff_latitude)],
+            position: [dropoffLongitude, dropoffLatitude],
             hour: dropoffHour,
             pickup: false
           });
@@ -58,13 +59,11 @@ in your app.js file, change your _processData method by this one:
         dropoffObj: {}
       });
 
-      data.pickups = Object.entries(data.pickupObj).map(d => {
-        const hour = Number(d[0]);
-        return {hour, x: hour + 0.5, y: d[1]};
+      data.pickups = Object.entries(data.pickupObj).map(([hour, count]) => {
+        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
       });
-      data.dropoffs = Object.entries(data.dropoffObj).map(d => {
-        const hour = Number(d[0]);
-        return {hour, x: hour + 0.5, y: d[1]};
+      data.dropoffs = Object.entries(data.dropoffObj).map(([hour, count]) => {
+        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
       });
       data.status = 'READY';
 
@@ -73,8 +72,8 @@ in your app.js file, change your _processData method by this one:
   }
 ```
 
-You can just copy/paste. Nothing rocket science here, we're just creating our dataset.
-We're building 3 extra objects: _pickups_, which has the number of pickups by hour, _dropoffs_, which has the tally of dropoffs by hour, and _scatterplot_, which will show how distance and time of trips are correlated. 
+You can just copy/paste. Nothing is rocket science here, we're just creating our dataset.
+We're building 3 extra objects: _pickups_, which has the number of pickups by hour, _dropoffs_, which has the tally of dropoffs by hour, and _scatterplot_, which will show how the distance and time of the trips are correlated.
 We're also adding the hour of the pickup or dropoff time to the dataset we passed to the deck.gl overlay.
 
 Then, create a new file called charts.js with the following:
@@ -182,7 +181,7 @@ This code produces this output:
 
 In just 8 lines of React-vis code we have a bar chart with axes!
 
-XYPlot is the wrapper of React-Vis component. It must be given a height and a width, although React-Vis provides a way to make responsive charts as well.
+XYPlot is the wrapper component around all React-Vis marks. It must be passed a height and width, or you can use React-Vis's FlexibleXYPlot to get the dimensions from the parent container (for responsive graphs, e.g.).
 
 Inside our XYPlot component, we just add the components that we need in the order that we want:
 
@@ -193,7 +192,7 @@ XAxis is our horizontal axis, YAxis is our vertical axis, and VerticalBarSeries 
 Every component in React-Vis can be fine tuned.
 In this next session, we're going to work on the appearance of the y-axis. Our objective is to make it go from 0% to 10%.
 
-Our dataset is based a sample of 10,000 trips on that day. The Y values proper contain an absolute number of pickups - in our sample, there were 434 pickups between 10 and 11 AM, for instance. 434 out of a sample of 10000 is not very useful, but a better way to phrase it is that it represents 4.34% of all the trips. 
+Our dataset is based a sample of 10,000 trips on a single day. The Y values proper contain an absolute number of pickups - in our sample, there were 434 pickups between 10 and 11 AM, for instance. 434 out of a sample of 10000 is not very useful, but a better way to phrase it is that it represents 4.34% of all the trips.
 
 We can do that by changing the way the ticks are represented in the axes.
 
@@ -241,7 +240,7 @@ The rest of this document will guide you through further fine-tuning improvement
 
 ### a. margins
 
-XYPlot has a property, margin, which defines the interior spacing. Its default values are set for larger charts. So let's change this:
+XYPlot has a margin property which defines the interior spacing. Its default values are set for larger charts. So let's change this:
 
 ```js
 <XYPlot
@@ -256,13 +255,13 @@ You can read more about margins and other properties in the [XYPlot](https://ube
 ### b. x-axis customization
 
 Right now, our x-axis is not very useful. It shows numbers: 0, 2, 4 ... with ticks on top of them.
-If you created this dataset, you may know those are hours, but that may not be obvious for people reading this chart. 
+If you created this dataset, you may know those are hours, but that may not be obvious for people reading this chart.
 
 Also, when plotting time on an x-axis, one should be **extra-careful** because it's so easy to be ambiguous.
 
 In our cases, our columns represent things that happened between midnight and 1:00AM, 1:00AM and 2:00 AM etc. until our last time slot, 11PM to midnight. So our columns correspond to time slots, not precise times. Writing 12AM below a column is ambiguous, because: is this the period _starting_ at 12AM? or _ending_ at 12AM?
 
-For React-vis, the x value of a bar chart corresponds to its center, not to its left-most point. This is why, when preparing the dataset, we made the x values to be 0.5 more than an integer: so that the column can be drawn in between 2 ticks. 
+For React-vis, the x value of a bar chart corresponds to its center, not to its left-most point. This is why, when preparing the dataset, we made the x values to be 0.5 more than their hour value: so that the column can be drawn in between 2 ticks.
 
 We don't want to write out many x-axis labels either: every 6 hours should be enough.
 XAxis has a tickValues prop that allows us to specify where we want to draw a tick: in our case, on [0, 6, 12, 18 and 24].

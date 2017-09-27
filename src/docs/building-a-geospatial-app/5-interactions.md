@@ -60,17 +60,17 @@ And finally, in the VerticalBarSeries component:
 ```
 <!-- INJECT:"GeospatialAppHoverInteraction" inline -->
 
-We are getting which hour is highlighted from the state of the parent component, and a callback method to change it.
+We are getting the highlighted hour from the the parent component's state, and adding a callback method to set the hour on the parent state.
 
 We are now integrating that information to prepare a dataset: we're going to add some color information to it. If a bar is highlighted, we're giving it a special color.
 
 In VerticalBarSeries, the onValueMouseOver is the way to plug our callback to an interaction event. When a user will mouseover a bar of the series, highlight will be called.
 
-When I prepared the dataset for the series, pickups, I provided an x and a y value for each mark on the series, which is required by React-Vis. However, I can provide all the attributes I want to my dataset. I chose to include an "hour" property which corresponds to the integer value of the hour when a pickup happened. 
+When we prepared the dataset for the pickups series, we provided an x and a y value for each mark, which is required by React-Vis. However, we can provide any attributes we want to our data array. We chose to include an "hour" property which corresponds to the integer value of the hour when a pickup happened.
 
-onValueMouseOver passes the object which corresponds to the mark which is highlighted, with all its properties. I can then pass the hour property to that highlight callback.
+onValueMouseOver passes the object which corresponds to the mark which is highlighted, with all its properties. We can then pass the hour property to that highlight callback.
 
-I also changed the colorType to be "literal". There are many ways to pass color to a react-vis series, but if we pass explicit color values in the dataset, we must signal it to the series.
+We also changed the colorType to be "literal". There are many ways to pass color to a react-vis series, but if we pass explicit color values in the dataset, we must signal it to the series.
 
 ## 2. Fine-tuning: handling mousing out of the chart and clicks.
 
