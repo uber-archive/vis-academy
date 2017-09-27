@@ -143,8 +143,7 @@ export default class App extends Component {
         {this.state.hoveredObject &&
           <div style={{
             ...tooltipStyle,
-            left: this.state.x,
-            top: this.state.y
+            transform: `translate(${this.state.x}px, ${this.state.y}px)`
           }}>
             <div>{this.state.hoveredObject.id}</div>
           </div>}

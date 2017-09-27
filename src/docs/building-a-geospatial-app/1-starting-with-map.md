@@ -42,7 +42,7 @@ above, and not the whole thing.
 
 ## 2. Adding Default Viewport State
 
-`react-map-gl` requires a viewport that specifies the dimension, location, and
+`react-map-gl` requires a viewport that specifies the dimensions, location, and
 basic settings of the map, so let's give ourselves a set of defaults:
 ```js
 ...
@@ -65,7 +65,7 @@ export default class App extends Component {
 }
 ```
 We set the viewport object on component state because `react-map-gl` leaves
-the control of the viewport to the user. We will have to update this viewport
+the control of the viewport to the implementer. We will have to update this viewport
 manually and pass it back into `react-map-gl` if we want to change it.
 
 ## 3. Adding the Map Component
