@@ -32,7 +32,7 @@ Then, in the render method, let's add an `hour` property to `DeckGLOverlay`:
 
 And in our deckgl-overlay.js file, let's make these changes:
 
-We're creting filteredData which is only the datapoints which correspond to the time slot highlighted or selected on the bar chart, and we're replacing data by filtered data in the layers. 
+We're creating a new filteredData variable, which is only the datapoints that correspond to the time slot highlighted or selected on the bar chart, and we're replacing data by filtered data in the layers.
 
 ```js
 const filteredData = this.props.hour === null
@@ -71,7 +71,7 @@ const layers = [
 And as you can see, interactions on the bar chart are now visible on our deck.gl part!
 
 <ul class="insert takeaways">
-  <li>React-Vis and Deck.GL components can interact with each other and their parent, just like any other React component!</li>
+  <li>React-Vis and Deck.GL components can interact their parent and their children, just like any other React component!</li>
   <li>There's no limit to what you can achieve!</li>
 </ul>
 

@@ -77,7 +77,7 @@ export default class App extends Component {
             pickup: false
           });
         }
-        
+
         const prevPickups = accu.pickupObj[pickupHour] || 0;
         const prevDropoffs = accu.dropoffObj[dropoffHour] || 0;
 
@@ -91,13 +91,11 @@ export default class App extends Component {
         dropoffObj: {}
       });
 
-      data.pickups = Object.entries(data.pickupObj).map(d => {
-        const hour = Number(d[0]);
-        return {hour, x: hour + 0.5, y: d[1]};
+      data.pickups = Object.entries(data.pickupObj).map(([hour, count]) => {
+        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
       });
-      data.dropoffs = Object.entries(data.dropoffObj).map(d => {
-        const hour = Number(d[0]);
-        return {hour, x: hour + 0.5, y: d[1]};
+      data.dropoffs = Object.entries(data.dropoffObj).map(([hour, count]) => {
+        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
       });
       data.status = 'READY';
 
@@ -144,10 +142,9 @@ export default class App extends Component {
         {this.state.hoveredObject &&
           <div style={{
             ...tooltipStyle,
-            left: this.state.x,
-            top: this.state.y
+            transform: `translate(${this.state.x}px, ${this.state.y}px)`
           }}>
-            <div>{this.state.hoveredObject.id}</div>
+            <div>{JSON.stringify(this.state.hoveredObject)}</div>
           </div>}
         <LayerControls
           settings={this.state.settings}

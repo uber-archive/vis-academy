@@ -18,7 +18,7 @@ export const HOME_RIGHT = (
   <div>
     <h2>Uber Visualization tutorial</h2>
     <p className='m-bottom'>
-      This tutorial will show you how to build an app that showcases three of Uber visualization libraries: ReactMapGL for maps, DeckGL to create WebGL-based data overlays and React-Vis> for simple charts.
+      This tutorial will show you how to build an app that showcases three of Uber visualization libraries: ReactMapGL for maps, DeckGL to create WebGL-based data overlays and React-Vis for simple charts.
       </p>
     <p className='m-bottom'>
       You will learn how to use these libraries separately, but also how they can be combined to work together.

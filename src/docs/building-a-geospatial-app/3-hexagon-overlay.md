@@ -19,7 +19,7 @@ can visualize a distribution heatmap from raw points.
 ## 1. Update our control panel
 We're going to upgrade our control panel so we can switch from the scatterplot layer to the hexagon layer. Let's do that now, so you can see the changes on the hexagon layer as we build it.
 
-Replace everywhere in app.js SCATTERPLOT_CONTROLS by HEXAGON_CONTROLS. It appears 4 times:
+Replace SCATTERPLOT_CONTROLS with HEXAGON_CONTROLS everywhere in app.js. It appears 4 times:
 - in the import statement,
 - in the component's contructor method, while preparing the initial state,
 - in the render method, as an argument to the LayerControls component.
@@ -28,13 +28,14 @@ Now, to implement our new overlay, let's focus on `deckgl-overlay.js`:
 
 ## 2. Add Constants for Hexagon Layer
 
-Deck.gl performances shallow compares on layer props to decide how to update attribute buffer.
+Deck.gl performantly shallow compares on layer props to decide how to update attribute buffer.
 To avoid unnecessary re-calculations, we define constant params outside of the render function.
 
 You can add these constants at the very top of `deckgl-overlay.js`.
-We will pass them into the `HexagonLayer` layer on.
+We will pass them into the `HexagonLayer` later on.
 
 ```js
+// in RGB
 const HEATMAP_COLORS = [
   [213, 62, 79],
   [252, 141, 89],
@@ -58,7 +59,7 @@ const elevationRange = [0, 1000];
 
 ## 3. Add Hexagon Layer
 
-We have already passed the necessary data into this component from the previous example. So now we only need to take care of rendering the `HexagonLayer` when needed.
+We have already passed the necessary data into this component in the previous example. So now we only need to take care of rendering the `HexagonLayer` when needed.
 
 ```js
 // ...
@@ -115,12 +116,12 @@ export default class DeckGLOverlay extends Component {
 
 With this, your `deckgl-overlay.js` should be ready to render a functional `HexagonLayer`.
 
-Here's a link to the [complete code of this step](https://github.com/uber-common/vis-academy/tree/master/src/demos/building-a-geospatial-app/hexagon-overlay) 
+Here's a link to the [complete code of this step](https://github.com/uber-common/vis-academy/tree/master/src/demos/building-a-geospatial-app/hexagon-overlay)
 
 <ul class="insert takeaways">
   <li>The HexagonLayer can display aggregated, 3D hexagons</li>
   <li>Deck.GL can display any number of layers at once</li>
-  <li>It's possible to deactivate any of these layers at run time by replacing it by null</li>
+  <li>It's possible to deactivate any of these layers at runtime by returning null instead of a layer</li>
 </ul>
 
 Let's go over some properties of the `HexagonLayer`:
@@ -134,17 +135,16 @@ Array of points for the layer. In this case, it's our Taxi data set.
 format as `[{position: [lng, lat]}, {position: [lng, lat]}]`
 
 ##### `getPosition` {Function}
-Function that gets called for each data point, should return an array of [longitude, latitude].
+Function that gets called on each data point, should return an array of [longitude, latitude].
 
 ##### `extruded` {Bool}
 Whether to enable hexagon elevation
 
 #### `radius` {Number}
-Hexagon layer cell radius in meter
+Hexagon layer cell radius in meters
 
-#### `upperPercentile` {Number}
-- Default: `100`
+#### `upperPercentile` {Number} (Default: `100`)
 Hexagon cells with value larger than upperPercentile will be hidden
 
 ##### `pickable` {Bool}
-Indicates whether this layer would be interactive.
+Indicates whether this layer should be interactive.
