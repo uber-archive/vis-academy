@@ -108,7 +108,9 @@ export default [{
     }
   ]
 }, {
-  name: 'Graph Visualization',
+  name: 'Building a Graph Vis',
+  desc: 'Learn how to create a graph visualization with d3-force layout.',
+  image: 'images/graph-vis/cover.png', 
   path: '/graph-vis',
   data: [
     {
@@ -124,11 +126,11 @@ export default [{
       markdown: startGraph
     },
     {
-      name: '3. Plugin layout engine',
+      name: '3. Plugin Layout Engine',
       markdown: layoutEngine
     },
     {
-      name: '4. Interacting with graph',
+      name: '4. Interacting With Graph',
       markdown: interactionHover
     }
   ]

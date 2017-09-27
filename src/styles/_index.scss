@@ -8,6 +8,10 @@
   padding: 24px;
 }
 
+.lessons {
+  display: flex;
+}
+
 .lesson-card {
   color: #494949;
   width: 300px;
@@ -27,6 +31,10 @@
   margin: 12px 0 8px;
   border-top: 2px solid #eef;
   padding-top: 12px;
+}
+
+.lesson-card__get-started {
+  color: $primary;
 }
 
 .btn {

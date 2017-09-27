@@ -1,11 +1,20 @@
+<!-- INJECT:"InteractiveGraph" heading -->
+
 <ul class='insert learning-objectives'>
-  <li>Interaction: hover to highlight</li>
+  <li>In this step, we will learn how to make graph interactive with mouse events.</li>
+  <li>We want to highlight the node and its connected edges when hovering over a node.</li>
 </ul>
 
-## Add visual property
+**HOLD UP!!!** If you got here without reading the previous steps,
+it is highly recommended that you do so, or you can just check out the complete code from the last step:
+```
+cd src/demos/graph/3-interactive-graph
+```
+
+## Add Visual Property
 
 First, we need to add a new visual property 'isHighlighted' to nodes and edges.
-We will change the color to red when `isHighlighted` is true.
+We will use this property to change the color to red when `isHighlighted` is true.
 
 ```js
 export default class App extends Component {
@@ -31,9 +40,15 @@ export default class App extends Component {
 }
 ```
 
-## Add hover event listener
+## Add Hover Event Listener to GraphRender
 
-For more detail about picking behavior, please see the documentation [here](https://uber.github.io/deck.gl/#/documentation/advanced-topics/picking).
+`deck.gl` includes a powerful picking engine that enables the application to precisely determine what object and layer is "picked" on the screen. 
+The "picking engine" identifies which object in which layer is at the given coordinates. While usually intuitive, what constitutes a pickable "object" is defined by each layer. Typically, it corresponds to one of the data entries that are passed in via prop.data. In our case, we use Scatterplot Layer as the node layer, the pickable object will be the nodes we passed in the props.data array.
+
+Picking can be enabled or disabled on a layer-by-layer basis. To enable picking on a layer, set its pickable prop to true. This value is false by default.
+`deck.gl` provides two basic mouse events: hover and click, to run the picking engine and calls callbacks with a single parameter `info` which contains the resulting picking info object.
+
+For more detail about picking behavior, please see the documentation [here](https://uber.github.io/deck.gl/#/documentation/getting-started/adding-interactivity).
 
 ```js
 // graph-render.js
@@ -41,48 +56,51 @@ export default class GraphRender extends PureComponent {
   // ...
 
   createNodeLayer() {
-    const {
-      // ...
-      onHoverNode
-    } = this.props;
-
     return new ScatterplotLayer({
       // ...
-      onHover: onHoverNode,
+      // 0. enable picking on the layer
       pickable: true
+      // 1. pass onHover callback from props
+      onHover: this.props.onHoverNode
     });
   }
 
   // ...
 }
+```
+## Implement onHoverNode Handler
 
+```js
 // app.js
 export default class App extends Component {
   constructor(props) {
     // ...
-    this.state = {hoveredNodeID: null};
+    this.state = {
+      // ...
+      // 0. add hoveredNodeID to component state
+      hoveredNodeID: null
+    };
   }
 
   // ...
 
   onHoverNode = node => {
-    // check if is hovering on a node
+    // 1. check if is hovering on a node
     const hoveredNodeID = node.object && node.object.id;
+    const graph = new Graph(this.state.graph);
     if (hoveredNodeID) {
-      // highlight the selected node and connected edges
+      // 2. highlight the selected node and connected edges
       const connectedEdgeIDs =
-        this._graph.findConnectedEdges(hoveredNodeID).map(e => e.id);
-      this._graph.nodes.forEach(n => n.isHighlighted = n.id === hoveredNodeID);
-      this._graph.edges.forEach(e => e.isHighlighted = connectedEdgeIDs.includes(e.id));
-      // update component state
-      this.setState({hoveredNodeID});
+        this.state.graph.findConnectedEdges(hoveredNodeID).map(e => e.id);
+      graph.nodes.forEach(n => n.isHighlighted = n.id === hoveredNodeID);
+      graph.edges.forEach(e => e.isHighlighted = connectedEdgeIDs.includes(e.id));
     } else {
-      // unset all nodes and edges
-      this._graph.nodes.forEach(n => n.isHighlighted = false);
-      this._graph.edges.forEach(e => e.isHighlighted = false);
-      // update component state
-      this.setState({hoveredNodeID: null});
+      // 3. unset all nodes and edges
+      graph.nodes.forEach(n => n.isHighlighted = false);
+      graph.edges.forEach(e => e.isHighlighted = false);      
     }
+    // 4. update component state
+    this.setState({graph, hoveredNodeID});
   }
 
   render() {
@@ -90,6 +108,7 @@ export default class App extends Component {
     return (
       <GraphRender
         // ...
+        // 5. pass onHoverNode handler
         onHoverNode={this.onHoverNode}
       />
     );
@@ -97,9 +116,9 @@ export default class App extends Component {
 }
 ```
 
-## Add color update trigger
+## Add Color Update Trigger
 
-As we mentioned in the previous [step](), `deck.gl` doesn't re-evaluate the `getColor` unless we define the updateTrigger for `getColor` explicitly.
+As we mentioned in the previous [step](#/graph-vis/3-layout-engine), `deck.gl` doesn't re-evaluate the accessors when data is not changed. We will need add the update trigger for `getColor` to inform `deck.gl` re-evaluate the colors again.
 
 ```js
 export default class App extends Component {
@@ -157,230 +176,6 @@ export default class GraphRender extends PureComponent {
 
 ## Complete code
 
-Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/starting-with-map/app.js) should now look like this:
-
-
-```js
-
-// app.js
-/* global window */
-import React, { Component } from 'react'
-
-// data
-import sampleGraph from '../data/sample-graph2';
-
-// components
-import Graph from './graph';
-import GraphRender from './graph-render';
-import LayoutEngine from './layout-engine';
-
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this._graph = new Graph();
-    this.state = {hoveredNodeID: null};
-    this._engine = new LayoutEngine();
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-    this.handleResize();
-    this.processData();
-  }
-
-  componentWillMount() {
-    this._engine.registerCallbacks({
-     onUpdate: this.reRender
-    });
-  }
-
-  componentWillUnmount() {
-    this._engine.unregisterCallbacks();
-  }
-
-  handleResize() => {
-    this.setState({
-      viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight
-      }
-    });
-  }
-
-  processData = () => {
-    if (sampleGraph) {
-      const {viewport} = this.state
-      const {width, height} = viewport
-      sampleGraph.nodes.forEach(node => {
-        this._graph.addNode({
-          id: node.id,
-          isHighlighted: false,
-        });
-      });
-      sampleGraph.edges.forEach(edge => {
-        this._graph.addEdge({
-          ...edge,
-          isHighlighted: false,
-        });
-      });
-      // update engine
-      this._engine.update(this._graph);
-      this._engine.start();
-    }
-  }
-
-  reRender = () => this.forceUpdate()
-
-  // node accessors
-  getNodeColor = node => (node.isHighlighted ? [256, 0, 0] : [94, 94, 94])
-
-  getNodeSize = node => 10
-
-  onHoverNode = node => {
-    // check if is hovering on a node
-    const hoveredNodeID = node.object && node.object.id;
-    if (hoveredNodeID) {
-      // highlight the selected node and connected edges
-      const connectedEdgeIDs =
-        this._graph.findConnectedEdges(hoveredNodeID).map(e => e.id);
-      this._graph.nodes.forEach(n => n.isHighlighted = n.id === hoveredNodeID);
-      this._graph.edges.forEach(e => e.isHighlighted = connectedEdgeIDs.includes(e.id));
-      // update component state
-      this.setState({hoveredNodeID});
-    } else {
-      // unset all nodes and edges
-      this._graph.nodes.forEach(n => n.isHighlighted = false);
-      this._graph.edges.forEach(e => e.isHighlighted = false);
-      // update component state
-      this.setState({hoveredNodeID: null});
-    }
-  }
-
-  // edge accessors
-  getEdgeColor = edge => (edge.isHighlighted ? [256, 0, 0] : [64, 64, 64])
-
-  getEdgeWidth = () => 2
-
-  render() {
-    if (this._graph.isEmpty()) {
-      return null;
-    }
-
-    const {viewport, hoveredNodeID} = this.state;
-    return (
-      <GraphRender
-        width={viewport.width}
-        height={viewport.height}
-        positionUpdateTrigger={this._engine.alpha()}
-        colorUpdateTrigger={hoveredNodeID}
-        nodes={this._graph.nodes}
-        getNodeColor={this.getNodeColor}
-        getNodeSize={this.getNodeSize}
-        getNodePosition={this._engine.getNodePosition}
-        onHoverNode={this.onHoverNode}
-        edges={this._graph.edges}
-        getEdgeColor={this.getEdgeColor}
-        getEdgeWidth={this.getEdgeWidth}
-        getEdgePosition={this._engine.getEdgePosition}
-      />
-    );
-  }
-}
-
-// graph-render.js
-import React, {PureComponent} from 'react';
-
-import DeckGL, {
-  LineLayer,
-  ScatterplotLayer,
-  OrthographicViewport,
-  COORDINATE_SYSTEM
-} from 'deck.gl';
-
-export default class GraphRender extends PureComponent {
-
-  creatViewport() {
-    const {height, width} = this.props;
-    return new OrthographicViewport({
-      width,
-      height,
-      left: (-width / 2),
-      top: (-height / 2)
-    });
-  }
-
-  createNodeLayer() {
-    const {
-      nodes,
-      getNodeColor,
-      getNodePosition,
-      getNodeSize,
-      onHoverNode,
-      // update triggers
-      colorUpdateTrigger,
-      positionUpdateTrigger,
-    } = this.props;
-
-    return new ScatterplotLayer({
-      id: 'node-layer',
-      data: nodes,
-      getPosition: node => getNodePosition(node),
-      // getPosition: getNodePosition,
-      // ^^^ this doesn't work?
-      getRadius: getNodeSize,
-      getColor: getNodeColor,
-      onHover: onHoverNode,
-      pickable: true,
-      projectionMode: COORDINATE_SYSTEM.IDENTITY,
-      updateTriggers: {
-        getPosition: positionUpdateTrigger,
-        getColor: colorUpdateTrigger
-      }
-    });
-  }
-
-  createEdgeLayer() {
-    const {
-      edges,
-      getEdgeColor,
-      getEdgePosition,
-      getEdgeWidth,
-      // update triggers
-      colorUpdateTrigger,
-      positionUpdateTrigger,
-    } = this.props;
-
-    return new LineLayer({
-      id: 'edge-layer',
-      data: edges,
-      getSourcePosition: e => getEdgePosition(e).sourcePosition,
-      getTargetPosition: e => getEdgePosition(e).targetPosition,
-      getColor: getEdgeColor,
-      strokeWidth: getEdgeWidth(),
-      projectionMode: COORDINATE_SYSTEM.IDENTITY,
-      updateTriggers: {
-        getSourcePosition: positionUpdateTrigger,
-        getTargetPosition: positionUpdateTrigger,
-        getColor: colorUpdateTrigger
-      }
-    });
-  }
-
-  render() {
-    const {height, width} = this.props;
-    return (
-      <div id="graph-render">
-        <DeckGL
-          width={width}
-          height={height}
-          viewport={this.creatViewport()}
-          layers={[
-            this.createEdgeLayer(),
-            this.createNodeLayer()
-          ]}
-        />
-      </div>
-    );
-  }
-}
-```
+You can check the complete code at here:
+ - [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/4-final-version/src/app.js)
+ - [graph-render.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/4-final-version/src/graph-render.js).

@@ -1,28 +1,26 @@
+<!-- INJECT:"GraphLayout" heading -->
+
 <ul class='insert learning-objectives'>
   <li>Plugin a Graph Layout Engine</li>
+  <li>Get new graph layout from layout engine</li>
 </ul>
 
+**HOLD UP!!!** If you got here without reading the previous steps,
+it is highly recommended that you do so, or you can just check out the complete code from the last step:
+```
+cd src/demos/graph/2-graph-layout
+```
 
-## Layout engine
+## D3 Force Layout Engine
 
-Spring system simulation
-annealing
-
-Decouple the layout calculation logic from the rendering, 
-
-Layout engine will trigger onUpdate callback function when every step of the 'simulation' is finished.
-
-
-[D3 Force](https://github.com/d3/d3-force)
-
-First, we need to install [d3-force(https://github.com/d3/d3-force) from npm:
+First, we need to install [d3-force](https://github.com/d3/d3-force) from npm:
 ```
 yarn add d3-force
 or
 npm install d3-force --save-dev (slower)
 ```
-Layout engine will trigger onUpdate callback function when every step of the 'simulation' is finished.
 
+Layout engine will trigger onUpdate callback function when every step of the 'simulation' is finished.
 
 ```js
 import * as d3 from 'd3-force';
@@ -32,39 +30,42 @@ import * as d3 from 'd3-force';
 export default class LayoutEngine {
 
   constructor(props) {
-    this._d3Graph = {nodes: [], edges: []};
     // ...
-    this._simulator = d3.forceSimulation(_d3Graph.nodes)...
+    // 0. instantiate d3 force layout
+    this._simulator = d3.forceSimulation(graph.nodes)...
+    // 1. register callback when every 'simulation' is finished.
     this._simulator.on('tick', this.ticked);
   }
 
-  // ...
-
   registerCallbacks(onUpdate) {
+    // 2. register external callback
     this._onUpdateCallback = onUpdate;
   }
 
   ticked = () => {
-    // ...
+    // 3. trigger registered callback
     this._onUpdateCallback();
   }
 
   start() {
     // ...
+    // 4. start the layout simulation
     this._simulator.alpha(alpha).restart();
   }
 
   // ...
 }
 ```
-For more detail, please see the complete code of the layout engine at [here]().
-Note that, the layout engine should be replaceable with any other implementation to achieve different type of graph layout.
+The main purpose is to decouple the layout calculation logic from the rendering.
+We already wrote the layout engine for you, so you can just import it to your `app.js`;
+For more detail, please see the complete code of the layout engine at [here](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/common/layout-engine.js).
+Note that, the layout engine should be replaceable with any other implementation to achieve a different type of graph layout.
 
 Let's plug in the layout engine we have here with our graph application.
 
-## 1. Start layout engine
+## 1. Start Layout Engine
 
-To speedup the rendering, we want the component rerender without 'diffing' the component state of props.
+To speed up the rendering, we want the component rerender without 'diffing' the component state of props.
 One trick we can do here is to call 'forceUpdate()' method to rerender the component.
 
 ```js
@@ -111,9 +112,9 @@ export default class App extends Component {
 
 See the complete doe of the layout engine at [here]().
 
-## 2. Connect Render with engine
+## 2. Connect Graph Render with Layout Engine
 
-Once the engine has been lauched, we can start to get the node/edge positions from the engine instead of reading the position from the internal graph (`this._graph`).
+Once the engine has been launched, we can start to get the node/edge positions from the engine instead of reading the position from the internal graph (`this._graph`).
 
 ```js
 export default class App extends Component {
@@ -132,7 +133,7 @@ export default class App extends Component {
 }
 ```
 
-## 3. Update trigger
+## 3. Position Update Trigger
 
 <!-- The last part is to trigger `deck.gl` to update when every time the layout is updated. -->
 In the previous step, we connected `getNodePosition` and `getEdgePosition` with the accessors in the layout engine. However, `deck.gl` doesn't recalculate positions unlesss the data prop changes by shallow comparison. To inform deck.gl to re-evaluate `getPosition` outcome, we need to explicitly define `updateTriggers`. 
@@ -144,29 +145,22 @@ export default class GraphRender extends PureComponent {
   // ...
 
   renderNodeLayer() {
-    const {
-      //...
-      positionUpdateTrigger
-    } = this.props;
-
     return new ScatterplotLayer({
       // ...
+      // 0. add positionUpdateTrigger to node layer
       updateTriggers: {
-        getPosition: positionUpdateTrigger
+        getPosition: this.props.positionUpdateTrigger
       }
     });
   }
 
   renderEdgeLayer() {
-    const {
-      // ...
-      positionUpdateTrigger
-    } = this.props;
-
     return new LineLayer({
+      // ...
+      // 1. add positionUpdateTrigger to node layer
       updateTriggers: {
-        getSourcePosition: positionUpdateTrigger,
-        getTargetPosition: positionUpdateTrigger
+        getSourcePosition: this.props.positionUpdateTrigger,
+        getTargetPosition: this.props.positionUpdateTrigger
       }
     });
   }
@@ -179,10 +173,10 @@ export default class App extends Component {
   // ...
 
   render() {
-    // ...
     return (
       <GraphRender
       	// ...
+        // 2. pass positionUpdateTrigger into GraphRender
         positionUpdateTrigger={this._engine.alpha()}
       />
     );
@@ -191,103 +185,13 @@ export default class App extends Component {
 ```
 
 <ul class='insert takeaways'>
-<li></li>
+  <li>Decouple the layout calculation logic from the rendering.</li>
+  <li>Connect node/edge position accessors with layout engine.</li>
+  <li>Add update trigger to inform deck.gl re-evaluate positions.</li>
 </ul>
 
 ## Complete code
 
-Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/app.js) should now look like this:
-
-```js
-// app.js
-import React, {PureComponent} from 'react';
-
-import DeckGL, {
-  LineLayer,
-  ScatterplotLayer,
-  OrthographicViewport,
-  COORDINATE_SYSTEM
-} from 'deck.gl';
-
-export default class GraphRender extends PureComponent {
-
-  creatViewport() {
-    const {height, width} = this.props;
-    return new OrthographicViewport({
-      width,
-      height,
-      left: (-width / 2),
-      top: (-height / 2)
-    });
-  }
-
-  renderNodeLayer() {
-    const {
-      nodes,
-      getNodeColor,
-      getNodePosition,
-      getNodeSize,
-      // update triggers
-      positionUpdateTrigger
-    } = this.props;
-
-    return new ScatterplotLayer({
-      id: 'node-layer',
-      data: nodes,
-      getPosition: node => getNodePosition(node),
-      // getPosition: getNodePosition,
-      // ^^^ this doesn't work?
-      getRadius: getNodeSize,
-      getColor: getNodeColor,
-      pickable: true,
-      projectionMode: COORDINATE_SYSTEM.IDENTITY,
-      updateTriggers: {
-        getPosition: positionUpdateTrigger
-      }
-    });
-  }
-
-  renderEdgeLayer() {
-    const {
-      edges,
-      getEdgeColor,
-      getEdgePosition,
-      getEdgeWidth,
-      // update triggers
-      positionUpdateTrigger
-    } = this.props;
-
-    return new LineLayer({
-      id: 'edge-layer',
-      data: edges,
-      getSourcePosition: e => getEdgePosition(e).sourcePosition,
-      getTargetPosition: e => getEdgePosition(e).targetPosition,
-      getColor: getEdgeColor,
-      strokeWidth: getEdgeWidth(),
-      projectionMode: COORDINATE_SYSTEM.IDENTITY,
-      updateTriggers: {
-        getSourcePosition: positionUpdateTrigger,
-        getTargetPosition: positionUpdateTrigger
-      }
-    });
-  }
-
-  render() {
-    const {height, width} = this.props;
-
-    return (
-      <div id="graph-render">
-        <DeckGL
-          width={width}
-          height={height}
-          viewport={this.creatViewport()}
-          layers={[
-            this.renderEdgeLayer(),
-            this.renderNodeLayer()
-          ]}
-        />
-      </div>
-    );
-  }
-}
-```
+You can check the complete code at here:
+ - [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/3-interactive-graph/src/app.js)
+ - [graph-render.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/3-interactive-graph/src/graph-render.js).

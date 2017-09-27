@@ -32,8 +32,6 @@ We'll end each lesson with key takeaways and further reading.
 ## 4. Start Coding!
 
 You should see the project sturcture of `0-starting-code` folder like this:
-
-This folder contains all the files you need to scaffold a simple app:
 ```
   src/
     demos/
@@ -54,6 +52,10 @@ This folder contains all the files you need to scaffold a simple app:
  - ./root.js: the entry point of the app.
  - ./webpack.config.js: basic [Webpack](https://webpack.github.io/) server settings.
  - ./yarn.lock: lock file for [yarn](https://yarnpkg.com/en/).
+
+We also prepared the starting code for each step in case you join in the middle of the class.
+Each folder has the same structure, the only thing you need to do is to follow the steps and edit the code in `src/` folder.
+
 
 Now You can open your text editor with the following file:
 

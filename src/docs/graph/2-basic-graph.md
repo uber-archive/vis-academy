@@ -3,20 +3,19 @@
 <li>Update the viewport when resizing the window</li>
 </ul>
 
-# Starting With a Graph
+**HOLD UP!!!** If you got here without reading the [**Setup**](#/graph-vis/setup) or
+[**Graph Render**](#/graph-vis/1-graph-render) step,
+it is highly recommended that you do so, or you can just check out the complete code from the last step:
 
-Checkout the complete code for this step
-[here](https://github.com/uber-common/vis-academy/tree/master/demos/starting-with-graph).
+```
+cd src/demos/graph/1-basic-graph
+```
 
 ## 1. Start with a bare React Component
 
-**HOLD UP!!!** If you got here without reading the **Setup** step, it is
-highly recommended that you do so, or your application might not work.
-[GO HERE](#/graph-vis/setup) and go through it now.
-
 The app component in the starting code above currently looks like this:
 ```js
-...
+// ...
 export default class App extends Component {
 
   constructor(props) {
@@ -31,40 +30,45 @@ export default class App extends Component {
 
 }
 ```
-The next steps of this tutorial will only refer to parts of the outline shown
-above, and not the whole thing.
+The next steps of this tutorial will only refer to parts of the outline shown above, and not the whole thing.
 
 ## 2. Add Graph Data
 
-We already prepared the sample graph data in the repository
-[here](https://github.com/uber-common/vis-tutorial/blob/master/demos/data/sample-graph.js),
+We already prepared the sample graph data in the repository 
+[here](https://github.com/uber-common/vis-tutorial/blob/master/demos/graph/data/sample-graph.js),
 and then import the file into your `app.js` component.
 
 ```js
-import sampleGraph from '../data/sample-graph';
+import sampleGraph from '../../data/sample-graph';
 ```
 
 Now we need to process this data into a usable format. 
-We already prepared a basic graph class [here](https://github.com/uber-common/vis-tutorial/blob/master/demos/graph/1-starting-code/graph.js) for storing graph data and some basic graph operations.
+We already prepared a basic graph class [here](https://github.com/uber-common/vis-tutorial/blob/master/demos/graph/common/graph.js) for storing graph data and some basic graph operations.
 
 We add a `processData` method and call it when component mounts to process the data.
 
 ```js
+// ...
+// 0. import Graph data structure.
+import Graph from '../../common/graph';
+
 export default class App extends Component {
 
   constructor(props) {
     // ...
+    // 1. add the graph to the component state.
     this.state = {
       graph: new Graph
     };
   }
 
   componentDidMount() {
-    // ...
+    // 2. call processData when the component is mounted.
     this.processData();
   }
 
   processData() {
+    // 3. load the graph data and update graph in the state.
     if (sampleGraph) {
       const newGraph = new Graph();
       sampleGraph.nodes.forEach(node =>
@@ -81,46 +85,7 @@ export default class App extends Component {
 }
 ```
 
-## 3. Random position for nodes
-
-Once we loaded the graph, we need to assign positions to the nodes so they can be plotted.
-In this example, we can just assign random positions to the nodes within the container.
-
-
-```js
-function randomPosition(width, height) {
-  const halfWidth = width / 2;
-  const halfHeight = height / 2;
-  const x = Math.random() * width - halfWidth;
-  const y = Math.random() * height - halfHeight;
-  return [x, y];
-}
-
-export default class App extends Component {
-  // ...
-
-  processData() {
-    if (sampleGraph) {
-      const newGraph = new Graph();
-      const {viewport} = this.state;
-      const {width, height} = viewport;
-      sampleGraph.nodes.forEach(node =>
-        newGraph.addNode({
-          id: node.id,
-          position: randomPosition(width, height)
-        })
-      );
-      // ...
-    }
-  }
-
-  // ...
-}
-
-```
-
-
-## 4. Viewport State
+## 3. Persist Viewport State
 
 The next thing will be the state of the viewport, here we only need the size of the window.
 The width and height can be easily retrieved from the global object `window`.
@@ -162,10 +127,52 @@ export default class App extends Component {
 }
 ```
 
+## 4. Assign Random Position For Nodes
+
+Once we loaded the graph, we need to assign positions to the nodes so they can be plotted.
+In this example, we can just assign random positions to the nodes within the container.
+
+
+```js
+// 0. function to return random position.
+function randomPosition(width, height) {
+  const halfWidth = width / 2;
+  const halfHeight = height / 2;
+  const x = Math.random() * width - halfWidth;
+  const y = Math.random() * height - halfHeight;
+  return [x, y];
+}
+
+export default class App extends Component {
+  // ...
+
+  processData() {
+    if (sampleGraph) {
+      // 1. get viewport state (width, height)
+      const width = this.state.viewport.width;
+      const height = this.state.viewport.height;
+      const newGraph = new Graph();
+      // 2. assign position to nodes
+      sampleGraph.nodes.forEach(node =>
+        newGraph.addNode({
+          id: node.id,
+          position: randomPosition(width, height)
+        })
+      );
+      // ...
+    }
+  }
+
+  // ...
+}
+
+```
+
 ## 5. Connect everything together
 
 The last step, we now can connect the accessors of nodes and edges with the `GraphRender` component.
 To simplify the application, the color accessor and size/width accessor will only return constant values.
+
 `getNodePosition` will simply return the `position` property of the node.
 `getEdgePosition` will try to find the source/target node and return its position.
 
@@ -173,12 +180,12 @@ To simplify the application, the color accessor and size/width accessor will onl
 export default class App extends Component {
   // ...
 
-  // node accessors
+  // 0. define node accessors
   getNodeColor = node => [94, 94, 94]
   getNodeSize = node => 10
   getNodePosition = node => node.position
 
-  // edge accessors
+  // 1. define edge accessors
   getEdgeColor = edge => [64, 64, 64]
   getEdgeWidth = () => 2
   getEdgePosition = edge => ({
@@ -187,19 +194,19 @@ export default class App extends Component {
   })
 
   render() {
-    // ...
+    // 2. pass data and accessors to GraphRender component
     return (
       <GraphRender
         /* viewport related */
-        width={viewport.width}
-        height={viewport.height}
+        width={this.state.viewport.width}
+        height={this.state.viewport.height}
         /* nodes related */
-        nodes={this._graph.nodes}
+        nodes={this.state.graph.nodes}
         getNodeColor={this.getNodeColor}
         getNodeSize={this.getNodeSize}
         getNodePosition={this.getNodePosition}
         /* edges related */
-        edges={this._graph.edges}
+        edges={this.state.graph.edges}
         getEdgeColor={this.getEdgeColor}
         getEdgeWidth={this.getEdgeWidth}
         getEdgePosition={this.getEdgePosition}
@@ -218,17 +225,19 @@ export default class App extends Component {
 
 ## Completed Code
 
-Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/1-basic-graph/src/app.js) should now look like this:
+Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/app.js) should now look like this:
 
 ```js
 /* global window */
 import React, {Component} from 'react';
 
 // data
-import sampleGraph from '../data/sample-graph2';
+import sampleGraph from '../../data/sample-graph';
+
+// utils
+import Graph from '../../common/graph';
 
 // components
-import Graph from './graph';
 import GraphRender from './graph-render'
 
 function randomPosition(width, height) {
@@ -271,12 +280,10 @@ export default class App extends Component {
   }
 
   processData() {
-    this._graph = new Graph();
-    // load data
     if (sampleGraph) {
+      const width = this.state.viewport.width;
+      const height = this.state.viewport.height;
       const newGraph = new Graph();
-      const {viewport} = this.state;
-      const {width, height} = viewport;
       sampleGraph.nodes.forEach(node =>
         newGraph.addNode({
           id: node.id,
@@ -293,8 +300,7 @@ export default class App extends Component {
   // node accessors
   getNodeColor = node => [94, 94, 94]
   getNodeSize = node => 10
-  getNodePosition =
-    node => node.position
+  getNodePosition = node => node.position
 
   // edge accessors
   getEdgeColor = edge => [64, 64, 64]
@@ -313,15 +319,15 @@ export default class App extends Component {
     return (
       <GraphRender
         /* viewport related */
-        width={viewport.width}
-        height={viewport.height}
+        width={this.state.viewport.width}
+        height={this.state.viewport.height}
         /* nodes related */
-        nodes={this._graph.nodes}
+        nodes={this.state.graph.nodes}
         getNodeColor={this.getNodeColor}
         getNodeSize={this.getNodeSize}
         getNodePosition={this.getNodePosition}
         /* edges related */
-        edges={this._graph.edges}
+        edges={this.state.graph.edges}
         getEdgeColor={this.getEdgeColor}
         getEdgeWidth={this.getEdgeWidth}
         getEdgePosition={this.getEdgePosition}

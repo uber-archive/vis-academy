@@ -10,7 +10,8 @@ import GeospatialAppLinkingItAll from './building-a-geospatial-app/6-linking-it-
 
 import * as guidelines from './building-a-geospatial-app/guidelines';
 
-import * as GraphExamples from './graph';
+import GraphLayout from './graph/3-interactive-graph/src/app';
+import InteractiveGraph from './graph/4-final-version/src/app';
 
 export default {
 
@@ -23,6 +24,8 @@ export default {
   GeospatialAppLinkingItAll,
 
   ...guidelines,
-  ...GraphExamples
+  
+  GraphLayout,
+  InteractiveGraph
 
 }
