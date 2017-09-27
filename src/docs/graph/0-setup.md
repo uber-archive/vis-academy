@@ -33,15 +33,29 @@ We'll end each lesson with key takeaways and further reading.
 
 You should see the project sturcture of `0-starting-code` folder like this:
 
-// picture of the projecture
+<img src="images/graph/folder-structure.png" alt="extruded"/>
 
 This folder contains all the files you need to scaffold a simple app:
+```
+  src/
+    demos/
+      0-starting-code/
+        src/
+        index.html
+        package.json
+        README.md
+        root.js
+        webpack.config.js
+        yarn.lock
+```
+
  - ./src: will be the folder that holds all your changes as you go through the tutorial.
  - ./index.html: the wireframe of the app
- - ./package.json: 
- - ./webpack.config.js: some basic webpack server settings.
- - ./README.md: readme about this app.
+ - ./package.json: the manifest about the application and dependencies.
+ - ./README.md: instructions about how to run this application.
  - ./root.js: the entry point of the app.
+ - ./webpack.config.js: basic [Webpack](https://webpack.github.io/) server settings.
+ - ./yarn.lock: lock file for [yarn](https://yarnpkg.com/en/).
 
 Now You can open your text editor with the following file:
 

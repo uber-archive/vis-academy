@@ -2,6 +2,12 @@
   <li>Create a GraphRender component</li>
 </ul>
 
+First of all, we will need to create a render engine to draw the nodes and edges of the graph on the canvas. 
+[Deck.GL](http://uber.github.io/deck.gl) is a WebGL overlay suite for React,
+providing a set of highly performant data visualization overlays that we can compose the visualization layer by layer.
+Let's get your hands on the component and add the layers by following steps:
+
+
 ## 1. Create a GraphRender Component
 
 Create a new file named `graph-render.js` in `src/` folder where we will put the deck.gl component. First, let's layout the component:
@@ -20,20 +26,17 @@ export default class GraphRender extends Component {
 }
 ```
 
-[Deck.GL](http://uber.github.io/deck.gl) is a WebGL overlay suite for React,
-providing a set of highly performant data visualization overlays.
-This gives us the basic structure, using the export `DeckGL` react component
-to render our `deck.gl` overlay. You'll notice that `layers` is being passed to
-`DeckGL` but it's an empty array. We have to initialize each `deck.gl` layer
-separately. 
+This gives us the basic structure, using the `DeckGL` react component to render our `deck.gl` overlay.
+You'll notice that `layers` is being passed to `DeckGL` but it's an empty array.
+We have to initialize each `deck.gl` layer separately. 
 `Deck.GL` comes with several prepackaged layers that we can use to show all kinds graph visualization.
-Let's edit the function and creat a `node layer` in `render()` function.
+Let's edit the function and creat a node layer in `render()` function.
 
 ## 2. Node Layer: Add Scatterplot Layer with Deck.gl
 
 [Scatterplot](https://uber.github.io/deck.gl/#/documentation/layer-catalog/scatterplot-layer) can be used to plot point locations. You can color the points to show different types of nodes, or have its radius based on a numeric metric such as the degree of node or any other node attributes.
 
-We will pass the data `nodes` and accessors like `getNodeColor`, `getNodePosition`, and `getNodeSize` as props to this `GraphRender` component.
+We will pass the data `nodes` and accessors like `getNodeColor`, `getNodePosition`, and `getNodeSize` as props to this `GraphRender` component later.
 
 ```js
 import DeckGL, {
@@ -65,7 +68,7 @@ export default class GraphRender extends Component {
 }
 ```
 
-Let's go over just some properties of the `ScatterplotLayer` above:
+Let's go over some properties of the `ScatterplotLayer` above:
 
 ##### `data` {Array}
 Array of points for the layer. In this case, it's the nodes of the graph.
@@ -82,13 +85,14 @@ Function that gets called for the color of each node, should return an array [r,
 If the alpha parameter is not provided, it will be set to 255.
 
 #### `projectionMode` {Number}
-COORDINATE_SYSTEM.IDENTITY
+COORDINATE_SYSTEM.IDENTITY: no projection
 
 
 ## 3. Edge Layer: Add Line Layer with Deck.gl
 
-[LineLayer](https://uber.github.io/deck.gl/#/documentation/layer-catalog/line-layer) can be used to plot a series of lines. The color of the line can be also coded by edge attributes.
-Note that we expect the accessor `getEdgePosition` will return `{sourcePosition: [x, y], targetPosition: [x, y]}`.
+[LineLayer](https://uber.github.io/deck.gl/#/documentation/layer-catalog/line-layer) can be used to plot a series of lines.
+
+The color and stroke width also can controlled by the accessors. Note that we expect the accessor `getEdgePosition` will return `{sourcePosition: [x, y], targetPosition: [x, y]}`.
 
 ```js
 import DeckGL, {
@@ -122,11 +126,18 @@ export default class GraphRender extends Component {
 }
 ```
 
-Here are some properties we used for edge layer above:
+Here are some properties we used in the `LineLayer` above:
 
 ##### `data` {Array}
 Array of lines for the layer. In this case, it's the edges of the graph.
-format as `[{source: sourceNodeId, target: targetNodeId}, {source: sourceNodeId, target: targetNodeId}, ...]`
+The expected format is:
+```
+data = [
+  {source: sourceNodeId, target: targetNodeId},
+  {source: sourceNodeId, target: targetNodeId},
+  ...
+]
+```
 
 ##### `getSourcePosition` {Function}
 Function that gets called for the position of ther source node, should return [x, y].
@@ -142,7 +153,7 @@ If the alpha parameter is not provided, it will be set to 255.
 The stroke width used to draw each line. Unit is pixels.
 
 #### `projectionMode` {Number}
-COORDINATE_SYSTEM.IDENTITY
+COORDINATE_SYSTEM.IDENTITY: no projection
 
 ## 4. Viewport
 
