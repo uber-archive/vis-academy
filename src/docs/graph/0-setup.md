@@ -33,8 +33,6 @@ We'll end each lesson with key takeaways and further reading.
 
 You should see the project sturcture of `0-starting-code` folder like this:
 
-<img src="images/graph/folder-structure.png" alt="extruded"/>
-
 This folder contains all the files you need to scaffold a simple app:
 ```
   src/
