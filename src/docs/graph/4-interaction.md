@@ -22,12 +22,14 @@ export default class App extends Component {
     // ...
     if (sampleGraph) {
       // ...
+      // 0. add a new property 'isHighlighted' to nodes
       sampleGraph.nodes.forEach(node => {
         this._graph.addNode({
           id: node.id,
           isHighlighted: false,
         });
       });
+      // 1. add a new property 'isHighlighted' to edges
       sampleGraph.edges.forEach(edge => {
         this._graph.addEdge({
           ...edge,
@@ -129,6 +131,7 @@ export default class App extends Component {
     return (
       <GraphRender
         // ...
+        // 0. add color update trigger
         colorUpdateTrigger={hoveredNodeID}
       />
     );
@@ -139,32 +142,23 @@ export default class GraphRender extends PureComponent {
   // ...
 
   createNodeLayer() {
-    const {
-      // ...
-      colorUpdateTrigger
-    } = this.props;
-
     return new ScatterplotLayer({
       // ...
       updateTriggers: {
-        getPosition: positionUpdateTrigger,
-        getColor: colorUpdateTrigger
+        // ...
+        // 1. register the color update trigger
+        getColor: this.props.colorUpdateTrigger
       }
     });
   }
 
   createEdgeLayer() {
-    const {
-      // ...
-      colorUpdateTrigger
-    } = this.props;
-
     return new LineLayer({
       // ...
       updateTriggers: {
-        getSourcePosition: positionUpdateTrigger,
-        getTargetPosition: positionUpdateTrigger,
-        getColor: colorUpdateTrigger
+        // ...
+        // 2. register the color update trigger
+        getColor: this.props.colorUpdateTrigger
       }
     });
   }

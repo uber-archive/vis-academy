@@ -19,6 +19,7 @@ import DeckGL from 'deck.gl';
 export default class GraphRender extends Component {
   render() {
     const layers = [];
+    // 0. create deck.gl instance
     return (
       <DeckGL layers={layers} />
     );
@@ -39,6 +40,7 @@ Let's edit the function and creat a node layer in `render()` function.
 We will pass the data `nodes` and accessors like `getNodeColor`, `getNodePosition`, and `getNodeSize` as props to this `GraphRender` component later.
 
 ```js
+// 0. import modules
 import DeckGL, {
   ScatterplotLayer,
   COORDINATE_SYSTEM
@@ -46,6 +48,7 @@ import DeckGL, {
 
 export default class GraphRender extends Component {
 
+  // 1. add a method to create node layer
   createNodeLayer() {
     return new ScatterplotLayer({
       id: 'node-layer',
@@ -88,6 +91,7 @@ COORDINATE_SYSTEM.IDENTITY: no projection
 The color and stroke width also can controlled by the accessors. Note that we expect the accessor `getEdgePosition` will return `{sourcePosition: [x, y], targetPosition: [x, y]}`.
 
 ```js
+// 0. import Line layer from deck.gl
 import DeckGL, {
   // ...
   LineLayer
@@ -95,7 +99,7 @@ import DeckGL, {
 
 export default class GraphRender extends Component {
   // ...
-
+  // 1. add a method to create edge layer
   createEdgeLayer() {
     return new LineLayer({
       id: 'edge-layer',
@@ -148,6 +152,7 @@ COORDINATE_SYSTEM.IDENTITY: no projection
 The `Viewport` manages projection and unprojection of coordinates between world and viewport coordinates (which is essentially a 3D matrix "camera" class of the type you would find in any 3D/WebGL/OpenGL library, holding `view` and `projection` matrices). OrthographicViewport will place the camera on the top and look at the graph.
 
 ```js
+// 0. import OrthographicViewport from deck.gl
 import DeckGL, {
   // ...
   OrthographicViewport
@@ -155,6 +160,7 @@ import DeckGL, {
 
 export default class GraphRender extends Component {
   
+  // 1. add a method to create viewport
   createViewport() {
     const {height, width} = this.props;
     return new OrthographicViewport({
@@ -181,9 +187,12 @@ export default class GraphRender extends PureComponent {
     return (
       <div id="graph-render">
         <DeckGL
+          // 0. pass the width and height
           width={this.props.width}
           height={this.props.height}
+          // 1. pass the viewport we creaetd
           viewport={this.createViewport()}
+          // 2. add layers we created
           layers={[
             this.createEdgeLayer(),
             this.createNodeLayer()

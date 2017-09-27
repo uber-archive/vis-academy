@@ -100,6 +100,7 @@ Let's quickly add the viewport state and the resize handler that updates our vie
 export default class App extends Component {
   constructor(props) {
     // ...
+    // 0. add viewport state
     this.state = {
       // ...
       viewport: {
@@ -110,14 +111,17 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    // 1. add window resize listener when the component is mounted
     window.addEventListener('resize', this.onResize);
     // ...
   }
 
   componentWillUnmount() {
+    // 2. remove window resize listener when the component will umounted
     window.removeEventListener('resize', this.onResize);
   }
 
+  // 3. add the handler for window resize event
   onResize = () => {
     this.setState({
       width: window.innerWidth,

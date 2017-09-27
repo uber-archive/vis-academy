@@ -114,7 +114,7 @@ See the complete doe of the layout engine at [here]().
 
 ## 2. Connect Graph Render with Layout Engine
 
-Once the engine has been launched, we can start to get the node/edge positions from the engine instead of reading the position from the internal graph (`this._graph`).
+Once the engine has been launched, we can start to get the node/edge positions from the engine instead of getting the positions from the graph in the component state(`this.state.graph`).
 
 ```js
 export default class App extends Component {
@@ -125,6 +125,7 @@ export default class App extends Component {
     return (
       <GraphRender
       	// ...
+        // 0. connect the accessors from engine to GraphRender
         getNodePosition={this._engine.getNodePosition}
         getEdgePosition={this._engine.getEdgePosition}
       />
