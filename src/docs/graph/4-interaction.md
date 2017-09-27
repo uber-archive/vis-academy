@@ -1,4 +1,4 @@
-<!-- INJECT:"InteractiveGraph" heading -->
+<!-- INJECT:"InteractiveGraph" -->
 
 <ul class='insert learning-objectives'>
   <li>In this step, we will learn how to make graph interactive with mouse events.</li>

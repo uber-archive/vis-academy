@@ -1,4 +1,4 @@
-<!-- INJECT:"GraphLayout" heading -->
+<!-- INJECT:"GraphLayout" -->
 
 <ul class='insert learning-objectives'>
   <li>Plugin a Graph Layout Engine</li>

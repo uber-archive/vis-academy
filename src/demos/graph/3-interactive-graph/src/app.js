@@ -16,8 +16,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: 1000,
+        height: 600
       },
       graph: new Graph()
     };
