@@ -100,7 +100,7 @@ export default class App extends Component {
       });
       this.setState({graph: newGraph});
       // step3: update engine
-      this._engine.update(this._graph);
+      this._engine.update(newGraph);
       // step4: start the engine
       this._engine.start();
     }
