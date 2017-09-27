@@ -17,7 +17,7 @@ export default class App extends Component {
     this.state = {
       viewport: {
         width: 1000,
-        height: 600
+        height: 700
       },
       graph: new Graph(),
       hoveredNodeID: null
