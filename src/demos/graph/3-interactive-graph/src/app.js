@@ -3,11 +3,13 @@ import React, { Component } from 'react'
 
 // data
 import sampleGraph from '../../data/sample-graph';
-import Graph from '../../data/graph';
+
+// utils
+import Graph from '../../common/graph';
+import LayoutEngine from '../../common/layout-engine';
 
 // components
 import GraphRender from './graph-render';
-import LayoutEngine from './layout-engine';
 
 export default class App extends Component {
   constructor(props) {

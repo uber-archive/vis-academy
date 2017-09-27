@@ -3,7 +3,9 @@ import React, {Component} from 'react';
 
 // data
 import sampleGraph from '../../data/sample-graph';
-import Graph from '../../data/graph';
+
+// utils
+import Graph from '../../common/graph';
 
 // components
 import GraphRender from './graph-render'
