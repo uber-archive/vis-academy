@@ -3,19 +3,18 @@
 
 .Home {
   background-color: #E5E5E4;
-  padding: 2rem;
 }
 
 .lesson-card {
   background-color: white;
   color: #494949;
 
-  width: 300px;
-  height: 450px;
+  width: 20rem;
+  max-width: 80vw;
+  height: 30rem;
   margin: 2rem;
   padding: 1rem;
-  position: relative;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  box-shadow: 0 0 5px rgba(black, 0.2);
   transition: background-color 250ms ease-in, color 250ms ease-in;
 
   .btn {
@@ -48,7 +47,8 @@ img.lesson-card__image {
 }
 
 footer {
-  left: 0;
+  position: relative !important;
+  bottom: 0 !important;
 }
 
 ul.insert {
