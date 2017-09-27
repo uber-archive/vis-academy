@@ -2,7 +2,7 @@ import React from 'react';
 
 export const PROJECT_TYPE = 'github'; // 'github' || 'phab'
 
-export const PROJECT_NAME = 'vis-tutorial';
+export const PROJECT_NAME = 'vis-academy';
 export const PROJECT_ORG = 'uber-common';
 export const PROJECT_URL = `https://github.com/${PROJECT_ORG}/${PROJECT_NAME}`;
 export const PROJECT_DESC = 'An introduction to Uber Visualization libraries.';

@@ -42,8 +42,10 @@ import layoutEngine from 'docs/graph/3-layout-engine.md';
 import interactionHover from 'docs/graph/4-interaction.md';
 
 export default [{
-  name: 'Geospatial Visualization',
-  path: '/geospatial-vis',
+  name: 'Building a Geospatial App',
+  desc: 'Learn how to create maps, layer data on top of them and draw charts with the Uber vis libraries.',
+  image: 'images/geospatial-app/geospatial-app.png', 
+  path: '/building-a-geospatial-app',
   data: [
     {
       name: 'Setup',
