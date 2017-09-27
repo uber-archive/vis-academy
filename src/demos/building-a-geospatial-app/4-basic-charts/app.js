@@ -48,36 +48,36 @@ export default class App extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
-  
+
   _processData() {
     if (taxiData) {
       this.setState({status: 'LOADED'});
       const data = taxiData.reduce((accu, curr) => {
-        const pickupTime = curr.tpep_pickup_datetime || '';
-        const dropoffTime = curr.tpep_dropoff_datetime || '';
+        const pickupHour = new Date(curr.tpep_pickup_datetime).getUTCHours();
+        const dropoffHour = new Date(curr.tpep_dropoff_datetime).getUTCHours();
 
-        const distance = curr.trip_distance;
-        const amount = curr.total_amount;
+        const pickupLongitude = Number(curr.pickup_longitude);
+        const pickupLatitude = Number(curr.pickup_latitude);
 
-        const pickupHour = Number(pickupTime.slice(11, 13));
-        const dropoffHour = Number(dropoffTime.slice(11, 13));
-
-        if (!isNaN(Number(curr.pickup_longitude)) && !isNaN(Number(curr.pickup_latitude))) {
+        if (!isNaN(pickupLongitude) && !isNaN(pickupLatitude)) {
           accu.points.push({
-            position: [Number(curr.pickup_longitude), Number(curr.pickup_latitude)],
+            position: [pickupLongitude, pickupLatitude],
             hour: pickupHour,
             pickup: true
           });
         }
 
-        if (!isNaN(Number(curr.dropoff_longitude)) && !isNaN(Number(curr.dropoff_latitude))) {
+        const dropoffLongitude = Number(curr.dropoff_longitude);
+        const dropoffLatitude = Number(curr.dropoff_latitude);
+
+        if (!isNaN(dropoffLongitude) && !isNaN(dropoffLatitude)) {
           accu.points.push({
-            position: [Number(curr.dropoff_longitude), Number(curr.dropoff_latitude)],
+            position: [dropoffLongitude, dropoffLatitude],
             hour: dropoffHour,
             pickup: false
           });
         }
-        
+
         const prevPickups = accu.pickupObj[pickupHour] || 0;
         const prevDropoffs = accu.dropoffObj[dropoffHour] || 0;
 
@@ -91,13 +91,11 @@ export default class App extends Component {
         dropoffObj: {}
       });
 
-      data.pickups = Object.entries(data.pickupObj).map(d => {
-        const hour = Number(d[0]);
-        return {hour, x: hour + 0.5, y: d[1]};
+      data.pickups = Object.entries(data.pickupObj).map(([hour, count]) => {
+        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
       });
-      data.dropoffs = Object.entries(data.dropoffObj).map(d => {
-        const hour = Number(d[0]);
-        return {hour, x: hour + 0.5, y: d[1]};
+      data.dropoffs = Object.entries(data.dropoffObj).map(([hour, count]) => {
+        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
       });
       data.status = 'READY';
 
@@ -132,10 +130,9 @@ export default class App extends Component {
         {this.state.hoveredObject &&
           <div style={{
             ...tooltipStyle,
-            left: this.state.x,
-            top: this.state.y
+            transform: `translate(${this.state.x}px, ${this.state.y}px)`
           }}>
-            <div>{this.state.hoveredObject.id}</div>
+            <div>{JSON.stringify(this.state.hoveredObject)}</div>
           </div>}
         <LayerControls
           settings={this.state.settings}

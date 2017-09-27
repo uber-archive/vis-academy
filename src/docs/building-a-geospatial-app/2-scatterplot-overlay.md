@@ -116,7 +116,7 @@ const layers = [
 
 Once we add the code to initialize a `ScatterplotLayer`, we will have
 a working map. We can further edit our `ScatterplotLayer` to color
-the dots by `pickup` or `dropoff`. First lets define colors outside the component 
+the dots by `pickup` or `dropoff`. First lets define colors outside the component
 under the imports.
 
 ```js
@@ -134,7 +134,7 @@ the `getColor` callback
   getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
 
 ```
-That's all you need to render a scatter plot layer with deck.gl. Let's go over 
+That's all you need to render a scatter plot layer with deck.gl. Let's go over
 just some properties of the `ScatterplotLayer` above:
 
 ##### `data` {Array}
@@ -190,7 +190,7 @@ data as a scatterplot overlay.
 
 ## Optional section
 
-Feel free to skip to [lesson 3](https://uber-common.github.io/vis-tutorial/#/3-more-data-overlays-hexagons) or even [lesson 4](https://uber-common.github.io/vis-tutorial/#/4-a-basic-chart). 
+Feel free to skip to [lesson 3](https://uber-common.github.io/vis-tutorial/#/3-more-data-overlays-hexagons) or even [lesson 4](https://uber-common.github.io/vis-tutorial/#/4-a-basic-chart).
 
 ## 4. Adding Polish
 
@@ -198,11 +198,11 @@ If you check out the source code for this step, you'll see extra code that add
 functionalities such as a settings panel, hover handler, hover tooltip, and
 loading spinner.
 
-The control for the settings panel is already provided in your starting code. It's a typical React component, so there's no use going through the details in this tutorial. 
+The control for the settings panel is already provided in your starting code. It's a typical React component, so there's no use going through the details in this tutorial.
 
 ## 5. code of app.js
 
-Here's the complete [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/building-a-geospatial-app/2-scatterplot-overlay/app.js) file including the control panel: 
+Here's the complete [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/building-a-geospatial-app/2-scatterplot-overlay/app.js) file including the control panel:
 
 ```js
 /* global window */
@@ -250,7 +250,7 @@ export default class App extends Component {
     window.addEventListener('resize', this._resize);
     this._resize();
   }
-  
+
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
@@ -304,10 +304,9 @@ export default class App extends Component {
         {this.state.hoveredObject &&
           <div style={{
             ...tooltipStyle,
-            left: this.state.x,
-            top: this.state.y
+            transform: `translate(${this.state.x}px, ${this.state.y}px)`
           }}>
-            <div>{this.state.hoveredObject.id}</div>
+            <div>{JSON.stringify(this.state.hoveredObject)}</div>
           </div>}
         <LayerControls
           settings={this.state.settings}
