@@ -49,7 +49,9 @@ We add a `processData` method and call it when component mounts to process the d
 
 ```js
 // ...
-// 0. import Graph data structure.
+
+// 0. import Graph data and data structure.
+import sampleGraph from '../../data/sample-graph';
 import Graph from '../../common/graph';
 
 export default class App extends Component {
