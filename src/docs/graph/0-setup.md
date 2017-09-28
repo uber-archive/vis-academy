@@ -1,4 +1,5 @@
-Before we go through the tutorial, let's make sure we have everything necessary in order to make this as smooth as possible.
+
+Before we go through the tutorial, let's make sure we have everything necessary in order to make this as smooth as possible. If you have problem with setting up the coding environment please check [here](#/installing-a-coding-environment/installing-tools-mac)
 
 ## 1. Cloning and Running
 

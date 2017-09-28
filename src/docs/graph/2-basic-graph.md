@@ -1,6 +1,5 @@
 <ul class='insert learning-objectives'>
-<li>Render a graph with random layout in a React application,</li>
-<li>Update the viewport when resizing the window</li>
+  <li>Setup the application, load graph data, and render a graph with random layout in a React application </li>
 </ul>
 
 **HOLD UP!!!** If you got here without reading the [**Setup**](#/graph-vis/setup) or
@@ -95,8 +94,7 @@ export default class App extends Component {
 
 The next thing will be the state of the viewport, here we only need the size of the window.
 The width and height can be easily retrieved from the global object `window`.
-We set the viewport object on component state because `deck.gl` leaves
-the control of the viewport to the user.
+We set the viewport object on component state because `deck.gl` leaves the control of the viewport to the user.
 
 ```js
 export default class App extends Component {
@@ -206,7 +204,7 @@ export default class App extends Component {
 ```
 
 Congratulations! You should be able to see a random graph now!
-<p class="inline-images">
+<p class="inline-images center">
   <img src="images/graph-vis/random-graph.png" alt="extruded" width="600px"/>
 </p>
 

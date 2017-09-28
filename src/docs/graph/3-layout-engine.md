@@ -143,7 +143,6 @@ export default class App extends Component {
 
 ## 4. Position Update Trigger
 
-<!-- The last part is to trigger `deck.gl` to update when every time the layout is updated. -->
 In the previous step, we connected `getNodePosition` and `getEdgePosition` with the accessors in the layout engine. However, `deck.gl` doesn't recalculate positions unlesss the data prop changes by shallow comparison. To inform deck.gl to re-evaluate `getPosition` outcome, we need to explicitly define `updateTriggers`. 
 `updateTriggers` expect an object whose keys are names of accessor props of this layer, and values are one or more variables that affect the output of the accessors. In our case, the key is 'getPosition' and the value can be the `alpha` value from the layout engine since the value of alpha changes when layout updated.
 
