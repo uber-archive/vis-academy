@@ -1,0 +1,28 @@
+import React, {Component} from 'react';
+import DeckGL, {ScatterplotLayer} from 'deck.gl';
+
+const PICKUP_COLOR = [0, 128, 255];
+const DROPOFF_COLOR = [255, 0, 128];
+
+export default class DeckGLOverlay extends Component {
+
+  render() {
+    if (!this.props.data) {
+      return null;
+    }
+
+    const layers = [
+      new ScatterplotLayer({
+        id: 'pickup',
+        data: this.props.data,
+        getPosition: d => [d.pickup_longitude, d.pickup_latitude],
+        getColor: d => PICKUP_COLOR,
+        radiusScale: 40
+      })
+    ];
+
+    return (
+      <DeckGL {...this.props.viewport} layers={layers} />
+    );
+  }
+}

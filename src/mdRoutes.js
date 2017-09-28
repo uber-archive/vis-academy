@@ -50,6 +50,14 @@ import startGraph from 'docs/graph/2-basic-graph.md';
 import layoutEngine from 'docs/graph/3-layout-engine.md';
 import interactionHover from 'docs/graph/4-interaction.md';
 
+// custom layers
+import setupCustomLayer from 'docs/custom-layers/0-setup.md';
+import combinationLayer from 'docs/custom-layers/1-combination-layer.md';
+import adaptorLayer from 'docs/custom-layers/2-adaptor-layer.md';
+import customShader from 'docs/custom-layers/3-custom-shader.md';
+import customAttribute from 'docs/custom-layers/4-custom-attribute.md';
+import customUniform from 'docs/custom-layers/5-custom-uniform.md';
+
 export default [{
   name: 'Installing a coding environment',
   desc: 'Prepare your machine for the Academy',
@@ -156,6 +164,37 @@ export default [{
     {
       name: '4. Interacting With Graph',
       markdown: interactionHover
+    }
+  ]
+}, {
+  name: 'Custom Layers',
+  desc: 'Advanced topic: learn how to create your own deck.gl layers.',
+  image: 'images/graph-vis/cover.png', 
+  path: '/custom-layers',
+  data: [
+    {
+      name: 'Setup',
+      markdown: setupCustomLayer
+    },
+    {
+      name: '1. Combination Layer',
+      markdown: combinationLayer
+    },
+    {
+      name: '2. Adaptor Layer',
+      markdown: adaptorLayer
+    },
+    {
+      name: '3. Custom Shader',
+      markdown: customShader
+    },
+    {
+      name: '4. Custom Attribute',
+      markdown: customAttribute
+    },
+    {
+      name: '5. Custom Uniform',
+      markdown: customUniform
     }
   ]
 }];
