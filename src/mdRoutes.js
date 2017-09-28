@@ -1,3 +1,12 @@
+// Setup
+
+import SetupWindows from
+  'docs/installing-a-coding-environment/1-install-tools-windows.md';
+import SetupMac from
+  'docs/installing-a-coding-environment/2-install-tools-mac.md';
+import SetupCloning from
+  'docs/installing-a-coding-environment/3-cloning.md';
+
 // Building a geospatial app
 import GeospatialAppSetup from
   'docs/building-a-geospatial-app/0-setup.md';
@@ -42,6 +51,21 @@ import layoutEngine from 'docs/graph/3-layout-engine.md';
 import interactionHover from 'docs/graph/4-interaction.md';
 
 export default [{
+  name: 'Installing a coding environment',
+  desc: 'Prepare your machine for the Academy',
+  image: 'images/setup/setup.png',
+  path: '/installing-a-coding-environment',
+  data: [{
+    name: 'Installing tools - Windows',
+    markdown: SetupWindows
+  }, {
+    name: 'Installing tools - Mac',
+    markdown: SetupMac
+  }, {
+    name: 'Downloading code examples',
+    markdown: SetupCloning
+  }]
+}, {
   name: 'Building a Geospatial App',
   desc: 'Learn how to create maps, layer data on top of them and draw charts with the Uber vis libraries.',
   image: 'images/geospatial-app/geospatial-app.png', 
