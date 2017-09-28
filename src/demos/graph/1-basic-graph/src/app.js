@@ -36,21 +36,19 @@ export default class App extends Component {
   }
 
   processData() {
-    if (sampleGraph) {
-      const width = this.state.viewport.width;
-      const height = this.state.viewport.height;
-      const newGraph = new Graph();
-      sampleGraph.nodes.forEach(node =>
-        newGraph.addNode({
-          id: node.id,
-          position: randomPosition(width, height)
-        })
-      );
-      sampleGraph.edges.forEach(edge =>
-        newGraph.addEdge(edge)
-      );
-      this.setState({graph: newGraph});
-    }
+    const width = this.state.viewport.width;
+    const height = this.state.viewport.height;
+    const newGraph = new Graph();
+    sampleGraph.nodes.forEach(node =>
+      newGraph.addNode({
+        id: node.id,
+        position: randomPosition(width, height)
+      })
+    );
+    sampleGraph.edges.forEach(edge =>
+      newGraph.addEdge(edge)
+    );
+    this.setState({graph: newGraph});
   }
 
   render() {

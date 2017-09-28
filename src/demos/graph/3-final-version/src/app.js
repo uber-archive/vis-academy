@@ -35,25 +35,23 @@ export default class App extends Component {
   }
 
   processData = () => {
-    if (sampleGraph) {
-      const newGraph = new Graph();
-      sampleGraph.nodes.forEach(node =>
-        newGraph.addNode({
-          id: node.id,
-          isHighlighted: false
-        })
-      );
-      sampleGraph.edges.forEach(edge =>
-        newGraph.addEdge({
-          ...edge,
-          isHighlighted: false
-        })
-      );
-      this.setState({graph: newGraph});
-      // update engine
-      this._engine.update(newGraph);
-      this._engine.start();
-    }
+    const newGraph = new Graph();
+    sampleGraph.nodes.forEach(node =>
+      newGraph.addNode({
+        id: node.id,
+        isHighlighted: false
+      })
+    );
+    sampleGraph.edges.forEach(edge =>
+      newGraph.addEdge({
+        ...edge,
+        isHighlighted: false
+      })
+    );
+    this.setState({graph: newGraph});
+    // update engine
+    this._engine.update(newGraph);
+    this._engine.start();
   }
 
   reRender = () => this.forceUpdate()
