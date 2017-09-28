@@ -5,11 +5,15 @@
 
 **HOLD UP!!!** If you got here without reading the [**Setup**](#/graph-vis/setup) or
 [**Graph Render**](#/graph-vis/1-graph-render) step,
-it is highly recommended that you do so, or you can just check out the complete code from the last step:
+it is highly recommended that you do so, or your application might not work.
+[GO HERE](#/graph-vis/setup) and go through it now.
 
-```
-cd src/demos/graph/1-basic-graph
-```
+# Architecture
+In this step, we will implement the main logic of the application, `app.js`. 
+Here's the overview of the architecture:
+<p class="inline-images">
+  <img src="images/graph-vis/architecture-basic.png" alt="extruded" width="600px"/>
+</p>
 
 ## 1. Start with a bare React Component
 
@@ -92,41 +96,20 @@ export default class App extends Component {
 The next thing will be the state of the viewport, here we only need the size of the window.
 The width and height can be easily retrieved from the global object `window`.
 We set the viewport object on component state because `deck.gl` leaves
-the control of the viewport to the user. We will have to update this viewport
-manually and pass it back into `deck.gl` if the size of the window changes.
-Let's quickly add the viewport state and the resize handler that updates our viewport with the new dimension:
+the control of the viewport to the user.
 
 ```js
 export default class App extends Component {
   constructor(props) {
     // ...
-    // 0. add viewport state
     this.state = {
       // ...
+      // 0. add viewport state
       viewport: {
         width: window.innerWidth,
         height: window.innerHeight
       }
     };
-  }
-
-  componentDidMount() {
-    // 1. add window resize listener when the component is mounted
-    window.addEventListener('resize', this.onResize);
-    // ...
-  }
-
-  componentWillUnmount() {
-    // 2. remove window resize listener when the component will umounted
-    window.removeEventListener('resize', this.onResize);
-  }
-
-  // 3. add the handler for window resize event
-  onResize = () => {
-    this.setState({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
   }
 
   // ...
@@ -220,18 +203,22 @@ export default class App extends Component {
     );
   }
 }
-
 ```
+
+Congratulations! You should be able to see a random graph now!
+<p class="inline-images">
+  <img src="images/graph-vis/random-graph.png" alt="extruded" width="600px"/>
+</p>
+
 
 <ul class='insert takeaways'>
 <li>GraphRender behaves just as another React component with props and callbacks.</li>
 <li>Basic settings of the nodes and edges are controlled by the accessors in `app.js`.</li>
-<li>`onResize` method will be triggered and to update the viewport when a user resizes the window.</li>
 </ul>
 
 ## Completed Code
 
-Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/app.js) should now look like this:
+Our completed component app.js should now look like this:
 
 ```js
 /* global window */
@@ -268,21 +255,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.onResize);
     this.processData();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
-  }
-
-  onResize() => {
-    this.setState({
-      viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight
-      }
-    });
   }
 
   processData() {

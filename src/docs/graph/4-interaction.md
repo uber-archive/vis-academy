@@ -6,9 +6,9 @@
 </ul>
 
 **HOLD UP!!!** If you got here without reading the previous steps,
-it is highly recommended that you do so, or you can just check out the complete code from the last step:
+it is highly recommended that you do so, or you can just check out the complete code from the previous step:
 ```
-cd src/demos/graph/3-interactive-graph
+cd src/demos/graph/2-graph-layout
 ```
 
 ## Add Visual Property
@@ -125,6 +125,7 @@ export default class App extends Component {
 As we mentioned in the previous [step](#/graph-vis/3-layout-engine), `deck.gl` doesn't re-evaluate the accessors when data is not changed. We will need add the update trigger for `getColor` to inform `deck.gl` re-evaluate the colors again.
 
 ```js
+// app.js
 export default class App extends Component {
   // ...
 
@@ -140,6 +141,7 @@ export default class App extends Component {
   }
 }
 
+// graph-render.js
 export default class GraphRender extends PureComponent {
   // ...
 
@@ -172,5 +174,5 @@ export default class GraphRender extends PureComponent {
 ## Complete code
 
 You can check the complete code at here:
- - [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/4-final-version/src/app.js)
- - [graph-render.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/4-final-version/src/graph-render.js).
+ - [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/3-final-version/src/app.js)
+ - [graph-render.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/3-final-version/src/graph-render.js).

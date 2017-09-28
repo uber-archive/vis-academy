@@ -56,6 +56,7 @@ You should see the project sturcture of `0-starting-code` folder like this:
 We also prepared the starting code for each step in case you join in the middle of the class.
 Each folder has the same structure, the only thing you need to do is to follow the steps and edit the code in `src/` folder.
 
+In the `common` folder, we have the `graph.js` for storing the graph data and `layout-engine.js` for calculating graph layout. We will use them later.
 
 Now You can open your text editor with the following file:
 

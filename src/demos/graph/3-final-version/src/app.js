@@ -19,39 +19,35 @@ export default class App extends Component {
         width: 1000,
         height: 700
       },
-      graph: new Graph()
+      graph: new Graph(),
+      hoveredNodeID: null
     };
     this._engine = new LayoutEngine();
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.onResize);
     this._engine.registerCallbacks(this.reRender);
     this.processData();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
     this._engine.unregisterCallbacks();
-  }
-
-  onResize = () => {
-    this.setState({
-      viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight
-      }
-    });
   }
 
   processData = () => {
     if (sampleGraph) {
       const newGraph = new Graph();
       sampleGraph.nodes.forEach(node =>
-        newGraph.addNode(node)
+        newGraph.addNode({
+          id: node.id,
+          isHighlighted: false
+        })
       );
       sampleGraph.edges.forEach(edge =>
-        newGraph.addEdge(edge)
+        newGraph.addEdge({
+          ...edge,
+          isHighlighted: false
+        })
       );
       this.setState({graph: newGraph});
       // update engine
@@ -63,11 +59,41 @@ export default class App extends Component {
   reRender = () => this.forceUpdate()
 
   // node accessors
-  getNodeColor = node => [94, 94, 94]
+  getNodeColor = node => (node.isHighlighted ? [255, 0, 0] : [94, 94, 94])
+
   getNodeSize = node => 10
 
+  onHoverNode = node => {
+    // check if is hovering on a node
+    const hoveredNodeID = node.object && node.object.id;
+    const graph = new Graph(this.state.graph);
+    if (hoveredNodeID) {
+      // highlight the selected node, connected edges, and neighbor nodes
+      const connectedEdges = this.state.graph.findConnectedEdges(hoveredNodeID);
+      const connectedEdgeIDs = connectedEdges.map(e => e.id);
+      const hightlightNodes = connectedEdges.reduce((res, e) => {
+        if (!res.includes(e.source)) {
+          res.push(e.source);
+        }
+        if (!res.includes(e.target)) {
+          res.push(e.target);
+        }
+        return res;
+      }, [])
+      graph.nodes.forEach(n => n.isHighlighted = hightlightNodes.includes(n.id));
+      graph.edges.forEach(e => e.isHighlighted = connectedEdgeIDs.includes(e.id));
+    } else {
+      // unset all nodes and edges
+      graph.nodes.forEach(n => n.isHighlighted = false);
+      graph.edges.forEach(e => e.isHighlighted = false);      
+    }
+    // update component state
+    this.setState({graph, hoveredNodeID});
+  }
+
   // edge accessors
-  getEdgeColor = edge => [64, 64, 64]
+  getEdgeColor = edge => (edge.isHighlighted ? [255, 0, 0] : [64, 64, 64])
+
   getEdgeWidth = () => 2
 
   render() {
@@ -81,12 +107,14 @@ export default class App extends Component {
         width={this.state.viewport.width}
         height={this.state.viewport.height}
         /* update triggers */
+        colorUpdateTrigger={this.state.hoveredNodeID}
         positionUpdateTrigger={this._engine.alpha()}
         /* nodes related */
         nodes={this.state.graph.nodes}
         getNodeColor={this.getNodeColor}
         getNodeSize={this.getNodeSize}
         getNodePosition={this._engine.getNodePosition}
+        onHoverNode={this.onHoverNode}
         /* edges related */
         edges={this.state.graph.edges}
         getEdgeColor={this.getEdgeColor}
