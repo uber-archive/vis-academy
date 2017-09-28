@@ -6,12 +6,17 @@
 </ul>
 
 **HOLD UP!!!** If you got here without reading the previous steps,
-it is highly recommended that you do so, or you can just check out the complete code from the last step:
+it is highly recommended that you do so, or you can just check out the complete code from the previous step:
 ```
-cd src/demos/graph/3-interactive-graph
+cd src/demos/graph/2-graph-layout
 ```
 
-## Add Visual Property
+# What Will We Do
+In this step, we will learn how to make graph interactive with mouse events.
+We will highlight the node and its connected edges when hovering over a node.
+
+
+## 1. Add Visual Property
 
 First, we need to add a new visual property 'isHighlighted' to nodes and edges.
 We will use this property to change the color to red when `isHighlighted` is true.
@@ -44,7 +49,7 @@ export default class App extends Component {
 }
 ```
 
-## Add Hover Event Listener to GraphRender
+## 2. Add Hover Event Listener to GraphRender
 
 `deck.gl` includes a powerful picking engine that enables the application to precisely determine what object and layer is "picked" on the screen. 
 The "picking engine" identifies which object in which layer is at the given coordinates. While usually intuitive, what constitutes a pickable "object" is defined by each layer. Typically, it corresponds to one of the data entries that are passed in via prop.data. In our case, we use Scatterplot Layer as the node layer, the pickable object will be the nodes we passed in the props.data array.
@@ -72,7 +77,7 @@ export default class GraphRender extends PureComponent {
   // ...
 }
 ```
-## Implement onHoverNode Handler
+## 3. Update `isHighlighted` When Hovering Over A Node
 
 ```js
 // app.js
@@ -120,11 +125,12 @@ export default class App extends Component {
 }
 ```
 
-## Add Color Update Trigger
+## 4. Add Color Update Trigger
 
 As we mentioned in the previous [step](#/graph-vis/3-layout-engine), `deck.gl` doesn't re-evaluate the accessors when data is not changed. We will need add the update trigger for `getColor` to inform `deck.gl` re-evaluate the colors again.
 
 ```js
+// app.js
 export default class App extends Component {
   // ...
 
@@ -140,6 +146,7 @@ export default class App extends Component {
   }
 }
 
+// graph-render.js
 export default class GraphRender extends PureComponent {
   // ...
 
@@ -172,5 +179,5 @@ export default class GraphRender extends PureComponent {
 ## Complete code
 
 You can check the complete code at here:
- - [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/4-final-version/src/app.js)
- - [graph-render.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/4-final-version/src/graph-render.js).
+ - [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/3-final-version/src/app.js)
+ - [graph-render.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/3-final-version/src/graph-render.js).

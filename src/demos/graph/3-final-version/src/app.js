@@ -26,45 +26,32 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.onResize);
     this._engine.registerCallbacks(this.reRender);
     this.processData();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
     this._engine.unregisterCallbacks();
   }
 
-  onResize = () => {
-    this.setState({
-      viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight
-      }
-    });
-  }
-
   processData = () => {
-    if (sampleGraph) {
-      const newGraph = new Graph();
-      sampleGraph.nodes.forEach(node =>
-        newGraph.addNode({
-          id: node.id,
-          isHighlighted: false
-        })
-      );
-      sampleGraph.edges.forEach(edge =>
-        newGraph.addEdge({
-          ...edge,
-          isHighlighted: false
-        })
-      );
-      this.setState({graph: newGraph});
-      // update engine
-      this._engine.update(newGraph);
-      this._engine.start();
-    }
+    const newGraph = new Graph();
+    sampleGraph.nodes.forEach(node =>
+      newGraph.addNode({
+        id: node.id,
+        isHighlighted: false
+      })
+    );
+    sampleGraph.edges.forEach(edge =>
+      newGraph.addEdge({
+        ...edge,
+        isHighlighted: false
+      })
+    );
+    this.setState({graph: newGraph});
+    // update engine
+    this._engine.update(newGraph);
+    this._engine.start();
   }
 
   reRender = () => this.forceUpdate()
