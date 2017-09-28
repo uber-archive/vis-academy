@@ -8,10 +8,10 @@
 it is highly recommended that you do so, or your application might not work.
 [GO HERE](#/graph-vis/setup) and go through it now.
 
-# Architecture
+# What Will We Do
 In this step, we will implement the main logic of the application, `app.js`. 
 Here's the overview of the architecture:
-<p class="inline-images">
+<p class="inline-images center">
   <img src="images/graph-vis/architecture-basic.png" alt="extruded" width="600px"/>
 </p>
 

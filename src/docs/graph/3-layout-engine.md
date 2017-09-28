@@ -11,10 +11,10 @@ it is highly recommended that you do so, or you can just check out the complete 
 cd src/demos/graph/1-basic-graph
 ```
 
-# Architecture
+# What Will We Do
 In this step, we will add a layout engine with the `app.js` for calculating graph layout.
 Here's the overview of the architecture:
-<p class="inline-images">
+<p class="inline-images center">
   <img src="images/graph-vis/architecture-with-layout-engine.png" alt="extruded" width="600px"/>
 </p>
 
