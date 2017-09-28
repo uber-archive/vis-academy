@@ -168,7 +168,8 @@ export default class GraphRender extends Component {
   
   // 1. add a method to create viewport
   createViewport() {
-    const {height, width} = this.props;
+    const width = this.props.width;
+    const height = this.props.height;
     return new OrthographicViewport({
       width,
       height,

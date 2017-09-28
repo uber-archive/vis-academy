@@ -18,8 +18,6 @@ A page should automatically be opened in your browser, with a pretty simple app 
 
 Note that the repository you cloned also contains all the content and code of this tutorial, and you may run it locally if you want (repeat the last two steps from above from vis-academy/).
 
-In the pages of this tutorial, you can use the back quote key ` (typically located below ESC) to see the code examples in full page.
-
 ## 3. How this tutorial works
 
 In this tutorial, you will build a graph visualization application from scratch, with nodes, edges, and some basic interaction. 
