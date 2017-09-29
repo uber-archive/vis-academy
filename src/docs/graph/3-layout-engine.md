@@ -96,21 +96,18 @@ export default class App extends Component {
 
   processData() {
     // ...
-    if (sampleGraph) {
-      // ...
-      const newGraph = new Graph();
-      newGraph.nodes.forEach(node => {
-        newGraph.addNode(node);
-      });
-      sampleGraph.edges.forEach(edge => {
-        newGraph.addEdge(edge);
-      });
-      this.setState({graph: newGraph});
-      // step3: update engine
-      this._engine.update(newGraph);
-      // step4: start the engine
-      this._engine.start();
-    }
+    const newGraph = new Graph();
+    newGraph.nodes.forEach(node => {
+      newGraph.addNode(node);
+    });
+    sampleGraph.edges.forEach(edge => {
+      newGraph.addEdge(edge);
+    });
+    this.setState({graph: newGraph});
+    // step3: update engine
+    this._engine.update(newGraph);
+    // step4: start the engine
+    this._engine.start();
   }
 
   // ...
@@ -202,3 +199,4 @@ export default class App extends Component {
 You can check the complete code at here:
  - [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/app.js)
  - [graph-render.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/graph-render.js).
+ 

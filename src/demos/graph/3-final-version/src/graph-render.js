@@ -25,10 +25,9 @@ export default class GraphRender extends PureComponent {
       id: 'node-layer',
       data: this.props.nodes,
       getPosition: node => this.props.getNodePosition(node),
-      // getPosition: this.props.getNodePosition,
-      getRadius: this.props.getNodeSize,
-      getColor: this.props.getNodeColor,
-      onHover: this.props.onHoverNode,
+      getRadius: node => this.props.getNodeSize(node),
+      getColor: node => this.props.getNodeColor(node),
+      onHover: node => this.props.onHoverNode(node),
       pickable: true,
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
@@ -46,7 +45,7 @@ export default class GraphRender extends PureComponent {
         this.props.getEdgePosition(e).sourcePosition,
       getTargetPosition: e =>
         this.props.getEdgePosition(e).targetPosition,
-      getColor: this.props.getEdgeColor,
+      getColor: e => this.props.getEdgeColor(e),
       strokeWidth: this.props.getEdgeWidth(),
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
