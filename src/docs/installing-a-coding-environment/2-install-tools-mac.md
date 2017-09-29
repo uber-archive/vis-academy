@@ -101,5 +101,5 @@ echo $MAPBOX_TOKEN
 And you should see your Mapbox access token. 
 Each time you will reopen your terminal, your access token will be present in your environment. 
 
-Next, we're going to download the code files you need to follow the lesson. [Continue the setup here](#/installing-a-coding-environment/3-cloning). (Note - this last step is the same for Mac and Windows)
+Next, we're going to download the code files you need to follow the lesson. [Continue the setup here](#/installing-a-coding-environment/downloading-code-examples). (Note - this last step is the same for Mac and Windows)
 

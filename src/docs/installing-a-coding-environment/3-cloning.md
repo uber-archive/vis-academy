@@ -6,8 +6,8 @@ In the previous steps, we've installed:
 we've obtained a mapbox token and we made sure it will be accessible each time you need it.
 
 If you haven't accomplished this yet, that's how you do it: 
-- [on Windows](#/installing-a-coding-environment/1-install-tools-windows)
-- [on MacOS](#/installing-a-coding-environment/2-install-tools-mac)
+- [on Windows](#/installing-a-coding-environment/installing-tools-windows)
+- [on MacOS](#/installing-a-coding-environment/installing-tools-mac)
 
 Next, we are going to get the code files that we need. 
 

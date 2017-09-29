@@ -15,7 +15,7 @@
   margin: 2rem;
   padding: 1rem;
   box-shadow: 0 0 5px rgba(black, 0.2);
-  transition: background-color 250ms ease-in, color 250ms ease-in;
+  transition: background-color 0.5s, box-shadow 0.3s, color 0.5s, transform 0.5s;
 
   .btn {
     transition: color 250ms ease-in;
@@ -27,6 +27,12 @@
   &:hover {
     background-color: $primary;
     color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12), 0 2px 5px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+
+    .lesson-card__image {
+      box-shadow: 0 0 0 4px white;
+    }
     .btn {
       color: white;
     }
@@ -34,8 +40,10 @@
 }
 
 img.lesson-card__image {
-  width: 70%;
+  border: 0px solid white;
   border-radius: 50%;
+  transition: box-shadow 0.8s;
+  width: 70%;
 }
 
 .lesson-card__name {
