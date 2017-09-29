@@ -61,9 +61,9 @@ export default class App extends Component {
 
   getNodeSize = node => 10
 
-  onHoverNode = node => {
+  onHoverNode = pickedObj => {
     // check if is hovering on a node
-    const hoveredNodeID = node.object && node.object.id;
+    const hoveredNodeID = pickedObj.object && pickedObj.object.id;
     const graph = new Graph(this.state.graph);
     if (hoveredNodeID) {
       // highlight the selected node, connected edges, and neighbor nodes

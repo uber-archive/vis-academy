@@ -72,8 +72,8 @@ Let's plug in the layout engine we have here with our graph application.
 
 ## 2. Start Layout Engine
 
-To speed up the rendering, we want the component rerender without 'diffing' the component state of props.
-One trick we can do here is to call 'forceUpdate()' method to rerender the component.
+To speed up the rendering, we want the component rerender without 'diffing' the component state and props.
+One trick we can do here is to call 'forceUpdate()' method to rerender the component when the layout simulation is completed on each step.
 
 ```js
 // step0: import layout engine
@@ -161,7 +161,7 @@ export default class GraphRender extends PureComponent {
   renderEdgeLayer() {
     return new LineLayer({
       // ...
-      // 1. add positionUpdateTrigger to node layer
+      // 1. add positionUpdateTrigger to edge layer
       updateTriggers: {
         getSourcePosition: this.props.positionUpdateTrigger,
         getTargetPosition: this.props.positionUpdateTrigger
