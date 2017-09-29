@@ -1,8 +1,11 @@
+
 Before we go through the tutorial, let's make sure we have everything necessary in order to make this as smooth as possible.
+This tutorial assumes a basic familiarity with Javascript and the command line, but otherwise it's not necessary to understand every step.
+Feel free to ask questions if anything is unclear.
+If you have problem with setting up the coding environment please check [here](#/installing-a-coding-environment/installing-tools-mac)
 
 ## 1. Cloning and Running
 
-In order to do live coding, you can use the example starting code we provide.
 Clone our tutorial repository and go through the usual setup steps. NOTE: you
 need to be running node **>=v6** locally.
 ```
@@ -16,8 +19,6 @@ npm start
 A page should automatically be opened in your browser, with a pretty simple app (for now!).
 
 Note that the repository you cloned also contains all the content and code of this tutorial, and you may run it locally if you want (repeat the last two steps from above from vis-academy/).
-
-In the pages of this tutorial, you can use the back quote key ` (typically located below ESC) to see the code examples in full page.
 
 ## 3. How this tutorial works
 
@@ -65,4 +66,4 @@ src/demos/graph/0-starting-code/src/app.js
 ```
 
 Next, you can head to the next step:
-[Graph Render](#/graph-vis/render).
+[Graph Render](#/graph-vis/1-graph-render).

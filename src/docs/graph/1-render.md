@@ -1,12 +1,12 @@
 <ul class='insert learning-objectives'>
-  <li>Create a GraphRender component</li>
+  <li>Create a GraphRender component using deck.gl</li>
 </ul>
 
 # What Will We Do
-In this step, we will create a reusable render engine by `deck.gl` to draw the nodes and edges of the graph on the canvas.
+In this step, we will create a reusable render engine to draw the nodes and edges of the graph on the canvas.
 [Deck.GL](http://uber.github.io/deck.gl) is a WebGL overlay suite for React,
 providing a set of highly performant data visualization overlays that we can compose the visualization layer by layer.
-This render engine will take data and several property accessors into the visualization layers and the users can control the all the visual logic outside of this component. Here's the overview of the render engine, GraphRender:
+This render engine will take data and several property accessors into the visualization layers and allow the users to control the  the visual logic outside of this component. Here's the overview of the render engine, GraphRender:
 
 <p class="inline-images center">
   <img src="images/graph-vis/architecture-graph-render.png" alt="extruded" width="600px"/>
@@ -59,9 +59,9 @@ export default class GraphRender extends Component {
     return new ScatterplotLayer({
       id: 'node-layer',
       data: this.props.nodes,
-      getPosition: this.props.getNodePosition,
-      getRadius: this.props.getNodeSize,
-      getColor: this.props.getNodeColor,
+      getPosition: node => this.props.getNodePosition(node),
+      getRadius: node => this.props.getNodeSize(node),
+      getColor: node => this.props.getNodeColor(node),
       projectionMode: COORDINATE_SYSTEM.IDENTITY
     });
   }
@@ -70,6 +70,7 @@ export default class GraphRender extends Component {
 }
 ```
 
+By passing these accesors into the layer directly, users can change the visual mapping externally without modifying this component.
 Let's go over some properties of the `ScatterplotLayer` above:
 
 ##### `data` {Array}
@@ -87,7 +88,7 @@ Function that gets called for the color of each node, should return an array [r,
 If the alpha parameter is not provided, it will be set to 255.
 
 #### `projectionMode` {Number}
-COORDINATE_SYSTEM.IDENTITY: no projection
+By default, `deck.gl` uses [Mercator projection](https://en.wikipedia.org/wiki/Mercator_projection) to project points onto the viewport. In our case, setting projectionMode to `COORDINATE_SYSTEM.IDENTITY` allows us to plot the points as-is the position  from the `getPosition` method.
 
 
 ## 3. Edge Layer: Add Line Layer with Deck.gl
@@ -114,7 +115,7 @@ export default class GraphRender extends Component {
         this.props.getEdgePosition(e).sourcePosition,
       getTargetPosition: e =>
         this.props.getEdgePosition(e).targetPosition,
-      getColor: this.props.getEdgeColor,
+      getColor: e => this.props.getEdgeColor(e),
       strokeWidth: this.props.getEdgeWidth(),
       projectionMode: COORDINATE_SYSTEM.IDENTITY
     });
@@ -148,10 +149,10 @@ Function that gets called for the color of the edge, should return an array [r, 
 If the alpha parameter is not provided, it will be set to 255.
 
 #### `strokeWidth` {Number}
-The stroke width used to draw each line. Unit is pixels.
+The width of the line; the unit is pixels. Note that `LineLayer` only has uniform stroke width for all lines. If you want to change the thickness of the line dynamically, please use [PathLayer](http://uber.github.io/deck.gl/#/documentation/layer-catalog/path-layer).
 
 #### `projectionMode` {Number}
-COORDINATE_SYSTEM.IDENTITY: no projection
+By default, `deck.gl` uses [Mercator projection](https://en.wikipedia.org/wiki/Mercator_projection) to project points onto the viewport. In our case, setting projectionMode to `COORDINATE_SYSTEM.IDENTITY` allows us to plot the points as-is the position  from the `getSourcePosition` and `getTargetPosition` method.
 
 ## 4. Viewport
 
@@ -168,7 +169,8 @@ export default class GraphRender extends Component {
   
   // 1. add a method to create viewport
   createViewport() {
-    const {height, width} = this.props;
+    const width = this.props.width;
+    const height = this.props.height;
     return new OrthographicViewport({
       width,
       height,
@@ -249,9 +251,8 @@ export default class GraphRender extends PureComponent {
       id: 'node-layer',
       data: this.props.nodes,
       getPosition: node => this.props.getNodePosition(node),
-      // getPosition: this.props.getNodePosition,
-      getRadius: this.props.getNodeSize,
-      getColor: this.props.getNodeColor,
+      getRadius: node => this.props.getNodeSize(node),
+      getColor: node => this.props.getNodeColor(node),
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
         getPosition: this.props.positionUpdateTrigger
@@ -267,7 +268,7 @@ export default class GraphRender extends PureComponent {
         this.props.getEdgePosition(e).sourcePosition,
       getTargetPosition: e =>
         this.props.getEdgePosition(e).targetPosition,
-      getColor: this.props.getEdgeColor,
+      getColor: e => this.props.getEdgeColor(e),
       strokeWidth: this.props.getEdgeWidth(),
       projectionMode: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {

@@ -18,8 +18,7 @@ We will highlight the node and its connected edges when hovering over a node.
 
 ## 1. Add Visual Property
 
-First, we need to add a new visual property 'isHighlighted' to nodes and edges.
-We will use this property to change the color to red when `isHighlighted` is true.
+First, we will add a new visual property `isHighlighted` to store the highlight status of the nodes and edges.
 
 ```js
 export default class App extends Component {
@@ -78,6 +77,14 @@ export default class GraphRender extends PureComponent {
 }
 ```
 ## 3. Update `isHighlighted` When Hovering Over A Node
+Since we already store the highlight status in nodes and edges, now we can update the status when hovering over a node.
+We can have `hoveredNodeID` in the component state, and update it when the hovered node changes.
+When `onHoverNode` event handler is triggered, the argument `pickableObj` contains the information of what object was picked by the `deck.gl` picking engine.
+You can see more detail about the picking info object at [here](https://uber.github.io/deck.gl/#/documentation/getting-started/adding-interactivity).
+
+The `object` in the `pickedObj` is referring to the node data we passed into the node layer.
+Once we got the picked node ID, we can get the connected edges from the [`Graph`](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/common/graph.js) class and update the highlight state of these selected edges and nodes.
+Let's see how we do the hovering interaction:
 
 ```js
 // app.js
@@ -93,9 +100,9 @@ export default class App extends Component {
 
   // ...
 
-  onHoverNode = node => {
+  onHoverNode = pickedObj => {
     // 1. check if is hovering on a node
-    const hoveredNodeID = node.object && node.object.id;
+    const hoveredNodeID = pickedObj.object && pickedObj.object.id;
     const graph = new Graph(this.state.graph);
     if (hoveredNodeID) {
       // 2. highlight the selected node and connected edges
@@ -127,7 +134,7 @@ export default class App extends Component {
 
 ## 4. Add Color Update Trigger
 
-As we mentioned in the previous [step](#/graph-vis/3-layout-engine), `deck.gl` doesn't re-evaluate the accessors when data is not changed. We will need add the update trigger for `getColor` to inform `deck.gl` re-evaluate the colors again.
+As we mentioned in the previous [step](#/graph-vis/3-plugin-layout-engine), `deck.gl` doesn't re-evaluate the accessors when data is not changed. We will need add the update trigger for `getColor` to inform `deck.gl` re-evaluate the colors again.
 
 ```js
 // app.js
@@ -156,7 +163,7 @@ export default class GraphRender extends PureComponent {
       updateTriggers: {
         // ...
         // 1. register the color update trigger
-        getColor: this.props.colorUpdateTrigger
+        getColor: node => this.props.colorUpdateTrigger(node)
       }
     });
   }
@@ -167,7 +174,7 @@ export default class GraphRender extends PureComponent {
       updateTriggers: {
         // ...
         // 2. register the color update trigger
-        getColor: this.props.colorUpdateTrigger
+        getColor: e => this.props.colorUpdateTrigger(e)
       }
     });
   }

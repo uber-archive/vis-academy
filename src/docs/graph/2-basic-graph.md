@@ -1,6 +1,5 @@
 <ul class='insert learning-objectives'>
-<li>Render a graph with random layout in a React application,</li>
-<li>Update the viewport when resizing the window</li>
+  <li>Setup the application, load graph data, and render a graph with random layout in a React application </li>
 </ul>
 
 **HOLD UP!!!** If you got here without reading the [**Setup**](#/graph-vis/setup) or
@@ -39,7 +38,7 @@ The next steps of this tutorial will only refer to parts of the outline shown ab
 ## 2. Add Graph Data
 
 We already prepared the sample graph data in the repository 
-[here](https://github.com/uber-common/vis-tutorial/blob/master/demos/graph/data/sample-graph.js),
+[here](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/data/sample-graph.js),
 and then import the file into your `app.js` component.
 
 ```js
@@ -47,7 +46,7 @@ import sampleGraph from '../../data/sample-graph';
 ```
 
 Now we need to process this data into a usable format. 
-We already prepared a basic graph class [here](https://github.com/uber-common/vis-tutorial/blob/master/demos/graph/common/graph.js) for storing graph data and some basic graph operations.
+We already prepared a basic graph class [here](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/common/graph.js) for storing graph data and some basic graph operations.
 
 We add a `processData` method and call it when component mounts to process the data.
 
@@ -95,8 +94,7 @@ export default class App extends Component {
 
 The next thing will be the state of the viewport, here we only need the size of the window.
 The width and height can be easily retrieved from the global object `window`.
-We set the viewport object on component state because `deck.gl` leaves
-the control of the viewport to the user.
+We set the viewport object on component state because `deck.gl` leaves the control of the viewport to the user.
 
 ```js
 export default class App extends Component {
@@ -206,7 +204,7 @@ export default class App extends Component {
 ```
 
 Congratulations! You should be able to see a random graph now!
-<p class="inline-images">
+<p class="inline-images center">
   <img src="images/graph-vis/random-graph.png" alt="extruded" width="600px"/>
 </p>
 
@@ -315,3 +313,5 @@ export default class App extends Component {
 ```
 
 That's all you need to render a graph and make it interactive!
+
+Next, you can head to the next step [**Layout Engine**](#/graph-vis/3-plugin-layout-engine).

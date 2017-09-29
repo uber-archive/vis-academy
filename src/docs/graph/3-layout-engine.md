@@ -68,12 +68,13 @@ We already wrote the layout engine for you, so you can just import it to your `a
 For more detail, please see the complete code of the layout engine at [here](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/common/layout-engine.js).
 Note that, the layout engine should be replaceable with any other implementation to achieve a different type of graph layout.
 
-Let's plug in the layout engine we have here with our graph application.
+Now let's plug in the layout engine with our graph application.
 
 ## 2. Start Layout Engine
 
-To speed up the rendering, we want the component rerender without 'diffing' the component state of props.
-One trick we can do here is to call 'forceUpdate()' method to rerender the component.
+Once the layout engine is instantiated in the constructor, we will need to register the update callback to get notified when the laout simulation is finished on each step. 
+To speed up the rendering, we want the component rerender without 'diffing' the component state and props.
+One trick we can do here is to call 'forceUpdate()' method to rerender the component when the layout simulation is completed on each step.
 
 ```js
 // step0: import layout engine
@@ -96,28 +97,23 @@ export default class App extends Component {
 
   processData() {
     // ...
-    if (sampleGraph) {
-      // ...
-      const newGraph = new Graph();
-      newGraph.nodes.forEach(node => {
-        newGraph.addNode(node);
-      });
-      sampleGraph.edges.forEach(edge => {
-        newGraph.addEdge(edge);
-      });
-      this.setState({graph: newGraph});
-      // step3: update engine
-      this._engine.update(newGraph);
-      // step4: start the engine
-      this._engine.start();
-    }
+    const newGraph = new Graph();
+    newGraph.nodes.forEach(node => {
+      newGraph.addNode(node);
+    });
+    sampleGraph.edges.forEach(edge => {
+      newGraph.addEdge(edge);
+    });
+    this.setState({graph: newGraph});
+    // step3: update engine
+    this._engine.update(newGraph);
+    // step4: start the engine
+    this._engine.start();
   }
 
   // ...
 }
 ```
-
-See the complete doe of the layout engine at [here]().
 
 ## 3. Connect Graph Render with Layout Engine
 
@@ -142,10 +138,16 @@ export default class App extends Component {
 ```
 
 ## 4. Position Update Trigger
+To here, you may still see a still graph without animaiton like this:
 
-<!-- The last part is to trigger `deck.gl` to update when every time the layout is updated. -->
+<p class="inline-images center">
+  <img src="images/graph-vis/no-position-update-trigger.png" alt="extruded" width="600px"/>
+</p>
+
 In the previous step, we connected `getNodePosition` and `getEdgePosition` with the accessors in the layout engine. However, `deck.gl` doesn't recalculate positions unlesss the data prop changes by shallow comparison. To inform deck.gl to re-evaluate `getPosition` outcome, we need to explicitly define `updateTriggers`. 
-`updateTriggers` expect an object whose keys are names of accessor props of this layer, and values are one or more variables that affect the output of the accessors. In our case, the key is 'getPosition' and the value can be the `alpha` value from the layout engine since the value of alpha changes when layout updated.
+`updateTriggers` expect an object whose keys are names of accessor props of this layer, and values are one or more variables that affect the output of the accessors. 
+
+The layout engine has an attribute `alpha` represents the momemtum of the current force layout simulation. Since the value of `alpha` changes on every simulation, we can use it as the update trigger for `getPosition`. That means, `deck.gl` will re-evalute the position of nodes and edges when the alpha changes.
 
 ```js
 // layout-engine.js
@@ -165,7 +167,7 @@ export default class GraphRender extends PureComponent {
   renderEdgeLayer() {
     return new LineLayer({
       // ...
-      // 1. add positionUpdateTrigger to node layer
+      // 1. add positionUpdateTrigger to edge layer
       updateTriggers: {
         getSourcePosition: this.props.positionUpdateTrigger,
         getTargetPosition: this.props.positionUpdateTrigger
@@ -203,3 +205,5 @@ export default class App extends Component {
 You can check the complete code at here:
  - [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/app.js)
  - [graph-render.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/graph-render.js).
+
+Next, you can head to the last step [**Interaction**](#/graph-vis/4-interacting-with-graph).
