@@ -79,7 +79,7 @@ export default class GraphRender extends PureComponent {
 ## 3. Update `isHighlighted` When Hovering Over A Node
 Since we already store the highlight status in nodes and edges, now we can update the status when hovering over a node.
 We can have `hoveredNodeID` in the component state, and update it when the hovered node changes.
-When `onHoverNode` handler is triggered, the argument `pickableObj` contains the information of what object was picked by the `deck.gl` picking engine.
+When `onHoverNode` event handler is triggered, the argument `pickableObj` contains the information of what object was picked by the `deck.gl` picking engine.
 You can see more detail about the picking info object at [here](https://uber.github.io/deck.gl/#/documentation/getting-started/adding-interactivity).
 
 The `object` in the `pickedObj` is referring to the node data we passed into the node layer.
