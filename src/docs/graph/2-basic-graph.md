@@ -313,3 +313,5 @@ export default class App extends Component {
 ```
 
 That's all you need to render a graph and make it interactive!
+
+Next, you can head to the next step [**Layout Engine**](#/graph-vis/3-plugin-layout-engine).

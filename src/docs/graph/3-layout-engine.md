@@ -199,4 +199,5 @@ export default class App extends Component {
 You can check the complete code at here:
  - [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/app.js)
  - [graph-render.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/2-graph-layout/src/graph-render.js).
- 
+
+Next, you can head to the last step [**Interaction**](#/graph-vis/4-interacting-with-graph).

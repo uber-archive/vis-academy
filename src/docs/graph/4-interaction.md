@@ -156,7 +156,7 @@ export default class GraphRender extends PureComponent {
       updateTriggers: {
         // ...
         // 1. register the color update trigger
-        getColor: this.props.colorUpdateTrigger
+        getColor: node => this.props.colorUpdateTrigger(node)
       }
     });
   }
@@ -167,7 +167,7 @@ export default class GraphRender extends PureComponent {
       updateTriggers: {
         // ...
         // 2. register the color update trigger
-        getColor: this.props.colorUpdateTrigger
+        getColor: e => this.props.colorUpdateTrigger(e)
       }
     });
   }
