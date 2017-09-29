@@ -38,7 +38,7 @@ The next steps of this tutorial will only refer to parts of the outline shown ab
 ## 2. Add Graph Data
 
 We already prepared the sample graph data in the repository 
-[here](https://github.com/uber-common/vis-tutorial/blob/master/demos/graph/data/sample-graph.js),
+[here](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/data/sample-graph.js),
 and then import the file into your `app.js` component.
 
 ```js
@@ -46,7 +46,7 @@ import sampleGraph from '../../data/sample-graph';
 ```
 
 Now we need to process this data into a usable format. 
-We already prepared a basic graph class [here](https://github.com/uber-common/vis-tutorial/blob/master/demos/graph/common/graph.js) for storing graph data and some basic graph operations.
+We already prepared a basic graph class [here](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/common/graph.js) for storing graph data and some basic graph operations.
 
 We add a `processData` method and call it when component mounts to process the data.
 

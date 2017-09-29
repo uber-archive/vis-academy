@@ -83,7 +83,7 @@ When `onHoverNode` handler is triggered, the argument `pickableObj` contains the
 You can see more detail about the picking info object at [here](https://uber.github.io/deck.gl/#/documentation/getting-started/adding-interactivity).
 
 The `object` in the `pickedObj` is referring to the node data we passed into the node layer.
-Once we got the picked node ID, we can get the connected edges from the `Graph` class and update the highlight state of these selected edges and nodes.
+Once we got the picked node ID, we can get the connected edges from the [`Graph`](https://github.com/uber-common/vis-academy/blob/master/src/demos/graph/common/graph.js) class and update the highlight state of these selected edges and nodes.
 Let's see how we do the hovering interaction:
 
 ```js

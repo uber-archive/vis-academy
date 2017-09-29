@@ -1,9 +1,11 @@
 
-Before we go through the tutorial, let's make sure we have everything necessary in order to make this as smooth as possible. If you have problem with setting up the coding environment please check [here](#/installing-a-coding-environment/installing-tools-mac)
+Before we go through the tutorial, let's make sure we have everything necessary in order to make this as smooth as possible.
+This tutorial assumes a basic familiarity with Javascript and the command line, but otherwise it's not necessary to understand every step.
+Feel free to ask questions if anything is unclear.
+If you have problem with setting up the coding environment please check [here](#/installing-a-coding-environment/installing-tools-mac)
 
 ## 1. Cloning and Running
 
-In order to do live coding, you can use the example starting code we provide.
 Clone our tutorial repository and go through the usual setup steps. NOTE: you
 need to be running node **>=v6** locally.
 ```
