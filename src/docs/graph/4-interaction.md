@@ -127,7 +127,7 @@ export default class App extends Component {
 
 ## 4. Add Color Update Trigger
 
-As we mentioned in the previous [step](#/graph-vis/3-layout-engine), `deck.gl` doesn't re-evaluate the accessors when data is not changed. We will need add the update trigger for `getColor` to inform `deck.gl` re-evaluate the colors again.
+As we mentioned in the previous [step](#/graph-vis/3-plugin-layout-engine), `deck.gl` doesn't re-evaluate the accessors when data is not changed. We will need add the update trigger for `getColor` to inform `deck.gl` re-evaluate the colors again.
 
 ```js
 // app.js
