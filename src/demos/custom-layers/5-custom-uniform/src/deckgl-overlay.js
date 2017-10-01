@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import DeckGL from 'deck.gl';
-import ScatterplotLayer from './my-scatterplot-layer';
-
-const PICKUP_COLOR = [0, 128, 255];
-const DROPOFF_COLOR = [255, 0, 128];
+import MyScatterplotLayer from './my-scatterplot-layer';
 
 const INFO_STYLE = {
   position: 'absolute',
@@ -20,14 +17,14 @@ export default class DeckGLOverlay extends Component {
       return null;
     }
 
-    const timeOfDay = (this.props.currentTime / 1000) % 24;
+    const timeOfDay = (Date.now() / 1000) % 24;
 
     const layers = [
-      new ScatterplotLayer({
+      new MyScatterplotLayer({
         id: 'pickup',
         data: this.props.data,
         getPosition: d => [d.pickup_longitude, d.pickup_latitude],
-        getColor: d => PICKUP_COLOR,
+        getColor: d => [0, 128, 255],
         getAngle: d => Math.atan2(d.dropoff_latitude - d.pickup_latitude, d.dropoff_longitude - d.pickup_longitude),
         getTime: d => {
           const pickupDate = new Date(d.pickup_datetime);

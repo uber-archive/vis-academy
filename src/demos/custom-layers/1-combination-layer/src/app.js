@@ -15,8 +15,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: props.width || window.innerWidth,
+        height: props.height || window.innerHeight,
         longitude: -74,
         latitude: 40.7,
         zoom: 11,
@@ -60,7 +60,7 @@ export default class App extends Component {
   }
 
   render() {
-    const {viewport, currentTime} = this.state;
+    const {viewport} = this.state;
 
     return (
       <div>
@@ -69,7 +69,7 @@ export default class App extends Component {
           onViewportChange={this._onViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
 
-          <DeckGLOverlay viewport={viewport} data={taxiData} currentTime={currentTime} />
+          <DeckGLOverlay viewport={viewport} data={taxiData} />
 
         </MapGL>
       </div>

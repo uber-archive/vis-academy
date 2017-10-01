@@ -5,6 +5,7 @@
     "build": "NODE_ENV=production webpack --env.prod=true"
   },
   "dependencies": {
+    "@turf/turf": "^4.7.3",
     "deck.gl": "^4.1.0",
     "luma.gl": "^4.0.1",
     "react": "^15.4.1",

@@ -60,7 +60,7 @@ export default class App extends Component {
   }
 
   render() {
-    const {viewport, currentTime} = this.state;
+    const {viewport} = this.state;
 
     return (
       <div>
@@ -69,7 +69,7 @@ export default class App extends Component {
           onViewportChange={this._onViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
 
-          <DeckGLOverlay viewport={viewport} data={taxiData} currentTime={currentTime} />
+          <DeckGLOverlay viewport={viewport} data={taxiData} />
 
         </MapGL>
       </div>

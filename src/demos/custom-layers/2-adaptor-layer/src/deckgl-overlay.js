@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import DeckGL from 'deck.gl';
-import TaxiLayer from './taxi-cluster-layer';
-
-const PICKUP_COLOR = [0, 128, 255];
-const DROPOFF_COLOR = [255, 0, 128];
+import TaxiClusterLayer from './taxi-cluster-layer';
 
 export default class DeckGLOverlay extends Component {
 
@@ -13,12 +10,11 @@ export default class DeckGLOverlay extends Component {
     }
 
     const layers = [
-      new TaxiLayer({
+      new TaxiClusterLayer({
         id: 'taxi-trips',
         data: this.props.data,
-        pickupColor: PICKUP_COLOR,
-        dropoffColor: DROPOFF_COLOR,
-        radiusScale: 40,
+        pickupColor: [0, 128, 255],
+        dropoffColor: [255, 0, 128],
         getPickupLocation: d => [d.pickup_longitude, d.pickup_latitude],
         getDropoffLocation: d => [d.dropoff_longitude, d.dropoff_latitude]
       })

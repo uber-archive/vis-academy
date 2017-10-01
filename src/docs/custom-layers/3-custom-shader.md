@@ -23,10 +23,10 @@ export default class MyScatterplotLayer extends ScatterplotLayer {
 In `deckgl-overlay.js`, draw the pickup points with this new layer. It should work identical to the ScatterplotLayer:
 
 ```js
-import ScatterplotLayer from './my-scatterplot-layer';
+import MyScatterplotLayer from './my-scatterplot-layer';
 
 const layers = [
-  new ScatterplotLayer({
+  new MyScatterplotLayer({
     id: 'pickup',
     data: this.props.data,
     getPosition: d => [d.pickup_longitude, d.pickup_latitude],
@@ -57,10 +57,9 @@ export default class MyScatterplotLayer extends ScatterplotLayer {
   }
 ```
 
-Open your developer console in the browser. Copy the printed fragment shader code to the top of this file as a string. It should look like this:
+Open your developer console in the browser. you should see the shader code printed out like this:
 
 ```js
-const fragmentShader = `
 #define SHADER_NAME scatterplot-layer-fragment-shader
 
 #ifdef GL_ES
@@ -81,6 +80,12 @@ void main(void) {
     discard;
   }
 }
+```
+
+Copy the above into our custom layer, define a string variable like this:
+```js
+const fragmentShader = `
+replace me with shader code
 `;
 ```
 

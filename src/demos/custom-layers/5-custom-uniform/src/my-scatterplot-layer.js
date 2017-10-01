@@ -19,11 +19,12 @@ uniform float radiusMaxPixels;
 uniform float renderPickingBuffer;
 uniform float outline;
 uniform float strokeWidth;
+uniform float currentTime;
 
 varying vec4 vColor;
 varying vec2 unitPosition;
 varying float innerUnitRadius;
-varying float time;
+varying float vAlpha;
 
 vec3 rotateZ(vec3 vector, float angle) {
   mat2 rotationMatrix = mat2(cos(angle), sin(angle), -sin(angle), cos(angle));
@@ -59,7 +60,7 @@ void main(void) {
   vec4 pickingColor = vec4(instancePickingColors / 255., 1.);
   vColor = mix(color, pickingColor, renderPickingBuffer);
 
-  time = instanceTimes;
+  vAlpha = 1.0 - abs(instanceTimes - currentTime);
 }
 `;
 
@@ -73,18 +74,12 @@ precision highp float;
 varying vec4 vColor;
 varying vec2 unitPosition;
 varying float innerUnitRadius;
-varying float time;
-
-uniform float currentTime;
+varying float vAlpha;
 
 void main(void) {
 
-  float distToCenter = length(unitPosition);
-
-  float alpha = 1.0 - abs(time - currentTime);
-
   if (unitPosition.x < 1.0 - abs(unitPosition.y) * 4.0) {
-    gl_FragColor = vec4(vColor.rgb, alpha);
+    gl_FragColor = vec4(vColor.rgb, vAlpha);
   } else {
     discard;
   }

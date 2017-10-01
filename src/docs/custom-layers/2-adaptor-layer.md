@@ -6,9 +6,11 @@
 
 # Adaptor Layer
 
-## 1. Create a new CompositeLayer
-
 As you have seen rendering 10,000 arcs on screen does not provide any visual clarity. We very rarely want to visualize raw data as is. In this case, let's try clustering the pickup/dropoff locations into fewer points.
+
+To demonstrate, I have implemented a function called `clusterPoints` in the `helpers.js`. Given a data array and one or more position accessors, it adds the centroid of the cluster to each datum. There are many JavaScript libraries that implement popular visualization algorithms. In this exercise, we will focus on how to plug such modules into deck.gl's layer lifecycle.
+
+## 1. Create a new CompositeLayer
 
 Create a new file under the `src` folder and name it `taxi-cluster-layer.js`. 
 
@@ -36,7 +38,15 @@ Now head over to `deckgl-overlay.js` and replace the TaxiLayer we've been using 
 
 ```js
 // Instead of importing from taxi-layer...
-import TaxiLayer from './taxi-cluster-layer';
+import TaxiClusterLayer from './taxi-cluster-layer';
+
+// render() function
+// Instead of TaxiLayer...
+    const layers = [
+      new TaxiClusterLayer({
+        // Same props as before
+      })
+    ];
 ```
 
 It should render exactly the same.
@@ -50,81 +60,70 @@ This method is called every time some of this layer props change.
 export default class TaxiClusterLayer extends CompositeLayer {
   updateState({oldProps, props}) {
     if (oldProps.data !== props.data) {
-      // data changed, recalculate cluster
-      const {data, getPickupLocation, getDropoffLocation} = props;
-      const clusteredData = data.map(d => ({...d}));
-
-      // TODO: manipulate data points here
-
-      this.setState({clusteredData});
+      // TODO: data changed, recalculate cluster
     }
   }
 }
 ```
 
-Here we checked if the `data` prop has changed. If so, we clone the data points into a new array to be processed. We save the processed data into the layer's state by calling `this.setState`, so we won't have to do it again.
-
-Now in `renderLayers`, instead of using the user provided data, we are going to use the processed data:
+Here we checked if the `data` prop has changed. If so, we will call the pre-defined clustering function to process the new data. It will return a copy of the data array with two new fields: `pickup_cluster` and `dropoff_cluster`.
 
 ```js
-  renderLayers() {
-    // Create sublayers
-    return [
-      new TaxiLayer({
-        ...this.props,
-        data: this.state.clusteredData
+// Import our own data processing module
+import {clusterPoints} from './helpers';
+
+export default class TaxiClusterLayer extends CompositeLayer {
+  updateState({oldProps, props}) {
+    if (oldProps.data !== props.data) {
+      // data changed, recalculate cluster
+      const clusteredData = clusterPoints(props.data, {
+        pickup_cluster: props.getPickupLocation,
+        dropoff_cluster: props.getDropoffLocation
       });
-    ];
+
+      // TODO: save the processed data somewhere
+    }
+  }
+}
+```
+
+After clustering, we want the layer to remember the processed data so that we don't have to do it again. 
+
+
+## 3. Save the processed data
+
+In deck.gl, each layer remembers stuff from previous render cycles via the `state` object. Inside a layer's methods, if we call:
+```js
+this.setState({
+  message: 'I remember!'
+});
+```
+Then later, we can retrieve that info by accessing:
+```js
+this.state.message; // returns 'I remember!'
+```
+
+In this example, we will save `clusteredData` to the layer state so that it can be accessed in the `renderLayers` method in follwing up render cycles.
+Here's the full code of the `updateState` method:
+```js
+  updateState({oldProps, props}) {
+    if (oldProps.data !== props.data) {
+      // data changed, recalculate cluster
+      const clusteredData = clusterPoints(props.data, {
+        pickup_cluster: props.getPickupLocation,
+        dropoff_cluster: props.getDropoffLocation
+      });
+
+      // save processed data to layer state
+      this.setState({clusteredData});
+    }
   }
 ```
 
-## 3. Clustering with turf.js
 
-[turf.js](http://turfjs.org) is an awesome library that performs common geospatial calculations. We will use it to help cluster our points.
+## 4. Render the processed data
 
-In your console:
-```
-npm install @turf/turf --save
-# or
-yarn add @turf/turf
-```
-This will install turf for this project.
-
-Now in `taxi-cluster-layer.js`, import some functions from turf:
-
-```js
-import turf from '@turf/helpers';
-import clustersKmeans from '@turf/clusters-kmeans';
-```
-
-Insert the following to replace the `TODO` item inside `updateState`:
-
-```js
-    // Collect pickup and dropoff points into one array
-    const pickupPoints = data.map((d, index) =>
-      turf.point(getPickupLocation(d), {pickup: index}));
-
-    const dropoffPoints = data.map((d, index) =>
-      turf.point(getDropoffLocation(d), {dropoff: index}));
-
-    const allPoints = turf.featureCollection(pickupPoints.concat(dropoffPoints));
-
-    // Calculate clusters using K-means: https://en.wikipedia.org/wiki/K-means_clustering)
-    clustersKmeans(allPoints).features
-    .forEach(p => {
-      const {pickup, dropoff, centroid} = p.properties;
-      if (pickup !== undefined) {
-        clusteredData[pickup].pickup_cluster_centroid = centroid;
-      } else {
-        clusteredData[dropoff].dropoff_cluster_centroid = centroid;
-      }
-    });
-```
-This code adds `pickup_cluster_centroid` and `dropoff_cluster_centroid` fields to the data points.
-
-## 4. Replace accessors
-
-Finally, in `renderLayers`, instead of using the user provided position accessors, we want to use the clustered position that we calculated:
+Finally, in `renderLayers`, instead of using the user provided props, we want to use the clustered position that we calculated:
 
 ```js
   renderLayers() {
@@ -133,8 +132,8 @@ Finally, in `renderLayers`, instead of using the user provided position accessor
       new TaxiLayer({
         ...this.props,
         data: this.state.clusteredData,
-        getPickupLocation: d => d.pickup_cluster_centroid,
-        getDropoffLocation: d => d.dropoff_cluster_centroid
+        getPickupLocation: d => d.pickup_cluster,
+        getDropoffLocation: d => d.dropoff_cluster
       });
     ];
   }

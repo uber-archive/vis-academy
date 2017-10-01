@@ -169,7 +169,7 @@ export default [{
 }, {
   name: 'Custom Layers',
   desc: 'Advanced topic: learn how to create your own deck.gl layers.',
-  image: 'images/graph-vis/cover.png', 
+  image: 'images/custom-layers/cover.png', 
   path: '/custom-layers',
   data: [
     {

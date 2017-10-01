@@ -1,47 +1,34 @@
 import DeckGL, {CompositeLayer, ScatterplotLayer, ArcLayer} from 'deck.gl';
 
-const defaultProps = {
-  radiusScale: 40,
-  pickupColor: [255, 0, 0],
-  dropoffColor: [0, 0, 255],
-  getPickupLocation: d => d.pickup,
-  getDropoffLocation: d => d.dropoff
-};
-
 export default class TaxiLayer extends CompositeLayer {
 
   renderLayers() {
-    const {id, data, pickupColor, dropoffColor, radiusScale, getPickupLocation, getDropoffLocation} = this.props;
-
     return [
       new ScatterplotLayer({
-        id: `${id}-pickup`,
-        data,
-        getPosition: getPickupLocation,
-        getColor: d => pickupColor,
-        radiusScale
+        id: `${this.props.id}-pickup`,
+        data: this.props.data,
+        getPosition: this.props.getPickupLocation,
+        getColor: d => this.props.pickupColor,
+        radiusScale: 40
       }),
       new ScatterplotLayer({
-        id: `${id}-dropoff`,
-        data,
-        getPosition: getDropoffLocation,
-        getColor: d => dropoffColor,
-        radiusScale
+        id: `${this.props.id}-dropoff`,
+        data: this.props.data,
+        getPosition: this.props.getDropoffLocation,
+        getColor: d => this.props.dropoffColor,
+        radiusScale: 40
       }),
       new ArcLayer({
-        id: `${id}-arc`,
-        data,
+        id: `${this.props.id}-arc`,
+        data: this.props.data,
         opacity: 0.3,
-        getSourcePosition: getPickupLocation,
-        getTargetPosition: getDropoffLocation,
-        getSourceColor: d => pickupColor,
-        getTargetColor: d => dropoffColor,
+        getSourcePosition: this.props.getPickupLocation,
+        getTargetPosition: this.props.getDropoffLocation,
+        getSourceColor: d => this.props.pickupColor,
+        getTargetColor: d => this.props.dropoffColor,
         strokeWidth: 2
       })
     ];
   }
 
 }
-
-TaxiLayer.layerName = 'TaxiLayer';
-TaxiLayer.defaultProps = defaultProps;

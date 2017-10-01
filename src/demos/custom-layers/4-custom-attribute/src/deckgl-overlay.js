@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import DeckGL from 'deck.gl';
-import ScatterplotLayer from './my-scatterplot-layer';
-
-const PICKUP_COLOR = [0, 128, 255];
-const DROPOFF_COLOR = [255, 0, 128];
+import MyScatterplotLayer from './my-scatterplot-layer';
 
 export default class DeckGLOverlay extends Component {
 
@@ -13,11 +10,11 @@ export default class DeckGLOverlay extends Component {
     }
 
     const layers = [
-      new ScatterplotLayer({
+      new MyScatterplotLayer({
         id: 'pickup',
         data: this.props.data,
         getPosition: d => [d.pickup_longitude, d.pickup_latitude],
-        getColor: d => PICKUP_COLOR,
+        getColor: d => [0, 128, 255],
         getAngle: d => Math.atan2(d.dropoff_latitude - d.pickup_latitude, d.dropoff_longitude - d.pickup_longitude),
         radiusScale: 40
       })

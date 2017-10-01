@@ -8,6 +8,8 @@
 
 Attributes are how the CPU sends per-instance information to the GPU. By adding an attribute to the scatterplot layer, we can make each data point look different.
 
+In this exercise, we will make each icon at pickup spot an arrow pointing to the direction that the rider is going.
+
 ## 1. Declare an attribute
 
 In `my-scatterplot-layer.js`, add a `initializeState` method to our layer class:
@@ -23,7 +25,17 @@ export default class MyScatterplotLayer extends ScatterplotLayer {
   }
 }
 ```
-This adds a new instanced attribute `instanceAngles`, that is automatically filled with the accessor `Layer.prop.getAngle`.
+This code adds a new instanced attribute `instanceAngles`, that is automatically filled with the accessor `Layer.prop.getAngle`. The `attributeManager` is automatically created for every layer. Check the [API reference](https://uber.github.io/deck.gl/#/documentation/api-reference/attribute-manager) to learn more about the attribute manager.
+
+In `deckgl-overlay.js`, we will provide the `getAngle` accessor:
+```js
+    const layers = [
+      new MyScatterplotLayer({
+        ...
+        getAngle: d => Math.atan2(d.dropoff_latitude - d.pickup_latitude, d.dropoff_longitude - d.pickup_longitude)
+      })
+    ];
+```
 
 ## 2. Replace the vertex shader
 
