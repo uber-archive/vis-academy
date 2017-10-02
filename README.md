@@ -1,3 +1,7 @@
-# vis-tutorial
+# Vis Academy
 
-> A set of tutorials on how our frameworks (deck.gl, luma.gl, react-map-gl, react-vis) make effective data visualization applications.
+Lessons and classes from the Uber visualization team, focusing on the visualizations frameworks that we've built: 
+
+* [deck.gl](http://deck.gl) - for large-scale WebGL visualizations;
+* [react-map-gl](https://uber.github.io/react-map-gl/) - React components for Mapbox GL;
+* [react-vis](https://uber.github.io/react-vis/) - A composable React charting library
