@@ -125,7 +125,7 @@ export default class App extends Component {
       <GraphRender
         // ...
         // 5. pass onHoverNode handler
-        onHoverNode={this.state.onHoverNode}
+        onHoverNode={this.onHoverNode}
       />
     );
   }
@@ -164,6 +164,22 @@ export default class GraphRender extends PureComponent {
   }
 
   // ...
+}
+
+// app.js
+export default class App extends Component {
+  // ...
+
+  render() {
+    // ...
+    return (
+      <GraphRender
+        // ...
+        // 3. pass state.hoveredNodeID as colorUpdateTrigger
+        colorUpdateTrigger={this.state.hoveredNodeID}
+      />
+    );
+  }
 }
 ```
 
