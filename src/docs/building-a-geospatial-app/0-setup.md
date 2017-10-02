@@ -19,13 +19,18 @@ For example, on Linux and Mac, you would run:
 export MapboxAccessToken=<token>
 ```
 
+For Vis 2017 tutorial, here is the token you can use, it will be valid for this week
+```
+export MapboxAccessToken=pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoiY2o4OW90ZjNuMDV6eTMybzFzbmc3bWpvciJ9.zfRO_nfL1O3d2EuoNtE_NQ
+```
+
 ## 2. Cloning and Running
 You should have git, node >= 6, and either yarn or npm installed.
 
 Clone our tutorial repository and open the new directory.
 ```
-git clone https://github.com/uber-common/vis-tutorial.git
-cd vis-tutorial/src/demos/building-a-geospatial-app/starting-code
+git clone https://github.com/uber-common/vis-academy.git
+cd vis-academy/src/demos/building-a-geospatial-app/starting-code
 
 yarn # or npm install (slower)
 npm start
@@ -35,7 +40,7 @@ A page should automatically open in your browser, with a pretty basic app (for n
 
 Note that the repository you cloned also contains all the content and code of
 this tutorial, and you may run it locally if you want (repeat the last two steps
-from above from vis-tutorial/).
+from above from vis-academy/).
 
 ## 3. How this tutorial works
 
@@ -52,7 +57,7 @@ We'll end each lesson with key takeaways and further reading.
 You can now open your text editor with the following file:
 
 ```
-src/demos/building-a-geospatial-app/starting-code/app.js
+src/demos/building-a-geospatial-app/starting-code/src/app.js
 ```
 
 It's an empty component! `starting-code` will be the folder that holds all your
