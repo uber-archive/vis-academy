@@ -10,7 +10,7 @@ import Charts from './charts';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
 
-import taxiData from '../data/taxi';
+import taxiData from '../../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
@@ -53,8 +53,8 @@ export default class App extends Component {
     if (taxiData) {
       this.setState({status: 'LOADED'});
       const data = taxiData.reduce((accu, curr) => {
-        const pickupTime = curr.tpep_pickup_datetime || '';
-        const dropoffTime = curr.tpep_dropoff_datetime || '';
+        const pickupTime = curr.pickup_datetime || '';
+        const dropoffTime = curr.dropoff_datetime || '';
 
         const distance = curr.trip_distance;
         const amount = curr.total_amount;

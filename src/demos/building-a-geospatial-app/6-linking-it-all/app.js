@@ -9,7 +9,7 @@ import {
 import Charts from './charts';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
-import taxiData from '../data/taxi';
+import taxiData from '../../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
@@ -54,8 +54,8 @@ export default class App extends Component {
       this.setState({status: 'LOADED'});
       const data = taxiData.reduce((accu, curr) => {
 
-        const pickupHour = new Date(curr.tpep_pickup_datetime).getUTCHours();
-        const dropoffHour = new Date(curr.tpep_dropoff_datetime).getUTCHours();
+        const pickupHour = new Date(curr.pickup_datetime).getUTCHours();
+        const dropoffHour = new Date(curr.dropoff_datetime).getUTCHours();
 
         const pickupLongitude = Number(curr.pickup_longitude);
         const pickupLatitude = Number(curr.pickup_latitude);
