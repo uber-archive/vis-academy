@@ -13,6 +13,7 @@
     "lint": "ocular lint"
   },
   "dependencies": {
+    "@turf/turf": "^4.7.3",
     "autobind-decorator": "^2.1.0",
     "d3-force": "^1.0.6",
     "deck.gl": "^4.1.1",

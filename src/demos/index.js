@@ -13,6 +13,13 @@ import * as guidelines from './building-a-geospatial-app/guidelines';
 import GraphLayout from './graph/2-graph-layout/src/app';
 import InteractiveGraph from './graph/3-final-version/src/app';
 
+// custom layers
+import CombinationLayer from './custom-layers/1-combination-layer/src/app';
+import AdaptorLayer from './custom-layers/2-adaptor-layer/src/app';
+import CustomShader from './custom-layers/3-custom-shader/src/app';
+import CustomAttribute from './custom-layers/4-custom-attribute/src/app';
+import CustomUniform from './custom-layers/5-custom-uniform/src/app';
+
 export default {
 
   GeospatialAppStartingWithMap,
@@ -26,6 +33,11 @@ export default {
   ...guidelines,
   
   GraphLayout,
-  InteractiveGraph
+  InteractiveGraph,
 
+  CombinationLayer,
+  AdaptorLayer,
+  CustomShader,
+  CustomAttribute,
+  CustomUniform
 }
