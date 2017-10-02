@@ -35,7 +35,7 @@ A page should automatically open in your browser, with a base map showing New Yo
 
 Note that the repository you cloned also contains all the content and code of
 this tutorial, and you may run it locally if you want (repeat the last two steps
-from above from vis-tutorial/).
+from above from vis-academy/).
 
 ## 3. How this tutorial works
 

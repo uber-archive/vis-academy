@@ -49,6 +49,11 @@ export const SCATTERPLOT_CONTROLS = {
     step: 10,
     min: 10,
     max: 200
+  },
+  showHexagon: {
+    displayName: 'Show Hexagon',
+    type: 'boolean',
+    value: true
   }
 };
 

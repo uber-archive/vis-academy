@@ -6,7 +6,7 @@
 </ul>
 
 # Add a Hexagon Overlay with Deck.GL
-[View code](https://github.com/uber-common/vis-academy/tree/master/demos/building-a-geospatial-app/3-hexagon-overlay)
+[View code](https://github.com/uber-common/vis-academy/tree/master/src/demos/building-a-geospatial-app/3-hexagon-overlay)
 
 **NOTE** This step follows from the **completed** code of the previous section,
 [Scatterplot Overlay](#/building-a-geospatial-app/2-scatterplot-overlay.md).
@@ -69,22 +69,14 @@ import DeckGL, {ScatterplotLayer, HexagonLayer} from 'deck.gl';
 
 export default class DeckGLOverlay extends Component {
 
-  _initialize(gl) {
-    gl.enable(gl.DEPTH_TEST);
-    gl.depthFunc(gl.LEQUAL);
-  }
-
   render() {
-    if (!this.props.data) {
-      return null;
-    }
-
+    // ...
     const layers = [
       !this.props.showHexagon ? new ScatterplotLayer({
         id: 'scatterplot',
         getPosition: d => d.position,
         getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
-        getRadius: d => 1,
+        getRadius: d => 5,
         opacity: 0.5,
         pickable: true,
         radiusMinPixels: 0.25,
@@ -95,21 +87,18 @@ export default class DeckGLOverlay extends Component {
         id: 'heatmap',
         colorRange: HEATMAP_COLORS,
         elevationRange,
-        elevationScale: 10,
+        elevationScale: 5,
         extruded: true,
         getPosition: d => d.position,
         lightSettings: LIGHT_SETTINGS,
         opacity: 1,
         pickable: true,
+        radius: 300,
         ...this.props
       }) : null
     ];
 
-    return (<DeckGL
-      {...this.props.viewport}
-      layers={layers}
-      onWebGLInitialized={this._initialize}
-    />);
+    // ...
   }
 }
 ```
@@ -148,3 +137,37 @@ Hexagon cells with value larger than upperPercentile will be hidden
 
 ##### `pickable` {Bool}
 Indicates whether this layer should be interactive.
+
+## Optional section
+
+Feel free to skip to [lesson 4](https://uber-common.github.io/vis-academy/#/building-a-geospatial-app/4-a-basic-chart).
+
+## 4. Adding Polish
+
+Let's add more hexagon layer controls to the control panel, if you have't add a control panel to your app, check out the optional session of lesson 2 first
+
+```js
+import {LayerControls, HEXAGON_CONTROLS} from './layer-controls';
+export default class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      // add settings
+      settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
+        ...accu,
+        [key]: HEXAGON_CONTROLS[key].value
+      }), {})
+    };
+  }
+}
+
+```
+
+Pass `HEXAGON_CONTROLS` to `LayerControls`
+```js
+   <LayerControls
+    // ...
+    settings={this.state.settings}
+  />
+```

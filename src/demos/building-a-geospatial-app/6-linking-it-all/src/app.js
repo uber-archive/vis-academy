@@ -9,8 +9,7 @@ import {
 import Charts from './charts';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
-
-import taxiData from '../../data/taxi';
+import taxiData from '../../../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
@@ -21,20 +20,22 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      ...props,
       viewport: {
         width: window.innerWidth,
         height: window.innerHeight,
         longitude: -74,
         latitude: 40.7,
         zoom: 11,
-        maxZoom: 16
+        maxZoom: 16,
+        ...props.viewport
       },
       settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
         ...accu,
         [key]: HEXAGON_CONTROLS[key].value
       }), {}),
-
-      status: 'LOADING'
+      status: 'LOADING',
+      selectedHour: null
     };
     this._resize = this._resize.bind(this);
   }
@@ -48,31 +49,31 @@ export default class App extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
-
   _processData() {
     if (taxiData) {
       this.setState({status: 'LOADED'});
       const data = taxiData.reduce((accu, curr) => {
-        const pickupTime = curr.pickup_datetime || '';
-        const dropoffTime = curr.dropoff_datetime || '';
 
-        const distance = curr.trip_distance;
-        const amount = curr.total_amount;
+        const pickupHour = new Date(curr.pickup_datetime).getUTCHours();
+        const dropoffHour = new Date(curr.dropoff_datetime).getUTCHours();
 
-        const pickupHour = Number(pickupTime.slice(11, 13));
-        const dropoffHour = Number(dropoffTime.slice(11, 13));
+        const pickupLongitude = Number(curr.pickup_longitude);
+        const pickupLatitude = Number(curr.pickup_latitude);
 
-        if (!isNaN(Number(curr.pickup_longitude)) && !isNaN(Number(curr.pickup_latitude))) {
+        if (!isNaN(pickupLongitude) && !isNaN(pickupLatitude)) {
           accu.points.push({
-            position: [Number(curr.pickup_longitude), Number(curr.pickup_latitude)],
+            position: [pickupLongitude, pickupLatitude],
             hour: pickupHour,
             pickup: true
           });
         }
 
-        if (!isNaN(Number(curr.dropoff_longitude)) && !isNaN(Number(curr.dropoff_latitude))) {
+        const dropoffLongitude = Number(curr.dropoff_longitude);
+        const dropoffLatitude = Number(curr.dropoff_latitude);
+
+        if (!isNaN(dropoffLongitude) && !isNaN(dropoffLatitude)) {
           accu.points.push({
-            position: [Number(curr.dropoff_longitude), Number(curr.dropoff_latitude)],
+            position: [dropoffLongitude, dropoffLatitude],
             hour: dropoffHour,
             pickup: false
           });
@@ -146,18 +147,22 @@ export default class App extends Component {
           }}>
             <div>{JSON.stringify(this.state.hoveredObject)}</div>
           </div>}
-        <LayerControls
+        {this.props.noControls ? null : <LayerControls
           settings={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
-          onChange={settings => this._updateLayerSettings(settings)}/>
+          onChange={settings => this._updateLayerSettings(settings)}
+        />}
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={viewport => this._onViewportChange(viewport)}
+          onViewportChange={viewport => {
+            this._onViewportChange(viewport);
+          }}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
             viewport={this.state.viewport}
             data={this.state.points}
+            hour={this.state.highlightedHour || this.state.selectedHour}
             onHover={hover => this._onHover(hover)}
             {...this.state.settings}
           />

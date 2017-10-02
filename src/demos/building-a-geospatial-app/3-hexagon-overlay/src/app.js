@@ -4,13 +4,12 @@ import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay';
 import {
   LayerControls,
-  HEXAGON_CONTROLS
+  HEXAGON_CONTROLS,
+  SCATTERPLOT_CONTROLS
 } from './layer-controls';
-import Charts from './charts';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
-
-import taxiData from '../../data/taxi';
+import taxiData from '../../../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
@@ -29,10 +28,18 @@ export default class App extends Component {
         zoom: 11,
         maxZoom: 16
       },
-      settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
-        ...accu,
-        [key]: HEXAGON_CONTROLS[key].value
-      }), {}),
+
+      settings: {
+        ...Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
+          ...accu,
+          [key]: SCATTERPLOT_CONTROLS[key].value
+        }), {}),
+
+        ...Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
+          ...accu,
+          [key]: HEXAGON_CONTROLS[key].value
+        }), {})
+      },
 
       status: 'LOADING'
     };
@@ -41,69 +48,37 @@ export default class App extends Component {
 
   componentDidMount() {
     this._processData();
-    window.addEventListener('resize', this._resize);
+    window.addEventListener('resize', () => this._resize);
     this._resize();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._resize);
+    window.removeEventListener('resize', () => this._resize);
   }
 
   _processData() {
     if (taxiData) {
       this.setState({status: 'LOADED'});
-      const data = taxiData.reduce((accu, curr) => {
-        const pickupHour = new Date(curr.pickup_datetime).getUTCHours();
-        const dropoffHour = new Date(curr.dropoff_datetime).getUTCHours();
+      const points = taxiData.reduce((accu, curr) => {
+        accu.push({
+          position: [Number(curr.pickup_longitude), Number(curr.pickup_latitude)],
+          pickup: true
+        });
 
-        const pickupLongitude = Number(curr.pickup_longitude);
-        const pickupLatitude = Number(curr.pickup_latitude);
-
-        if (!isNaN(pickupLongitude) && !isNaN(pickupLatitude)) {
-          accu.points.push({
-            position: [pickupLongitude, pickupLatitude],
-            hour: pickupHour,
-            pickup: true
-          });
-        }
-
-        const dropoffLongitude = Number(curr.dropoff_longitude);
-        const dropoffLatitude = Number(curr.dropoff_latitude);
-
-        if (!isNaN(dropoffLongitude) && !isNaN(dropoffLatitude)) {
-          accu.points.push({
-            position: [dropoffLongitude, dropoffLatitude],
-            hour: dropoffHour,
-            pickup: false
-          });
-        }
-
-        const prevPickups = accu.pickupObj[pickupHour] || 0;
-        const prevDropoffs = accu.dropoffObj[dropoffHour] || 0;
-
-        accu.pickupObj[pickupHour] = prevPickups + 1;
-        accu.dropoffObj[dropoffHour] = prevDropoffs + 1;
-
+        accu.push({
+          position: [Number(curr.dropoff_longitude), Number(curr.dropoff_latitude)],
+          pickup: false
+        });
         return accu;
-      }, {
-        points: [],
-        pickupObj: {},
-        dropoffObj: {}
+      }, []);
+      this.setState({
+        points,
+        status: 'READY'
       });
-
-      data.pickups = Object.entries(data.pickupObj).map(([hour, count]) => {
-        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
-      });
-      data.dropoffs = Object.entries(data.dropoffObj).map(([hour, count]) => {
-        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
-      });
-      data.status = 'READY';
-
-      this.setState(data);
     }
   }
 
-  _onHover({x, y, object}) {
+ _onHover({x, y, object}) {
     this.setState({x, y, hoveredObject: object});
   }
 
@@ -147,10 +122,9 @@ export default class App extends Component {
             viewport={this.state.viewport}
             data={this.state.points}
             onHover={hover => this._onHover(hover)}
-             {...this.state.settings}
+            {...this.state.settings}
           />
         </MapGL>
-        <Charts {...this.state} />
         <Spinner status={this.state.status} />
       </div>
     );

@@ -12,7 +12,7 @@ the powerful `MapboxGL` mapping library. `react-map-gl` makes it super easy to
 drop a mapping component into your application.
 
 Checkout the complete code for this step
-[here](https://github.com/uber-common/vis-academy/tree/master/demos/building-a-geospatial-app/1-starting-with-map).
+[here](https://github.com/uber-common/vis-academy/blob/master/src/demos/building-a-geospatial-app/1-starting-with-map/src/app.js).
 
 ## 1. Start with a bare React Component
 
@@ -72,11 +72,16 @@ manually and pass it back into `react-map-gl` if we want to change it.
 
 Now that we have a viewport object, let's add the actual map component.
 `react-map-gl` makes this extremely easy.
+
 ```js
 import MapGL from 'react-map-gl';
+```
+Add to `render()`
+
+```js
 
 export default class App extends Component {
-
+  // ...
   render() {
     return (
       <div>
@@ -176,7 +181,7 @@ where viewport state is actually being updated.
 
 ## 6. Completed Code
 
-Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/building-a-geospatial-app/1-starting-with-map/app.js) should now look like this:
+Our completed component [app.js](https://github.com/uber-common/vis-academy/blob/master/src/demos/building-a-geospatial-app/1-starting-with-map/src/app.js) should now look like this:
 
 ```js
 /* global window */
@@ -232,7 +237,7 @@ export default class App extends Component {
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={viewport => this._onViewportChange.bind(viewport)}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
         </MapGL>
       </div>

@@ -17,6 +17,10 @@ providing a set of highly performant data visualization overlays.
 with our map, to show display geospatial data. The simplest one is the `ScatterplotLayer`,
 which we will use.
 
+Checkout the complete code for this step
+[here](https://github.com/uber-common/vis-academy/blob/master/src/demos/building-a-geospatial-app/2-scatterplot-overlay/src/app.js).
+
+
 ## 1. Add Taxi Data
 
 Import the taxi data into your `app.js` component. If you cloned our
@@ -69,8 +73,8 @@ export default class App extends Component {
 
 ## 2. Add `deck.gl` Component
 
-Open the file named `deckgl-overlay.js` where we will put the deck.gl
-component. First, let's add  `DeckGl` to render:
+Open file `deckgl-overlay.js` where we will put the deck.gl
+component. First, let's add  `DeckGl`:
 
 ```
 import DeckGL, {ScatterplotLayer} from 'deck.gl';
@@ -89,7 +93,7 @@ then render it:
     const layers = [];
 
     return (
-      <DeckGL {...this.props.viewport} layers={layers} />
+      <DeckGL {...this.props.viewport} layers={layers} onWebGLInitialized={this._initialize}/>
     );
   }
 
@@ -111,12 +115,36 @@ const layers = [
     getRadius: d => 5,
     opacity: 0.5,
     pickable: false,
-    radiusScale: 3,
+    radiusScale: 5,
     radiusMinPixels: 0.25,
     radiusMaxPixels: 30,
     ...this.props
   })
 ];
+```
+
+## 3. Using the `deck.gl` Component
+
+Now that we have the component created, we can render it inside `App` and pass
+data as well as other props to it.
+
+```js
+import DeckGLOverlay from './deckgl-overlay';
+
+export default class App extends Component {
+
+  render() {
+    return (
+      <div>
+        <MapGL ...>
+          <DeckGLOverlay
+            viewport={this.state.viewport}
+            data={this.state.points} />
+        </MapGL>
+      </div>
+    );
+  }
+}
 ```
 
 Once we add the code to initialize a `ScatterplotLayer`, we will have
@@ -144,29 +172,6 @@ for each point.
 ##### `pickable` {Bool}
 Indicates whether this layer would be interactive.
 
-## 3. Using the `deck.gl` Component
-
-Now that we have the component created, we can render it inside `App` and pass
-data as well as other props to it.
-
-```js
-import DeckGLOverlay from './deckgl-overlay';
-
-export default class App extends Component {
-
-  render() {
-    return (
-      <div>
-        <MapGL ...>
-          <DeckGLOverlay
-            viewport={this.state.viewport}
-            data={this.state.points} />
-        </MapGL>
-      </div>
-    );
-  }
-}
-```
 
 With this, you should have a working `deck.gl` overlay that displays the taxi
 data as a scatterplot overlay.
@@ -179,12 +184,12 @@ data as a scatterplot overlay.
 
 <ul class="insert further-readings">
   <li>[Deck.GL](http://uber.github.io/deck.gl) and its extensive documentation</li>
-  <li>[Gallery of Deck.GL overlays](https://uber-common.github.io/vis-tutorial/#/data-overlays-gallery/mapping-types)</li>
+  <li>[Gallery of Deck.GL overlays](https://uber-common.github.io/vis-academy/#/building-a-geospatial-app/data-overlays-gallery/mapping-types)</li>
 </ul>
 
 ## Optional section
 
-Feel free to skip to [lesson 3](https://uber-common.github.io/vis-tutorial/#/3-more-data-overlays-hexagons) or even [lesson 4](https://uber-common.github.io/vis-tutorial/#/4-a-basic-chart).
+Feel free to skip to [lesson 3](https://uber-common.github.io/vis-academy/#/building-a-geospatial-app/3-more-data-overlays-hexagons) or even [lesson 4](https://uber-common.github.io/vis-academy/#/building-a-geospatial-app/4-a-basic-chart).
 
 ## 4. Adding Polish
 
@@ -215,6 +220,7 @@ export default class App extends Component {
       }), {}),
     };
   }
+}
 ```
 Next, lets render a layer control panel on the screen. Lets add `LayerControls` to render methods.
 

@@ -8,7 +8,7 @@ const element = document.getElementById('root');
 render(<App />, element);
 
 if (module.hot) {
-  module.hot.accept('./app', () => {
+  module.hot.accept('./src/app', () => {
     const Next = require('./src/app').default;
     render(<Next />, element);
   });

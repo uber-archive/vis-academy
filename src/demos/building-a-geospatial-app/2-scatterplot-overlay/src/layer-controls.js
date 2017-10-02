@@ -2,11 +2,6 @@ import React, {Component} from 'react';
 import {layerControl} from './style';
 
 export const HEXAGON_CONTROLS = {
-  showHexagon: {
-    displayName: 'Show Hexagon',
-    type: 'boolean',
-    value: true
-  },
   radius: {
     displayName: 'Hexagon Radius',
     type: 'range',
@@ -49,6 +44,11 @@ export const SCATTERPLOT_CONTROLS = {
     step: 10,
     min: 10,
     max: 200
+  },
+  showHexagon: {
+    displayName: 'Show Hexagon',
+    type: 'boolean',
+    value: true
   }
 };
 
