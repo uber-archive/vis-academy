@@ -125,7 +125,7 @@ export default class App extends Component {
       <GraphRender
         // ...
         // 5. pass onHoverNode handler
-        onHoverNode={this.onHoverNode}
+        onHoverNode={this.state.onHoverNode}
       />
     );
   }
@@ -137,22 +137,6 @@ export default class App extends Component {
 As we mentioned in the previous [step](#/graph-vis/3-plugin-layout-engine), `deck.gl` doesn't re-evaluate the accessors when data is not changed. We will need add the update trigger for `getColor` to inform `deck.gl` re-evaluate the colors again.
 
 ```js
-// app.js
-export default class App extends Component {
-  // ...
-
-  render() {
-    // ...
-    return (
-      <GraphRender
-        // ...
-        // 0. add color update trigger
-        colorUpdateTrigger={hoveredNodeID}
-      />
-    );
-  }
-}
-
 // graph-render.js
 export default class GraphRender extends PureComponent {
   // ...
@@ -163,7 +147,7 @@ export default class GraphRender extends PureComponent {
       updateTriggers: {
         // ...
         // 1. register the color update trigger
-        getColor: node => this.props.colorUpdateTrigger(node)
+        getColor: this.props.colorUpdateTrigger
       }
     });
   }
@@ -174,7 +158,7 @@ export default class GraphRender extends PureComponent {
       updateTriggers: {
         // ...
         // 2. register the color update trigger
-        getColor: e => this.props.colorUpdateTrigger(e)
+        getColor: this.props.colorUpdateTrigger
       }
     });
   }
