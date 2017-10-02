@@ -23,7 +23,7 @@ Import the taxi data into your `app.js` component. If you cloned our
 tutorial repo as-is, your import statement should look like this:
 
 ```js
-import taxiData from '../data/taxi';
+import taxiData from '../../../data/taxi';
 ```
 
 Now we need to process this data into a usable format. Since we are only going
@@ -98,6 +98,8 @@ to render our `deck.gl` overlay. You'll notice that `layers` is being passed to
 separately. Let's edit the function and initialize a `ScatterplotLayer` in `render()` function.
 
 ```js
+// const layers = [];
+
 const layers = [
   new ScatterplotLayer({
     id: 'scatterplot',
