@@ -19,6 +19,11 @@ For example, on Linux and Mac, you would run:
 export MapboxAccessToken=<token>
 ```
 
+For Vis 2017 tutorial, here is the token you can use, it will be valid for this week
+```
+export MapboxAccessToken=pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoiY2o4OW90ZjNuMDV6eTMybzFzbmc3bWpvciJ9.zfRO_nfL1O3d2EuoNtE_NQ
+```
+
 ## 2. Cloning and Running
 You should have git, node >= 6, and either yarn or npm installed.
 
@@ -52,7 +57,7 @@ We'll end each lesson with key takeaways and further reading.
 You can now open your text editor with the following file:
 
 ```
-src/demos/custom-layers/starting-code/app.js
+src/demos/custom-layers/starting-code/src/app.js
 ```
 
 It's an empty component! `starting-code` will be the folder that holds all your
