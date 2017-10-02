@@ -8,7 +8,7 @@ function Home() {
   return (
     <div className="Home f fcol fg">
       <div className="title">
-        <img src="/images/vis-logo.png" alt="vis-logo" />
+        <img src="images/vis-logo.png" alt="vis-logo" />
         <h1>Vis Academy</h1>
         <p>Tutorials and classes prepared by the Uber visualization team</p>
       </div>
@@ -34,5 +34,3 @@ function Home() {
 }
 
 export default Home
-
-// <span className="lesson-card__get-started btn">{'GET STARTED!'}</span>
