@@ -142,7 +142,7 @@ export default [{
   ]
 }, {
   name: 'Building a Graph Vis',
-  desc: 'Learn how to create a graph visualization with d3-force layout.',
+  desc: 'Learn how to create a graph visualization in webGL, with d3-force layout.',
   image: 'images/graph-vis/cover.png',
   badges: ['deck.gl'],
   path: '/graph-vis',
@@ -171,7 +171,8 @@ export default [{
 }, {
   name: 'Custom Layers',
   desc: 'Advanced topic: learn how to create your own deck.gl layers.',
-  image: 'images/custom-layers/cover.png', 
+  image: 'images/custom-layers/cover.png',
+  badges: ['deck.gl'],
   path: '/custom-layers',
   data: [
     {
