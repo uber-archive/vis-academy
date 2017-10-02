@@ -4,6 +4,8 @@ Before you get started with the lessons, you need to have number of tools instal
 
 The following instructions are written for a completely new machine, assuming that nothing you'll need is installed yet.
 
+The purpose of this section is not to get you the fanciest code environment with all bells and whistles - which has a lot to do with personal preferences, anyway - but to make sure you have enough to get going. For everything we're going to install I've added simple commands to check that this step is cleared; if you're having a problem on a specific step you can find answers online. 
+
 ## Get a text editor
 
 First things first is to make sure you have a robust text editor. I am partial to [Sublime Text](https://www.sublimetext.com/3) but there are lots of other good options like [Visual Studio](https://code.visualstudio.com/), [Atom](https://atom.io) and many others. 
