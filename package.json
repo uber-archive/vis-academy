@@ -3,7 +3,7 @@
   "description": "A set of Uber Visualization tutorials",
   "repository": {
     "type": "git",
-    "url": "https://github.com/uber-common/vis-tutorial.git"
+    "url": "https://github.com/uber-common/vis-academy.git"
   },
   "version": "0.1.0",
   "main": "index.js",

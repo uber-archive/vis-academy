@@ -5,7 +5,7 @@ import DeckGLOverlay from './deckgl-overlay';
 import {LayerControls, SCATTERPLOT_CONTROLS} from './layer-controls';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
-import taxiData from '../../data/taxi';
+import taxiData from '../../../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here

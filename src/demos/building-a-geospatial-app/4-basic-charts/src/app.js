@@ -9,7 +9,8 @@ import {
 import Charts from './charts';
 import Spinner from './spinner';
 import {tooltipStyle} from './style';
-import taxiData from '../../data/taxi';
+
+import taxiData from '../../../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
@@ -20,22 +21,20 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props,
       viewport: {
         width: window.innerWidth,
         height: window.innerHeight,
         longitude: -74,
         latitude: 40.7,
         zoom: 11,
-        maxZoom: 16,
-        ...props.viewport
+        maxZoom: 16
       },
       settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
         ...accu,
         [key]: HEXAGON_CONTROLS[key].value
       }), {}),
-      status: 'LOADING',
-      selectedHour: null
+
+      status: 'LOADING'
     };
     this._resize = this._resize.bind(this);
   }
@@ -49,11 +48,11 @@ export default class App extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
+
   _processData() {
     if (taxiData) {
       this.setState({status: 'LOADED'});
       const data = taxiData.reduce((accu, curr) => {
-
         const pickupHour = new Date(curr.pickup_datetime).getUTCHours();
         const dropoffHour = new Date(curr.dropoff_datetime).getUTCHours();
 
@@ -104,20 +103,8 @@ export default class App extends Component {
     }
   }
 
-  _onHighlight(highlightedHour) {
-    this.setState({highlightedHour});
-  }
-
   _onHover({x, y, object}) {
     this.setState({x, y, hoveredObject: object});
-  }
-
-  _onSelect(selectedHour) {
-    this.setState({selectedHour:
-      selectedHour === this.state.selectedHour ?
-        null :
-        selectedHour
-      });
   }
 
   _onViewportChange(viewport) {
@@ -147,30 +134,23 @@ export default class App extends Component {
           }}>
             <div>{JSON.stringify(this.state.hoveredObject)}</div>
           </div>}
-        {this.props.noControls ? null : <LayerControls
+        <LayerControls
           settings={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
-          onChange={settings => this._updateLayerSettings(settings)}
-        />}
+          onChange={settings => this._updateLayerSettings(settings)}/>
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={viewport => {
-            this._onViewportChange(viewport);
-          }}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
             viewport={this.state.viewport}
             data={this.state.points}
-            hour={this.state.highlightedHour || this.state.selectedHour}
             onHover={hover => this._onHover(hover)}
-            {...this.state.settings}
+             {...this.state.settings}
           />
         </MapGL>
-        <Charts {...this.state}
-          highlight={hour => this._onHighlight(hour)}
-          select={hour => this._onSelect(hour)}
-        />
+        <Charts {...this.state} />
         <Spinner status={this.state.status} />
       </div>
     );
