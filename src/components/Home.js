@@ -12,7 +12,7 @@ function Home() {
         <h1>Vis Academy</h1>
         <p>Tutorials and classes prepared by the Uber visualization team</p>
       </div>
-      <div className="fg f fac fjc fw lessons">
+      <div className="fg f fac fw lessons">
         {lessons.map((d, i) => (
           <a href={`#${d.path}`} key={i}>
             <div className="lesson-card f fcol fac">
