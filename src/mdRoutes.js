@@ -76,7 +76,8 @@ export default [{
 }, {
   name: 'Building a Geospatial App',
   desc: 'Learn how to create maps, layer data on top of them and draw charts with the Uber vis libraries.',
-  image: 'images/geospatial-app/geospatial-app.png', 
+  image: 'images/geospatial-app/geospatial-app.png',
+  badges: ['react-vis', 'react-map-gl', 'deck.gl'],
   path: '/building-a-geospatial-app',
   data: [
     {
@@ -142,7 +143,8 @@ export default [{
 }, {
   name: 'Building a Graph Vis',
   desc: 'Learn how to create a graph visualization with d3-force layout.',
-  image: 'images/graph-vis/cover.png', 
+  image: 'images/graph-vis/cover.png',
+  badges: ['deck.gl'],
   path: '/graph-vis',
   data: [
     {

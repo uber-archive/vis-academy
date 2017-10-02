@@ -1,46 +1,66 @@
 @import "~react-vis/dist/main.scss";
 @import "./_variables.scss";
 
-.Home {
-  background-color: #E5E5E4;
-
+.title {
+  height: 300px;
+  width: 100%;
+  margin: 6em auto 1em;
+  max-width: 72rem;
+  img {
+    position: absolute;
+    z-index: -1;
+  }
+  h1, p {
+    margin-left: 213px;
+  }
   h1 {
-    font-size: 6em;
-    font-weight: 400;
+    font-size: 2em;
+    font-weight: 600;
   }
   p {
-    font-size: 1.6em;
-    line-height: 1.5;
-  }
-
-  h3 {
-    font-size: 1.8em;
+    font-size: 4em;
+    font-weight: 400;
   }
 }
 
-.title {
-  width: 100%;
-  text-align: center;
-  * {
-    margin: 1em auto;
-    max-width: 600px;
-  }
-  p {
-    font-size: 3em;
+.badges {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+.badge {
+  border: 1px solid #979797;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: calc(5em / 9);
+  padding: 0 5px;
+  margin: 0 5px 0 0;
+  line-height: 2em;
+  text-transform: uppercase;
+  transition: color 0.5s, border-color 0.5s, background 0.5s;
+  &:hover {
+    background: white;
+    color: $primary !important;
   }
 }
 
 .lesson-card {
   background-color: white;
   color: #494949;
-
+  font-size: 1.5em;
   width: 20rem;
   max-width: 80vw;
   height: 30rem;
   margin: 2rem;
   padding: 1.5rem 1rem 1rem;
+  position: relative;
   box-shadow: 0 0 5px rgba(black, 0.2);
   transition: background-color 250ms, box-shadow 0.3s, color 250ms, transform 250ms;
+
+  h3 {
+    font-size: 1.2em;
+  }
 
   .btn {
     transition: color 250ms ease-in;
@@ -60,6 +80,10 @@
     }
     .btn {
       color: white;
+    }
+    .badge {
+      color: white;
+      border-color: white;
     }
   }
 }
@@ -176,13 +200,26 @@ ul.insert {
 
 @media screen and (max-width: $mobile) {
   .Home {
-    h1 {
-      font-size: 3em;
-    }
     .title {
+      margin: 2rem auto;
+      h1 {
+        margin: 1rem 1rem 1rem 2rem ;
+      }
+      img {
+        height: 100px;
+      }
       p {
-        margin: 1em auto;
+        margin: 1rem 1rem 1rem 2rem ;
+        font-size: 1em;
         max-width: 80%;
+      }
+      height: 100px;
+    }
+    .lesson-card {
+      margin: 1rem 2rem;
+      max-width: none;
+      img {
+        width: 50%;
       }
     }
   }
