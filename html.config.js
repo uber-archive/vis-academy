@@ -1,10 +1,10 @@
 module.exports = {
 
-  title: 'Visualization Tutorials',
+  title: 'Vis Academy',
 
   meta: [{
     name: 'description',
-    content: 'An introduction to visualization libraries.',
+    content: 'Classes and tutorials from the Uber Visualization team',
   }],
 
 };

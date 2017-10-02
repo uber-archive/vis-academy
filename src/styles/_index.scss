@@ -3,6 +3,31 @@
 
 .Home {
   background-color: #E5E5E4;
+
+  h1 {
+    font-size: 6em;
+    font-weight: 400;
+  }
+  p {
+    font-size: 1.6em;
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-size: 1.8em;
+  }
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  * {
+    margin: 1em auto;
+    max-width: 600px;
+  }
+  p {
+    font-size: 3em;
+  }
 }
 
 .lesson-card {
@@ -13,7 +38,7 @@
   max-width: 80vw;
   height: 30rem;
   margin: 2rem;
-  padding: 1rem;
+  padding: 1.5rem 1rem 1rem;
   box-shadow: 0 0 5px rgba(black, 0.2);
   transition: background-color 250ms, box-shadow 0.3s, color 250ms, transform 250ms;
 
@@ -60,24 +85,32 @@ footer {
 }
 
 ul.insert {
-  line-height: 2;
-  margin: 16px 0 !important;
-  overflow: auto;
-  padding: 110px 29px 46px 34px !important;
-  position: relative;
-  list-style-type: none;
-
-  background-color: #F8F8F9;
-  border: 1px solid #C6C6C6;
+  background-color: #e5e5e4;
   color: #3A3A48;
+  line-height: 1.5;
+  list-style-type: none;
+  margin: 1rem 0 1rem -1rem !important;
+  overflow: auto;
+  padding: 72px 16px 16px !important;
+  position: relative;
+
   &:before {
-    font-size: 44px;
-    line-height: 52px;
-    font-weight: 400;
+    font-size: 2em;
+    font-weight: 600;
     position: absolute;
-    top: 36px;
+    top: 14px;
+  }
+
+  &.further-readings, &.takeaways {
+    margin: 2.5rem 0 2.5rem -1rem !important;
+  }
+
+  li {
+    font-size: 1.5em;
   }
 }
+
+
 
 .learning-objectives:before {
   content: 'Learning Objectives';
@@ -99,9 +132,12 @@ ul.insert {
   height: 35vh !important;
 }
 
+
+
 .markdown-body {
   h1, h2, h3 {
     font-weight: 400 !important;
+    margin-top: 2rem;
   }
   h1 {
     font-size: 36px !important;
@@ -115,9 +151,40 @@ ul.insert {
     font-size: 24px !important;
     line-height: 32px !important;
   }
+  code {
+    font-size: inherit !important;
+  }
+  p {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-top: 2.5rem !important;
+    max-width: 42em;
+  }
+  &.p2 {
+    padding: 2rem 2rem 2rem 4rem;
+  }
+  pre {
+    padding: 1rem 2rem;
+    margin-top: 2.5rem !important;
+    margin-left: -1rem;
+  }
 }
 
 .center {
   text-align: center;
+}
+
+@media screen and (max-width: $mobile) {
+  .Home {
+    h1 {
+      font-size: 3em;
+    }
+    .title {
+      p {
+        margin: 1em auto;
+        max-width: 80%;
+      }
+    }
+  }
 }
 

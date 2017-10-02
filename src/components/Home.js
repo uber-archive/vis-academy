@@ -7,7 +7,10 @@ import lessons from 'mdRoutes'
 function Home() {
   return (
     <div className="Home f fcol fg">
-
+      <div className="title">
+        <h1>Vis Academy</h1>
+        <p>Tutorials and classes prepared by the Uber visualization team</p>
+      </div>
       <div className="fg f fac fjc fw lessons">
         {lessons.map((d, i) => (
           <a href={`#${d.path}`} key={i}>
