@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay';
 
-import taxiData from '../../data/taxi';
+import taxiData from '../../../data/taxi';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
