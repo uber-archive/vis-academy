@@ -110,9 +110,9 @@ every time the user interacts with the map (panning, zooming, rotating, etc.)
 For a truly interactive map, let's add the callback and update our state. We
 already passed in the callback when we defined the component so now we just
 need to define it.
+
 ```js
 export default class App extends Component {
-
   _onViewportChange(viewport) {
     this.setState({
       viewport: {...this.state.viewport, ...viewport}

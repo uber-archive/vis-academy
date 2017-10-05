@@ -27,7 +27,7 @@ export default class App extends Component {
     window.addEventListener('resize', this._resize);
     this._resize();
   }
-  
+
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
   }
@@ -51,7 +51,7 @@ export default class App extends Component {
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={viewport => this._onViewportChange.bind(viewport)}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
         </MapGL>
       </div>
