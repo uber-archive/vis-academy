@@ -105,7 +105,7 @@ export default [{
       markdown: GeospatialAppInteractions
     },
     {
-      name: '6. Linking if all',
+      name: '6. Linking it all',
       markdown: GeospatialAppLinkingAll
     }, 
     {
