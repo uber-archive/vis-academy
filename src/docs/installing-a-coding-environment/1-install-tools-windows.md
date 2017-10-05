@@ -62,6 +62,11 @@ set "MapboxAccessToken=[your mapbox access token goes here]"
 
 (you'll replace [your mapbox access token goes here] by the mapbox access token you just created or copied, and there's no brackets.)
 
+For Vis 2017 tutorial, here is the token you can use, it will be valid for this week
+```
+export MapboxAccessToken=pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoiY2o4OW90ZjNuMDV6eTMybzFzbmc3bWpvciJ9.zfRO_nfL1O3d2EuoNtE_NQ
+```
+
 Save this file.
 It may be protected, in which case find it in the file explorer, remove security options and save again.
 

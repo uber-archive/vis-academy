@@ -4,10 +4,11 @@ This tutorial assumes a basic familiarity with Javascript and the command line, 
 Feel free to ask questions if anything is unclear.
 If you have problem with setting up the coding environment please check [here](#/installing-a-coding-environment/installing-tools-mac).
 
-## 1. Cloning and Running
+## 1. Running
 
-Clone our tutorial repository and go through the usual setup steps. NOTE: you
-need to be running node **>=v6** locally.
+Clone our tutorial repository and go through the usual setup steps.
+
+NOTE: you need to be running node **>=v6** locally.
 ```
 git clone https://github.com/uber-common/vis-academy.git
 cd vis-academy/src/demos/graph/0-starting-code

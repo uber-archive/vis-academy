@@ -62,7 +62,7 @@ Now run
 npm install --global yarn
 ```
 
-If anything fails at this point, please open a [GitHub issue](https://github.com/uber-common/vis-academy/issues/new).
+If anything fails at this point, please open a [GitHub issue](https://github.com/uber-common/vis-academy/issues/new) to let us know.
 
 ## Get Git
 
@@ -95,6 +95,11 @@ echo 'export MapboxAccessToken="[your mapbox access token]' >> $HOME/.bash_profi
 ```
 
 (you'll replace [your mapbox access token] with the mapbox access token you just created or copied, without the brackets.)
+
+For Vis 2017 tutorial, here is the token you can use, it will be valid for this week
+```
+export MapboxAccessToken=pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoiY2o4OW90ZjNuMDV6eTMybzFzbmc3bWpvciJ9.zfRO_nfL1O3d2EuoNtE_NQ
+```
 
 Close your terminal window and reopen it.
 

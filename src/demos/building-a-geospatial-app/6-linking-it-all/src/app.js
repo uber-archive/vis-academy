@@ -29,9 +29,9 @@ export default class App extends Component {
         maxZoom: 16,
         ...props.viewport
       },
-      settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
+      settings: Object.entries(HEXAGON_CONTROLS).reduce((accu, [key, setting]) => ({
         ...accu,
-        [key]: HEXAGON_CONTROLS[key].value
+        [key]: setting.value
       }), {}),
       status: 'LOADING',
       selectedHour: null

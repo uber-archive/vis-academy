@@ -29,14 +29,14 @@ export default class App extends Component {
       },
 
       settings: {
-        ...Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
+        ...Object.entries(SCATTERPLOT_CONTROLS).reduce((accu, [key, setting]) => ({
           ...accu,
-          [key]: SCATTERPLOT_CONTROLS[key].value
+          [key]: setting.value
         }), {}),
 
-        ...Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
+        ...Object.entries(HEXAGON_CONTROLS).reduce((accu, [key, setting]) => ({
           ...accu,
-          [key]: HEXAGON_CONTROLS[key].value
+          [key]: setting.value
         }), {})
       },
 
