@@ -1,8 +1,8 @@
 
 Before we go through the tutorial, let's make sure we have everything necessary in order to make this as smooth as possible.
-This tutorial assumes a basic familiarity with Javascript and the command line, but otherwise it's not necessary to understand every step.
+This tutorial assumes a basic familiarity with Javascript and the command line, and you'll get the most out of the lessons if you already have experience with React but otherwise it's not necessary to understand every step.
 Feel free to ask questions if anything is unclear.
-If you have problem with setting up the coding environment please check [here](#/installing-a-coding-environment/installing-tools-mac)
+If you have problem with setting up the coding environment please check [here](#/installing-a-coding-environment/installing-tools-mac).
 
 ## 1. Cloning and Running
 
@@ -22,9 +22,9 @@ Note that the repository you cloned also contains all the content and code of th
 
 ## 3. How this tutorial works
 
-In this tutorial, you will build a graph visualization application from scratch, with nodes, edges, and some basic interaction. 
+In this tutorial, you will build a graph visualization application from scratch, with nodes, edges, and some basic interaction.
 
-In each lesson, we'll highlight what we'll cover, then we'll go through the code examples - copying the examples is how we'll build the app step by step. Some parts of the lessons are skippable - you can move to the next session and still have a functional app at the end. 
+In each lesson, we'll highlight what we'll cover, then we'll go through the code examples - copying the examples is how we'll build the app step by step. Some parts of the lessons are skippable - you can move to the next session and still have a functional app at the end.
 
 Feel free to explore and experiment as you copy the code examples, you can find working code that correspond to the start of each lesson in the repository.
 

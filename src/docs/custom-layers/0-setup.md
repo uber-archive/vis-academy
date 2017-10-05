@@ -1,6 +1,10 @@
 Before we start, let's make sure we have everything necessary to run our app.
 
+* [Setup instructions on Mac](#/installing-a-coding-environment/installing-tools-mac)
+* [Setup instructions on Windows](#/installing-a-coding-environment/installing-tools-windows)
+
 This tutorial assumes a basic familiarity with Javascript and the command line,
+and you'll get the most out of the lessons if you already have experience with React
 but otherwise it's not necessary to understand every step. Feel free to ask
 questions if anything is unclear.
 

@@ -48,7 +48,7 @@ export default class MyScatterplotLayer extends ScatterplotLayer {
 }
 ```
 
-`Layer.getShaders` is the API that exposes the shaders that the layer uses. We can find the default fragment shader by calling `super.getShaders().fs`:
+`Layer.getShaders` is the API that exposes the shaders that the layer will use. We can find the default fragment shader by calling `super.getShaders().fs`:
 
 ```js
   getShaders() {

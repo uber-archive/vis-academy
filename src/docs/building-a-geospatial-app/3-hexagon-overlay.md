@@ -11,10 +11,7 @@
 **NOTE** This step follows from the **completed** code of the previous section,
 [Scatterplot Overlay](#/building-a-geospatial-app/2-scatterplot-overlay.md).
 
-`Scatterplot` can plot raw points, but to visualize distribution of these
-points, we need a layer that can aggregate points into a geo grid.
-`HexagonLayer` and `GridLayer` are both aggregation layers that
-can visualize a distribution heatmap from raw points.
+`ScatterplotLayer` can plot individual points, but it can be difficult to understand the distribution of your data when many points overlap. One solution is to aggregate our points into a geo grid. `HexagonLayer` and `GridLayer` are both aggregation layers that can visualize a distribution heatmap from raw points.
 
 ## 1. Update our control panel
 We're going to upgrade our control panel so we can switch from the scatterplot layer to the hexagon layer. Let's do that now, so you can see the changes on the hexagon layer as we build it.
@@ -105,7 +102,7 @@ export default class DeckGLOverlay extends Component {
 
 With this, your `deckgl-overlay.js` should be ready to render a functional `HexagonLayer`.
 
-Here's a link to the [complete code of this step](https://github.com/uber-common/vis-academy/tree/master/src/demos/building-a-geospatial-app/hexagon-overlay)
+Here's a link to the [complete code for this step](https://github.com/uber-common/vis-academy/tree/master/src/demos/building-a-geospatial-app/hexagon-overlay)
 
 <ul class="insert takeaways">
   <li>The HexagonLayer can display aggregated, 3D hexagons</li>
