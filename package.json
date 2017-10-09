@@ -18,7 +18,7 @@
     "d3-force": "^1.0.6",
     "deck.gl": "^4.1.1",
     "luma.gl": "^4.0.1",
-    "ocular": "^0.2.15",
+    "ocular": "^0.2.16",
     "react-map-gl": "^3.0.4",
     "react-vis": "^1.7.2"
   },
