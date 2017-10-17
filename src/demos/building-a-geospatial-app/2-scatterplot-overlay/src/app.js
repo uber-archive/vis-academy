@@ -35,7 +35,6 @@ export default class App extends Component {
       hoveredObject: null,
       status: 'LOADING'
     };
-    this._resize = this._resize.bind(this);
   }
 
   componentDidMount() {
@@ -80,7 +79,7 @@ export default class App extends Component {
     });
   }
 
-  _resize() {
+  _resize = () => {
     this._onViewportChange({
       width: window.innerWidth,
       height: window.innerHeight
