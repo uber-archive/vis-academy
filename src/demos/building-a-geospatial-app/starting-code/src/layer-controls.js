@@ -59,7 +59,7 @@ export const SCATTERPLOT_CONTROLS = {
 
 export class LayerControls extends Component {
 
-  _onValueChange(settingName, newValue) {
+  _onValueChange = (settingName, newValue) => {
     const {settings} = this.props;
     // Only update if we have a confirmed change
     if (settings[settingName] !== newValue) {
@@ -88,7 +88,7 @@ export class LayerControls extends Component {
               settingName={key}
               value={settings[key]}
               propType={propTypes[key]}
-              onChange={this._onValueChange.bind(this)}/>
+              onChange={this._onValueChange}/>
           </div>)}
       </div>
     );

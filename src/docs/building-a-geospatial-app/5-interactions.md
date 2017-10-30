@@ -14,7 +14,7 @@ We're already using the state of our app to store our data and interaction with 
 In app.js, let's add a method to handle this interaction:
 
 ```js
-_onHighlight(highlightedHour) {
+_onHighlight = (highlightedHour) => {
   this.setState({highlightedHour});
 }
 ```
@@ -23,7 +23,7 @@ then in the render method:
 
 ```js
 <Charts {...this.state}
-  highlight={hour => this._onHighlight(hour)}
+  highlight={this._onHighlight}
 />
 ```
 
@@ -88,7 +88,7 @@ But eventually we'd like to leave a bar selected while we mouse over elsewhere o
 Let's go back to app.js to add the `_onSelect` method:
 
 ```js
-_onSelect(selectedHour) {
+_onSelect = (selectedHour) => {
   this.setState({
     selectedHour: selectedHour === this.state.selectedHour ? null : selectedHour
   });
@@ -99,8 +99,8 @@ and update the `Charts` component in our render method:
 
 ```js
 <Charts {...this.state}
-  highlight={hour => this._onHighlight(hour)}
-  select={hour => this._onSelect(hour)}
+  highlight={this._onHighlight}
+  select={this._onSelect}
 />
 ```
 

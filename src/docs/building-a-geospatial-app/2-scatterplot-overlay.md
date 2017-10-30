@@ -225,7 +225,7 @@ export default class App extends Component {
 Next, lets render a layer control panel on the screen. Lets add `LayerControls` to render methods.
 
 ```js
-  _updateLayerSettings(settings) {
+  _updateLayerSettings = (settings) => {
     this.setState({settings});
   }
 
@@ -235,7 +235,7 @@ Next, lets render a layer control panel on the screen. Lets add `LayerControls` 
         <LayerControls
           settings={this.state.settings}
           propTypes={SCATTERPLOT_CONTROLS}
-          onChange={settings => this._updateLayerSettings(settings)}/>
+          onChange={this._updateLayerSettings}/>
         <MapGL
            // ...
         </MapGL>
