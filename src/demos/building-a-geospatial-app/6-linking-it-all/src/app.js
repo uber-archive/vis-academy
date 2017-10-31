@@ -7,7 +7,6 @@ import {
   HEXAGON_CONTROLS
 } from './layer-controls';
 import Charts from './charts';
-import Spinner from './spinner';
 import {tooltipStyle} from './style';
 import taxiData from '../../../data/taxi';
 
@@ -171,7 +170,6 @@ export default class App extends Component {
           highlight={hour => this._onHighlight(hour)}
           select={hour => this._onSelect(hour)}
         />
-        <Spinner status={this.state.status} />
       </div>
     );
   }
