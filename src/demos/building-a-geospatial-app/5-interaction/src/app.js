@@ -36,6 +36,7 @@ export default class App extends Component {
 
       status: 'LOADING'
     };
+    this._resize = this._resize.bind(this);
   }
 
   componentDidMount() {
@@ -102,15 +103,15 @@ export default class App extends Component {
     }
   }
 
-  _onHighlight = (highlightedHour) => {
+  _onHighlight(highlightedHour) {
     this.setState({highlightedHour});
   }
 
-  _onHover = ({x, y, object}) => {
+  _onHover({x, y, object}) {
     this.setState({x, y, hoveredObject: object});
   }
 
-  _onSelect = (selectedHour) => {
+  _onSelect(selectedHour) {
     this.setState({selectedHour:
       selectedHour === this.state.selectedHour ?
         null :
@@ -118,20 +119,20 @@ export default class App extends Component {
       });
   }
 
-  _onViewportChange = (viewport) => {
+  _onViewportChange(viewport) {
     this.setState({
       viewport: {...this.state.viewport, ...viewport}
     });
   }
 
-  _resize = () => {
+  _resize() {
     this._onViewportChange({
       width: window.innerWidth,
       height: window.innerHeight
     });
   }
 
-  _updateLayerSettings = (settings) => {
+  _updateLayerSettings(settings) {
     this.setState({settings});
   }
 
@@ -148,22 +149,22 @@ export default class App extends Component {
         <LayerControls
           settings={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
-          onChange={this._updateLayerSettings}/>
+          onChange={settings => this._updateLayerSettings(settings)}/>
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={this._onViewportChange}
+          onViewportChange={viewport => this._onViewportChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}>
           <DeckGLOverlay
             viewport={this.state.viewport}
             data={this.state.points}
-            onHover={this._onHover}
+            onHover={hover => this._onHover(hover)}
             {...this.state.settings}
           />
         </MapGL>
         <Charts {...this.state}
-          highlight={this._onHighlight}
-          select={this._onSelect}
+          highlight={hour => this._onHighlight(hour)}
+          select={hour => this._onSelect(hour)}
         />
         <Spinner status={this.state.status} />
       </div>

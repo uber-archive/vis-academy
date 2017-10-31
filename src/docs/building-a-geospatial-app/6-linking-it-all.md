@@ -25,7 +25,7 @@ Then, in the render method, let's add an `hour` property to `DeckGLOverlay`:
   viewport={this.state.viewport}
   data={this.state.points}
   hour={this.state.highlightedHour || this.state.selectedHour}
-  onHover={this._onHover}
+  onHover={hover => this._onHover(hover)}
   settings={this.state.settings}
 />
 ```

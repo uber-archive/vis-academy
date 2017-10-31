@@ -25,6 +25,9 @@ export default class App extends Component {
       },
       currentTime: 0
     };
+    this._resize = this._resize.bind(this);
+    this._animate = this._animate.bind(this);
+    this._onViewportChange = this._onViewportChange.bind(this);
   }
 
   componentDidMount() {
@@ -32,26 +35,26 @@ export default class App extends Component {
     this._resize();
     this._animate();
   }
-
+  
   componentWillUnmount() {
     window.removeEventListener('resize', this._resize);
     window.cancelAnimationFrame(this._animation);
   }
 
-  _onViewportChange = (viewport) => {
+  _onViewportChange(viewport) {
     this.setState({
       viewport: {...this.state.viewport, ...viewport}
     });
   }
 
-  _resize = () => {
+  _resize() {
     this._onViewportChange({
       width: window.innerWidth,
       height: window.innerHeight
     });
   }
 
-  _animate = () => {
+  _animate() {
     this.setState({currentTime: Date.now()});
     this._animation = window.requestAnimationFrame(this._animate);
   }

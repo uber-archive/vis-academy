@@ -114,21 +114,21 @@ render() {
           left: this.state.x,
           top: this.state.y
         }}>
-          <div>{JSON.stringify(this.state.hoveredObject)}</div>
+          <div>{this.state.hoveredObject.id}</div>
         </div>}
       <LayerControls
         settings={this.state.settings}
         propTypes={HEXAGON_CONTROLS}
-        onChange={this._updateLayerSettings}/>
+        onChange={settings => this._updateLayerSettings(settings)}/>
       <MapGL
         {...this.state.viewport}
         mapStyle={MAPBOX_STYLE}
-        onViewportChange={this._onViewportChange}
+        onViewportChange={viewport => this._onViewportChange(viewport)}
         mapboxApiAccessToken={MAPBOX_TOKEN}>
         <DeckGLOverlay
           viewport={this.state.viewport}
           data={this.state.points}
-          onHover={this._onHover}
+          onHover={hover => this._onHover(hover)}
           settings={this.state.settings}/>
       </MapGL>
       <Charts {...this.state} />
