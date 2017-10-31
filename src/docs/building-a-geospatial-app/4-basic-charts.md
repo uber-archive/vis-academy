@@ -21,8 +21,8 @@ in your app.js file, replace your _processData method with this one:
       this.setState({status: 'LOADED'});
       const data = taxiData.reduce((accu, curr) => {
 
-        const pickupHour = new Date(curr.tpep_pickup_datetime).getUTCHours();
-        const dropoffHour = new Date(curr.tpep_dropoff_datetime).getUTCHours();
+        const pickupHour = new Date(curr.pickup_datetime).getUTCHours();
+        const dropoffHour = new Date(curr.dropoff_datetime).getUTCHours();
 
         const pickupLongitude = Number(curr.pickup_longitude);
         const pickupLatitude = Number(curr.pickup_latitude);
@@ -132,7 +132,6 @@ render() {
           settings={this.state.settings}/>
       </MapGL>
       <Charts {...this.state} />
-      <Spinner status={this.state.status} />
     </div>
   );
 }

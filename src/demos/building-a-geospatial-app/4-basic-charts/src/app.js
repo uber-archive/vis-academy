@@ -7,7 +7,6 @@ import {
   HEXAGON_CONTROLS
 } from './layer-controls';
 import Charts from './charts';
-import Spinner from './spinner';
 import {tooltipStyle} from './style';
 
 import taxiData from '../../../data/taxi';
@@ -151,7 +150,6 @@ export default class App extends Component {
           />
         </MapGL>
         <Charts {...this.state} />
-        <Spinner status={this.state.status} />
       </div>
     );
   }

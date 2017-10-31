@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay';
 import {LayerControls, SCATTERPLOT_CONTROLS} from './layer-controls';
-import Spinner from './spinner';
 import {tooltipStyle} from './style';
 import taxiData from '../../../data/taxi';
 
@@ -117,7 +116,6 @@ export default class App extends Component {
             {...this.state.settings}
           />
         </MapGL>
-        <Spinner status={this.state.status} />
       </div>
     );
   }
