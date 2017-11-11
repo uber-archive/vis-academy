@@ -13,7 +13,18 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    highlightedHour: state.highlightedHour,
+    hoveredObject: state.hoveredObject,
+    pickups: state.pickups,
+    points: state.points,
+    ready: state.ready,
+    selectedHour: state.selectedHour,
+    settings: state.settings,
+    viewport: state.viewport,
+    x: state.x,
+    y: state.y
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
