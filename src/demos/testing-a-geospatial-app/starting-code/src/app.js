@@ -22,7 +22,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    console.log('in CDM');
     this.props.init({
       data: taxiData,
       settingsObject: HEXAGON_CONTROLS,
@@ -43,12 +42,9 @@ export default class App extends Component {
   }
 
   render() {
-    if (!this.props.ready) {
-      return null;
-    }
     return (
       <div>
-        {this.props.hoveredObject && null &&
+        {this.props.hoveredObject &&
           <div style={{
             ...tooltipStyle,
             transform: `translate(${this.props.x}px, ${this.props.y}px)`
