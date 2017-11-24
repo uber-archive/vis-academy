@@ -10016,7 +10016,7 @@ const format = {
   total_amount: Number,
 };
 
-export default dataRows.map(r => r.split(',').reduce((prev, curr, i) => {
+module.exports = dataRows.map(r => r.split(',').reduce((prev, curr, i) => {
   const field = fields[i];
   prev[field] = format[field](curr);
   return prev;
