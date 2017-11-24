@@ -15,12 +15,15 @@
   "dependencies": {
     "@turf/turf": "^4.7.3",
     "autobind-decorator": "^2.1.0",
+    "babel-preset-env": "^1.6.1",
     "d3-force": "^1.0.6",
     "deck.gl": "^4.1.1",
     "luma.gl": "^4.0.1",
     "ocular": "^0.2.16",
     "react-map-gl": "^3.0.4",
-    "react-vis": "^1.7.2"
+    "react-vis": "^1.7.2",
+    "tape": "^4.8.0",
+    "tape-catch": "^1.0.6"
   },
   "license": "MIT",
   "private": true
