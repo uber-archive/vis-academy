@@ -8,12 +8,16 @@ You should have git, node >= 6, and either yarn or npm installed.
 Clone our tutorial repository and open the new directory.
 ```
 git clone https://github.com/uber-common/vis-academy.git
-cd vis-academy/src/demos/testing-a-geospatial-app/starting-code
+cd vis-academy/src/demos/testing-a-geospatial-app/0-starting-code
 
 yarn # or npm install (slower)
 ```
 
 In this module, you won't really have to run the app, but if you want to, you will need to get a Mapbox token. Checkout [Installing a coding environment](#/installing-a-coding-environment/) for all the steps.
+
+## How this tutorial works
+
+In this tutorial, you're going to start from the code in the "0-starting-code" directory, and follow instructions on each section. If you skip a section, you can always get the code - every folder in /src/demos/testing-a-geospatial-app/ contains the code at the end of the corresponding section. 
 
 ## Presentation of the app
 

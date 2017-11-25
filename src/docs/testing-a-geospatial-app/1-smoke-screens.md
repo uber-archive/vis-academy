@@ -147,3 +147,5 @@ Awesome! all tests pass!
 Finally, assert.end() signals there will be no more tests and is __required__.
 
 Congratulations, you've written your first series of tests! 
+
+Let's continue to the next section: [code coverage](#testing-a-geospatial-app/2-code-coverage).
