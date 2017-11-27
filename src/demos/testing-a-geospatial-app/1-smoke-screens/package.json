@@ -1,0 +1,36 @@
+{
+  "scripts": {
+    "start-local": "webpack-dev-server --env.local --progress --hot --port 3030 --open",
+    "start": "webpack-dev-server --progress --hot --port 3030 --open",
+    "build": "NODE_ENV=production webpack --env.prod=true",
+    "test": "NODE_ENV=test tape -r babel-register -r ./src/test/"
+  },
+  "dependencies": {
+    "babel-preset-env": "^1.6.1",
+    "deck.gl": "^4.1.0",
+    "immutable": "^3.8.1",
+    "luma.gl": "^4.0.1",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-map-gl": "^3.0.4",
+    "react-redux": "^5.0.6",
+    "react-vis": "^1.7.2",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
+    "tape": "^4.8.0",
+    "tape-catch": "^1.0.6"
+  },
+  "devDependencies": {
+    "buble-loader": "^0.4.0",
+    "csv-loader": "^2.1.1",
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.2.0"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "stage-2",
+      "react"
+    ]
+  }
+}

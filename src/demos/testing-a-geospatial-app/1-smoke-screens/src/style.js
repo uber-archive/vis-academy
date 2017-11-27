@@ -28,6 +28,7 @@ export const layerControl = {
 export const charts = {
   background: "white",
   border: "1px solid #C0C0C0",
+  boxSizing: "border-box",
   fontFamily:
     'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
   fontSize: "12px",
@@ -39,18 +40,4 @@ export const charts = {
   top: 20,
   width: 500,
   zIndex: 100
-};
-
-export const spinner = {
-  animation: "linear 2s infinite",
-  background: "#1EACC7",
-  borderRadius: "50%",
-  height: 10,
-  width: 10,
-  opacity: 0.4,
-  position: "absolute",
-  top: 70,
-  left: 60,
-  transformOrigin: "20px 20px",
-  zIndex: 110
 };
