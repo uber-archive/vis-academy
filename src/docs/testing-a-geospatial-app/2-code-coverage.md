@@ -28,6 +28,6 @@ You'll be able to see that for now, our 4 tests cover 42.59% of our statements a
 
 Code coverage is helpful but is not the endgame. It's much easier to achieve a great code coverage than to write helpful tests!
 
-Let's continue to the next section: [testing UI](#testing-a-geospatial-app/3-testing-UI).
+Let's continue to the next section: [testing UI](#testing-a-geospatial-app/3-testing-ui).
 
 
