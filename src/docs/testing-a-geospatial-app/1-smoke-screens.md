@@ -1,16 +1,24 @@
+<ul class='insert learning-objectives'>
+<li>Discuss what is testing</li>
+<li>Write our first set of tests</li>
+</ul>
+
 ## What is testing?
 
 Before we even get started let's take a minute to discuss what's even the point of writing tests and what can we possibly accomplish.
 
 Testing is writing specific code ("tests") to verify if our app works as intended. 
-We can the run these tests independently of the app. Each test can pass or fail. If all tests pass, then the app works indeed as intended; however, if even one single test fails, that means that an issue must be investigated.
+We can the run these tests independently of the app. Each test can pass or fail. If all tests pass, then the app works indeed as expected; however, if even one single test fails, that means that an issue must be investigated.
 
-Web apps are typically made of many different parts, components, but also containers, actions, reducers etc. When changing one part of the app, it's difficult to foresee if that change won't cause any issue with other components (and the more complex the app, the harder it is). But with testing, it is possible to prevent some of these problems. If after a change, a test that previously passed now fails, this means that there is a larger issue at play - at a minimum, the test must be changed. 
-It's also often a good idea to write tests after a change, because such a test can explain the idea behind the change. The second function of tests, beyond preventing bugs, is to describe expected behaviors of the app; tests are also a form of documentation.
+Web apps are typically made of many different parts, components, but also containers, actions, reducers etc. When changing one part of the app, it's difficult to foresee if that change won't cause any issue with other components (and the more complex the app, the harder it is).
+
+But with testing, it is possible to _prevent_ some of these problems. If after a change, a test that previously passed now fails, this means that there is a larger issue at play - at a minimum, the test must be changed.
+
+It's also often a good idea to write tests after a change, because such a test can _explain_ the idea behind the change. The second function of tests, beyond preventing bugs, is to describe expected behaviors of the app; tests are also a form of documentation.
 
 ## Smoke screens
 
-Smoke screens are the dumbest, most basic tests. We're just trying to see if calling the React components of our app doesn't cause a crash. They are honestly not super useful in the grand scheme of things, but they are also super easy and short to write and if a smoke screen ever fails, you certainly have a problem. So let's write our first set of smoke screens.
+Smoke screens are the dumbest, most basic tests. We're just trying to see if calling the React components of our app doesn't cause a crash. They are honestly not the most useful tests, in the grand scheme of things, but they are also very easy and short to write and if a smoke screen ever fails, you certainly have a problem. So let's write our first set of smoke screens.
 
 ## Installing new stuff
 
@@ -149,3 +157,10 @@ Finally, assert.end() signals there will be no more tests and is __required__.
 Congratulations, you've written your first series of tests! 
 
 Let's continue to the next section: [code coverage](#testing-a-geospatial-app/2-code-coverage).
+
+<ul class='insert takeaways'>
+<li>Testing helps prevent bugs especially as parts of the app are updated independantly.</li>
+<li>Testing means running a series of tests which must all pass.</li>
+<li>Smoke screens test if a component constructor will run without crashing.</li>
+<li>Smoke screens are very simple tests but can prevent catastrophic failures.</li>
+</ul>

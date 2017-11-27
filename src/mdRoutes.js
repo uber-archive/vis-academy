@@ -29,8 +29,8 @@ import GeospatialAppConfusing from "docs/building-a-geospatial-app/guidelines/ax
 import testingIntro from "docs/testing-a-geospatial-app/0-intro.md";
 import testingSmokeScreens from "docs/testing-a-geospatial-app/1-smoke-screens.md";
 import testingCodeCoverage from "docs/testing-a-geospatial-app/2-code-coverage.md";
-import testingTestingUI from "docs/testing-a-geospatial-app/3-testing-ui";
-import testingTestingActions from "docs/testing-a-geospatial-app/4-testing-actions";
+import testingTestingUI from "docs/testing-a-geospatial-app/3-testing-ui.md";
+import testingTestingActions from "docs/testing-a-geospatial-app/4-testing-actions.md";
 
 // graph vis
 import setupGraph from "docs/graph/0-setup.md";

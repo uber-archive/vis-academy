@@ -1,4 +1,9 @@
-## Testing actions and the reducer
+<ul class='insert learning-objectives'>
+<li>What tests can be done on the store?</li>
+<li>What are good practices when testing actions?</li>
+</ul>
+
+## Testing actions and the store
 
 In the previous section, we've looked at the kind of things we can test in the UI - we can test the props of components (or properties of DOM elements such as style), simulate events, check whether functions have been called by the UI.
 
@@ -118,6 +123,11 @@ assert.deepEquals(
 ```
 
 Of course, there's a lot more we could do: pass it inputs which are not well-formed and expect it to fail, pass it smaller datasets and show the result of that, etc.
+
+<ul class='insert takeaways'>
+<li>It's better to test actions from the reducer directly.</li>
+<li>Beyond individual actions, whole scenarios can also be tested.</li>
+</ul>
 
 
 

@@ -1,3 +1,8 @@
+<ul class='insert learning-objectives'>
+<li>Discuss what is code coverage</li>
+<li>Measure code coverage in our app</li>
+</ul>
+
 ## Code coverage
 
 Code coverage is one measure of how well your code is tested. When computing coverage, you are counting how many branches of your code are are taken into account by tests.
@@ -30,4 +35,7 @@ Code coverage is helpful but is not the endgame. It's much easier to achieve a g
 
 Let's continue to the next section: [testing UI](#testing-a-geospatial-app/3-testing-ui).
 
-
+<ul class='insert takeaways'>
+<li>Code coverage is one high-level measure of how thorough tests are for an app.</li>
+<li>A high code coverage is a means, not an end.</li>
+</ul>

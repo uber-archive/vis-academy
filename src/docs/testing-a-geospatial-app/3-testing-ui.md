@@ -1,4 +1,11 @@
-## testing UI
+<ul class='insert learning-objectives'>
+<li>See how components can be tested in a simulated browser environment</li>
+<li>Learn how to test attributes of elements created by components</li>
+<li>Simulate events such as clicks on our test components</li>
+<li>Setup spy functions</li>
+</ul>
+
+## Testing UI
 
 In this section, we're going to go deeper than simply trying to call component constructors.
 We're going to use Enzyme to test how actual components behave once rendered. That should be difficult, because when testing, we are not in a browswer environment and we don't have a DOM in which to actually render the component. This is why Enzyme comes with a companion module, JSDOM, which can simulate the DOM while testing.
@@ -221,6 +228,7 @@ test("mounting the charts", assert => {
 
   asset.end();
 })
+```
 
 But this test doesn't work. That's because when shallow mounting, we can only see what happens one element deep. That's already super useful and faster than fully rendering the elements. But for this, shallow isn't enough, so let's use Enzyme's fuller API: mount().
 
@@ -293,3 +301,8 @@ Next, we are going to simulate events, in this case mousing over a node and clic
 Finally, we're going to use spy functions again to see that those events had an effect. This time we're using the more generic syntax, callCount, which stores the number of times a function has been called.
 
 Let's continue to the next section: [testing actions](#testing-a-geospatial-app/4-testing-actions).
+
+<ul class='insert takeaways'>
+<li>Once the proper testing environment is set up, we can go well beyond smoke screens.</li>
+<li>We can test and simulate how our components look but also how they react to events.</li>
+</ul>
