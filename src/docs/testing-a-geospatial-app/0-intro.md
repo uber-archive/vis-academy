@@ -37,4 +37,4 @@ As a redux-powered app, our new app does exactly the same as its previous incarn
 
 ## Are you ready to test?
 
-If so, head towards the next section: [smoke screens](#testing-a-geospatial-app/1-smoke-screens).
+If so, head towards the next section: [smoke tests](#testing-a-geospatial-app/1-smoke-tests).
