@@ -16,9 +16,11 @@ But with testing, it is possible to _prevent_ some of these problems. If after a
 
 It's also often a good idea to write tests after a change, because such a test can _explain_ the idea behind the change. The second function of tests, beyond preventing bugs, is to describe expected behaviors of the app; tests are also a form of documentation.
 
-## Smoke screens
+## Smoke tests
 
-Smoke screens are the dumbest, most basic tests. We're just trying to see if calling the React components of our app doesn't cause a crash. They are honestly not the most useful tests, in the grand scheme of things, but they are also very easy and short to write and if a smoke screen ever fails, you certainly have a problem. So let's write our first set of smoke screens.
+Smoke tests are the dumbest, most basic tests. We're just trying to see if calling the React components of our app doesn't cause a crash. Even though they are very short and easy to write, and that they can prevent catastrophic (albeit unlikely) failures, in the grand scheme of things, they are rarely worth the time. 
+
+What they are good for, however, is to help us understand how to get started with testing.
 
 ## Installing new stuff
 
@@ -52,15 +54,15 @@ Likewise, in addition to "scripts", "dependencies" and "devDependencies", create
 
 ## Writing our first tests
 
-Now, create a "test" folder in our "src" folder, and create two files inside, index.js and smoke-screens.js.
+Now, create a "test" folder in our "src" folder, and create two files inside, index.js and smoke-tests.js.
 
 index.js is where we'll organize all our tests. For now, just add this single line:
 
 ```
-import './smoke-screens';
+import './smoke-tests';
 ```
 
-And now, add this to smoke-screens.js: 
+And now, add this to smoke-tests.js: 
 
 ```
 import React from "react";
@@ -71,15 +73,15 @@ import Charts from "../charts";
 import DeckGLOverlay from "../deckgl-overlay";
 import { LayerControls } from "../layer-controls";
 
-test("Smokescreens", assert => {
+test("Smoketests", assert => {
   const app = <App />;
-  assert.ok(true, 'App smoke screen ok');
+  assert.ok(true, 'App smoke test ok');
   const charts = <Charts />;
-  assert.ok(true, "Charts smoke screen ok");
+  assert.ok(true, "Charts smoke test ok");
   const deckGLOverlay = <DeckGLOverlay />;
-  assert.ok(true, "DeckGLOverlay smoke screen ok");
+  assert.ok(true, "DeckGLOverlay smoke test ok");
   const layerControls = <Controls />;
-  assert.ok(true, "layerControls smoke screen ok");
+  assert.ok(true, "layerControls smoke test ok");
 
   assert.end();
 });
@@ -94,10 +96,10 @@ npm run test
 And you should get:
 
 ```
-# Smokescreens
-ok 1 App smoke screen ok
-ok 2 Charts smoke screen ok
-ok 3 DeckGLOverlay smoke screen ok
+# Smoke tests
+ok 1 App smoke test ok
+ok 2 Charts smoke test ok
+ok 3 DeckGLOverlay smoke test ok
 not ok 4 ReferenceError: Controls is not defined
 
 (lengthy error message)
@@ -111,7 +113,7 @@ error Command failed with exit code 1.
 
 ```
 
-## Analysis of smoke-screen.js
+## Analysis of smoke-test.js
 
 We're importing React, because we're going to write some JSX. Then test from tape-catch, which is what we are going to use to write our tests.
 We import all of our components.
@@ -137,11 +139,11 @@ const layerControls = <LayerControls />;
 and now run npm run test again:
 
 ```
-# Smokescreens
-ok 1 App smoke screen ok
-ok 2 Charts smoke screen ok
-ok 3 DeckGLOverlay smoke screen ok
-ok 4 layerControls smoke screen ok
+# Smoketests
+ok 1 App smoke test ok
+ok 2 Charts smoke test ok
+ok 3 DeckGLOverlay smoke test ok
+ok 4 layerControls smoke test ok
 
 1..4
 # tests 4
@@ -161,6 +163,6 @@ Let's continue to the next section: [code coverage](#testing-a-geospatial-app/2-
 <ul class='insert takeaways'>
 <li>Testing helps prevent bugs especially as parts of the app are updated independantly.</li>
 <li>Testing means running a series of tests which must all pass.</li>
-<li>Smoke screens test if a component constructor will run without crashing.</li>
-<li>Smoke screens are very simple tests but can prevent catastrophic failures.</li>
+<li>Smoke tests test if a component constructor will run without crashing.</li>
+<li>Smoke tests are very simple tests but can prevent catastrophic failures.</li>
 </ul>
