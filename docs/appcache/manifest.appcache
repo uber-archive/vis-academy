@@ -1,20 +1,23 @@
 CACHE MANIFEST
-#ver:11/28/2017, 10:07:48 AM
+#ver:11/28/2017, 11:43:04 AM
 #plugin:4.8.4
 
 CACHE:
-../bundle-6893a97fc02b8c6fad0a.js
-../styles-6893a97fc02b8c6fad0a.css
+../bundle-ba4d88ac2f873f0f4a04.js
+../styles-ba4d88ac2f873f0f4a04.css
 ../
-../fonts/uber.ttf
-../fonts/uber.svg
-../fonts/uber.woff
-../images/icon-chart.svg
 ../favicon.ico
+../fonts/uber.ttf
+../fonts/uber.woff
+../fonts/uber.svg
+../images/icon-chart.svg
 ../images/footer-pattern.gif
 ../images/icon-custom.svg
 ../images/icon-high-precision.svg
+../images/icon-react.svg
 ../images/icon-layers.svg
+../images/uber-logo.png
+
 ../images/hero.jpg
 ../images/uber-logo.png
 ../images/icon-react.svg
@@ -23,28 +26,28 @@ CACHE:
 ../images/graph-vis/architecture-basic.png
 ../images/graph-vis/architecture-graph-render.png
 ../images/graph-vis/architecture-with-layout-engine.png
-../images/graph-vis/cover.png
-../images/graph-vis/no-position-update-trigger.png
 ../images/geospatial-app/geospatial-app.png
+../images/graph-vis/no-position-update-trigger.png
+../images/graph-vis/cover.png
 ../images/graph-vis/random-graph.png
-../images/mg_arc_1.png
 ../images/mg_arc_2.png
+../images/mg_arc_1.png
+../images/mg_hex_1.png
 ../images/mg_choropleth.png
 ../images/mg_hex_2.png
-../images/mg_hex_1.png
-../images/mg_hex_3.png
 ../images/mg_hex_3d.png
+../images/mg_hex_3.png
 ../images/mg_hex_4.png
 ../images/mg_hex_5.png
 ../images/mg_hex_6.png
 ../images/mg_path.png
 ../images/mg_scatterplot_1.png
 ../images/setup/empty-app.png
+../images/mg_scatterplot_1.png
 ../images/path.jpg
-../images/mg_scatterplot_2.png
-../images/setup/setup.png
 ../images/vis-logo.png
+../images/mg_scatterplot_2.png
 ../images/setup/testing.png
-
+../images/setup/setup.png
 NETWORK:
 *
