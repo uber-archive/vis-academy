@@ -1,2 +1,2 @@
 import "./components";
-import "./smoke-screens";
+import "./smoke-tests";

@@ -7,15 +7,15 @@ import { LayerControls } from "../layer-controls";
 
 import test from "tape-catch";
 
-test("Smokescreens", assert => {
+test("Smoketests", assert => {
   const app = <App />;
-  assert.ok(true, 'App smoke screen ok');
+  assert.ok(true, 'App smoke test ok');
   const charts = <Charts />;
-  assert.ok(true, "Charts smoke screen ok");
+  assert.ok(true, "Charts smoke test ok");
   const deckGLOverlay = <DeckGLOverlay />;
-  assert.ok(true, "DeckGLOverlay smoke screen ok");
+  assert.ok(true, "DeckGLOverlay smoke test ok");
   const layerControls = <LayerControls />;
-  assert.ok(true, "layerControls smoke screen ok");
+  assert.ok(true, "layerControls smoke test ok");
 
   assert.end();
 });

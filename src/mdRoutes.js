@@ -27,7 +27,7 @@ import GeospatialAppConfusing from "docs/building-a-geospatial-app/guidelines/ax
 
 // testing a geospatial app
 import testingIntro from "docs/testing-a-geospatial-app/0-intro.md";
-import testingSmokeScreens from "docs/testing-a-geospatial-app/1-smoke-screens.md";
+import testingSmokeTests from "docs/testing-a-geospatial-app/1-smoke-tests.md";
 import testingCodeCoverage from "docs/testing-a-geospatial-app/2-code-coverage.md";
 import testingTestingUI from "docs/testing-a-geospatial-app/3-testing-ui.md";
 import testingTestingActions from "docs/testing-a-geospatial-app/4-testing-actions.md";
@@ -152,7 +152,7 @@ export default [
     name: "Testing a Geospatial App",
     desc:
       "Learn how to write tests for a react-redux web app, using our geospatial app as an example.",
-    image: "images/geospatial-app/geospatial-app.png",
+    image: "images/setup/testing.png",
     badges: ["react", "redux", "enzyme"],
     path: "/testing-a-geospatial-app",
     data: [
@@ -161,8 +161,8 @@ export default [
         markdown: testingIntro
       },
       {
-        name: "1. Smoke Screens",
-        markdown: testingSmokeScreens
+        name: "1. Smoke Tests",
+        markdown: testingSmokeTests
       },
       {
         name: "2. Code Coverage",

@@ -13,7 +13,7 @@ We're going to use Enzyme to test how actual components behave once rendered. Th
 To make this work, we're going to have to add quite a few things:
 
 ```
-npm install babel-polyfill enzyme enzyme-adapter-react-15 jsdom sinon --save-dev
+npm install babel-polyfill enzyme enzyme-adapter-react-15 jsdom jsdom-global sinon --save-dev
 ```
 
 What do they all do?
@@ -21,6 +21,7 @@ What do they all do?
 * enzyme is the main module which will let us test our components in the DOM.
 * enzyme-adapter-react-15: enzyme needs to be configured to work in a certain environment, through "adapters". 
 * jsdom is the javascript "headless browser" that will be used to simulate the DOM.
+* jsdom-global will inject the parts of the DOM API you need for testing in your node.js environment.
 * sinon is a module we will use to build spy functions.
 
 We're not done yet!
@@ -29,33 +30,12 @@ Create a new file in src/test called 'setup-browser-env' and paste this:
 
 ```
 /* setup.js */
-import "babel-polyfill";
-const { JSDOM } = require("jsdom");
-const Adapter = require("enzyme-adapter-react-15");
-const { configure } = require("enzyme");
+import 'babel-polyfill';
+import JSDOM from 'jsdom';
+const Adapter = require('enzyme-adapter-react-15');
+const { configure } = require('enzyme');
 
-const jsdom = new JSDOM("<!doctype html><html><body></body></html>");
-const { window } = jsdom;
-
-function copyProps(src, target) {
-  const props = Object.getOwnPropertyNames(src)
-    .filter(prop => typeof target[prop] === "undefined")
-    .reduce(
-      (result, prop) => ({
-        ...result,
-        [prop]: Object.getOwnPropertyDescriptor(src, prop)
-      }),
-      {}
-    );
-  Object.defineProperties(target, props);
-}
-
-global.window = window;
-global.document = window.document;
-global.navigator = {
-  userAgent: "node.js"
-};
-copyProps(window, global);
+require('jsdom-global')();
 
 configure({ adapter: new Adapter() });
 ```
