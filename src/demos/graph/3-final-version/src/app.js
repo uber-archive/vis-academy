@@ -68,8 +68,8 @@ export default class App extends Component {
     const graph = new Graph(this.state.graph);
     if (hoveredNodeID) {
       // 2. highlight the selected node, neighbor nodes, and connected edges
-      const connectedEdgeIDs =
-        this.state.graph.findConnectedEdges(hoveredNodeID).map(e => e.id);
+      const connectedEdges = this.state.graph.findConnectedEdges(hoveredNodeID);
+      const connectedEdgeIDs = connectedEdges.map(e => e.id);
       const hightlightNodes = connectedEdges.reduce((res, e) => {
         if (!res.includes(e.source)) {
           res.push(e.source);
