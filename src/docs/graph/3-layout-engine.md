@@ -145,9 +145,9 @@ To here, you may still see a still graph without animaiton like this:
 </p>
 
 In the previous step, we connected `getNodePosition` and `getEdgePosition` with the accessors in the layout engine. However, `deck.gl` doesn't recalculate positions unlesss the data prop changes by shallow comparison. To inform deck.gl to re-evaluate `getPosition` outcome, we need to explicitly define `updateTriggers`. 
-`updateTriggers` expect an object whose keys are names of accessor props of this layer, and values are one or more variables that affect the output of the accessors. 
+`updateTriggers` expects an object whose keys are names of accessor props of this layer, and values are one or more variables that affect the output of the accessors. 
 
-The layout engine has an attribute `alpha` represents the momemtum of the current force layout simulation. Since the value of `alpha` changes on every simulation, we can use it as the update trigger for `getPosition`. That means, `deck.gl` will re-evalute the position of nodes and edges when the alpha changes.
+The layout engine has an attribute `alpha` represents the momemtum of the current force layout simulation. Since the value of `alpha` changes on every simulation, we can use it as the update trigger for `getPosition`. That means, `deck.gl` will re-evalute the position of nodes and edges when the `alpha` value changes.
 
 ```js
 // layout-engine.js
