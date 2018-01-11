@@ -61,12 +61,13 @@ export default class App extends Component {
 
   getNodeSize = node => 10
 
+
   onHoverNode = pickedObj => {
-    // check if is hovering on a node
+    // 1. check if is hovering on a node
     const hoveredNodeID = pickedObj.object && pickedObj.object.id;
     const graph = new Graph(this.state.graph);
     if (hoveredNodeID) {
-      // highlight the selected node, connected edges, and neighbor nodes
+      // 2. highlight the selected node, neighbor nodes, and connected edges
       const connectedEdges = this.state.graph.findConnectedEdges(hoveredNodeID);
       const connectedEdgeIDs = connectedEdges.map(e => e.id);
       const hightlightNodes = connectedEdges.reduce((res, e) => {
@@ -77,15 +78,15 @@ export default class App extends Component {
           res.push(e.target);
         }
         return res;
-      }, [])
+      }, []);
       graph.nodes.forEach(n => n.isHighlighted = hightlightNodes.includes(n.id));
       graph.edges.forEach(e => e.isHighlighted = connectedEdgeIDs.includes(e.id));
     } else {
-      // unset all nodes and edges
+      // 3. unset all nodes and edges
       graph.nodes.forEach(n => n.isHighlighted = false);
       graph.edges.forEach(e => e.isHighlighted = false);      
     }
-    // update component state
+    // 4. update component state
     this.setState({graph, hoveredNodeID});
   }
 

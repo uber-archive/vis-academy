@@ -144,17 +144,17 @@ To here, you may still see a still graph without animaiton like this:
   <img src="images/graph-vis/no-position-update-trigger.png" alt="extruded" width="600px"/>
 </p>
 
-In the previous step, we connected `getNodePosition` and `getEdgePosition` with the accessors in the layout engine. However, `deck.gl` doesn't recalculate positions unlesss the data prop changes by shallow comparison. To inform deck.gl to re-evaluate `getPosition` outcome, we need to explicitly define `updateTriggers`. 
-`updateTriggers` expect an object whose keys are names of accessor props of this layer, and values are one or more variables that affect the output of the accessors. 
+In the previous step, we connected `getNodePosition` and `getEdgePosition` with the accessors in the layout engine. However, `deck.gl` doesn't recalculate positions unless the data prop changes by shallow comparison. To inform deck.gl to re-evaluate `getPosition` outcome, we need to explicitly define `updateTriggers`. 
+`updateTriggers` expects an object whose keys are names of accessor props of this layer, and values are one or more variables that affect the output of the accessors. For more information about `updateTriggers`, please check [here](http://uber.github.io/deck.gl/#/documentation/advanced-topics/updates?section=update-triggers)
 
-The layout engine has an attribute `alpha` represents the momemtum of the current force layout simulation. Since the value of `alpha` changes on every simulation, we can use it as the update trigger for `getPosition`. That means, `deck.gl` will re-evalute the position of nodes and edges when the alpha changes.
+The layout engine has an attribute `alpha` represents the momentum of the current force layout simulation. Since the value of `alpha` changes on every simulation, we can use it as the update trigger for `getPosition`. That means, `deck.gl` will re-evalute the position of nodes and edges when the `alpha` value changes.
 
 ```js
-// layout-engine.js
+// graph-render.js
 export default class GraphRender extends PureComponent {
   // ...
 
-  renderNodeLayer() {
+  createNodeLayer() {
     return new ScatterplotLayer({
       // ...
       // 0. add positionUpdateTrigger to node layer
@@ -164,7 +164,7 @@ export default class GraphRender extends PureComponent {
     });
   }
 
-  renderEdgeLayer() {
+  createEdgeLayer() {
     return new LineLayer({
       // ...
       // 1. add positionUpdateTrigger to edge layer
