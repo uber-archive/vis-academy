@@ -73,7 +73,7 @@ in your app.js file, replace your _processData method with this one:
 ```
 
 You can just copy/paste. Nothing is rocket science here, we're just creating our dataset.
-We're building 3 extra objects: _pickups_, which has the number of pickups by hour, _dropoffs_, which has the tally of dropoffs by hour, and _scatterplot_, which will show how the distance and time of the trips are correlated.
+We're building 3 extra objects: _pickups_, which has the number of pickups by hour, _dropoffs_, which has the tally of dropoffs by hour, and _scatterplot_, which will visualize how the distance and time of the trips are correlated.
 We're also adding the hour of the pickup or dropoff time to the dataset we passed to the deck.gl overlay.
 
 Then, create a new file called charts.js with the following:

@@ -24,9 +24,9 @@ export default class App extends Component {
         maxZoom: 16
       },
       points: [],
-      settings: Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
+      settings: Object.entries(SCATTERPLOT_CONTROLS).reduce((accu, [key, setting]) => ({
         ...accu,
-        [key]: SCATTERPLOT_CONTROLS[key].value
+        [key]: setting.value
       }), {}),
       // hoverInfo
       x: 0,

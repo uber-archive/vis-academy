@@ -18,7 +18,7 @@ Checkout the complete code for this step
 
 **HOLD UP!!!** If you got here without reading the **Setup** step, it is
 highly recommended that you do so, or your application might not work.
-[GO HERE](#/building-a-geospatial-app/0-setup.md) and go through it now.
+[GO HERE](#/building-a-geospatial-app/0-setup) and go through it now.
 
 The app component in the starting code above currently looks like this:
 ```js
@@ -110,9 +110,9 @@ every time the user interacts with the map (panning, zooming, rotating, etc.)
 For a truly interactive map, let's add the callback and update our state. We
 already passed in the callback when we defined the component so now we just
 need to define it.
+
 ```js
 export default class App extends Component {
-
   _onViewportChange(viewport) {
     this.setState({
       viewport: {...this.state.viewport, ...viewport}

@@ -6,7 +6,7 @@
 In this step, we will create a reusable render engine to draw the nodes and edges of the graph on the canvas.
 [Deck.GL](http://uber.github.io/deck.gl) is a WebGL overlay suite for React,
 providing a set of highly performant data visualization overlays that we can compose the visualization layer by layer.
-This render engine will take data and several property accessors into the visualization layers and allow the users to control the  the visual logic outside of this component. Here's the overview of the render engine, GraphRender:
+This render engine will take data and several property accessors into the visualization layers and allow the users to control the visual logic outside of this component. Here's the overview of the render engine, GraphRender:
 
 <p class="inline-images center">
   <img src="images/graph-vis/architecture-graph-render.png" alt="extruded" width="600px"/>
@@ -35,7 +35,7 @@ export default class GraphRender extends Component {
 
 This gives us the basic structure, using the `DeckGL` react component to render our `deck.gl` overlay.
 You'll notice that `layers` is being passed to `DeckGL` but it's an empty array.
-We have to initialize each `deck.gl` layer separately. 
+We have to initialize each `deck.gl` layer separately.
 `Deck.GL` comes with several prepackaged layers that we can use to show all kinds graph visualization.
 Let's edit the function and creat a node layer in `render()` function.
 
@@ -166,7 +166,7 @@ import DeckGL, {
 } from 'deck.gl';
 
 export default class GraphRender extends Component {
-  
+
   // 1. add a method to create viewport
   createViewport() {
     const width = this.props.width;

@@ -214,9 +214,9 @@ export default class App extends Component {
     super(props);
     this.state = {
       // add settings
-      settings: Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
+      settings: Object.entries(SCATTERPLOT_CONTROLS).reduce((accu, [key, setting]) => ({
         ...accu,
-        [key]: SCATTERPLOT_CONTROLS[key].value
+        [key]: setting.value
       }), {}),
     };
   }
