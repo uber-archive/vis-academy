@@ -129,7 +129,7 @@ render() {
           viewport={this.state.viewport}
           data={this.state.points}
           onHover={hover => this._onHover(hover)}
-          settings={this.state.settings}/>
+          {...this.state.settings}/>
       </MapGL>
       <Charts {...this.state} />
     </div>

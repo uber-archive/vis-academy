@@ -131,7 +131,7 @@ return (
       // Callback for viewport changes, addressed below
       onViewportChange={viewport => this._onViewportChange(viewport)}
       // ...
-      />
+    ></MapGL>
   </div>
 );
 ```

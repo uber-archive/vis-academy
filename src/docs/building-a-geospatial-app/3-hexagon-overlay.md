@@ -144,30 +144,49 @@ Feel free to skip to [lesson 4](https://uber-common.github.io/vis-academy/#/buil
 
 ## 4. Adding Polish
 
-Let's add more hexagon layer controls to the control panel, if you have't add a control panel to your app, check out the optional session of lesson 2 first
+Adding mouseover interaction to our hexagons:
+
+In app.js, add this method to our app component:
 
 ```js
-import {LayerControls, HEXAGON_CONTROLS} from './layer-controls';
-export default class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      // add settings
-      settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
-        ...accu,
-        [key]: HEXAGON_CONTROLS[key].value
-      }), {})
-    };
+  _onHover({x, y, object}) {
+    this.setState({x, y, hoveredObject: object});
   }
-}
-
 ```
 
-Pass `HEXAGON_CONTROLS` to `LayerControls`
+Then, in the <DeckGLOverlay /> component, add a call to this method:
+
 ```js
-   <LayerControls
-    // ...
-    settings={this.state.settings}
-  />
+  <DeckGLOverlay
+    viewport={this.state.viewport}
+    data={this.state.points}
+    onHover={hover => this._onHover(hover)}
+    {...this.state.settings}
+/>
 ```
+
+With this, we effectively pass information whenever the user mousesover the hexagons or scatterplot and we store it in the state of the app. However, we don't display it yet.
+
+Let's add a tooltip component:
+
+At the beginning of the app, import the styling for the tooltip: 
+```js
+import {tooltipStyle} from './style';
+```
+
+Then, in the render method, right before the <LayerControls /> component, add:
+
+```js
+  {this.state.hoveredObject &&
+    <div style={{
+      ...tooltipStyle,
+      transform: `translate(${this.state.x}px, ${this.state.y}px)`
+    }}>
+      <div>{JSON.stringify(this.state.hoveredObject)}</div>
+    </div>
+  }
+```
+
+You will now be able to see additional information when mousing over your map!
+
+
