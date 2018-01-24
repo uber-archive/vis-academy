@@ -1,53 +1,49 @@
 CACHE MANIFEST
-#ver:11/28/2017, 11:54:30 AM
+#ver:1/23/2018, 6:01:37 PM
 #plugin:4.8.4
 
 CACHE:
-../bundle-ba4d88ac2f873f0f4a04.js
-../styles-ba4d88ac2f873f0f4a04.css
+../bundle-f6bd3c052b42a8f50573.js
+../styles-f6bd3c052b42a8f50573.css
 ../
-../fonts/uber.svg
 ../fonts/uber.ttf
-../fonts/uber.woff
-../fonts/uber.svg
-../images/icon-chart.svg
-../images/footer-pattern.gif
 ../favicon.ico
+../fonts/uber.svg
+../fonts/uber.woff
+../images/footer-pattern.gif
+../images/icon-chart.svg
 ../images/icon-custom.svg
 ../images/icon-high-precision.svg
-../images/icon-react.svg
+../images/hero.jpg
 ../images/icon-layers.svg
 ../images/uber-logo.png
 ../images/icon-react.svg
 ../images/logo.svg
-../images/hero.jpg
 ../images/custom-layers/cover.png
 ../images/graph-vis/architecture-basic.png
 ../images/geospatial-app/geospatial-app.png
-../images/graph-vis/architecture-graph-render.png
-../images/graph-vis/architecture-with-layout-engine.png
 ../images/graph-vis/cover.png
+../images/graph-vis/architecture-with-layout-engine.png
+../images/graph-vis/architecture-graph-render.png
 ../images/graph-vis/no-position-update-trigger.png
 ../images/graph-vis/random-graph.png
 ../images/mg_arc_2.png
 ../images/mg_arc_1.png
-../images/mg_hex_1.png
 ../images/mg_choropleth.png
 ../images/mg_hex_1.png
 ../images/mg_hex_2.png
 ../images/mg_hex_3.png
-../images/mg_hex_4.png
 ../images/mg_hex_3d.png
+../images/mg_hex_4.png
 ../images/mg_hex_5.png
 ../images/mg_hex_6.png
 ../images/mg_path.png
-../images/mg_scatterplot_1.png
 ../images/setup/empty-app.png
-../images/mg_scatterplot_1.png
 ../images/path.jpg
-../images/vis-logo.png
 ../images/mg_scatterplot_2.png
+../images/mg_scatterplot_1.png
 ../images/setup/testing.png
+../images/vis-logo.png
 ../images/setup/setup.png
 
 NETWORK:
