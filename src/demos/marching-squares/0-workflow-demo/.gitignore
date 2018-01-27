@@ -1,0 +1,18 @@
+node_modules
+dist
+yarn.lock
+yarn-error.log
+.DS_Store
+
+# Java
+*.class
+*.pyc
+
+# Intellij
+*.iml
+*.iws
+*.egg-info
+
+backend/mlvis-data/
+backend/env/
+__pycache__
