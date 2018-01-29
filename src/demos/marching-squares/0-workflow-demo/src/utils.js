@@ -43,3 +43,7 @@ export const generateRandomData = () => {
       ])
     );
 };
+
+export const allocBuffer = (size = 100, defaultValue = 0) => {
+  return Array.from(Array(size)).map(_ => 0);
+};

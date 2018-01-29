@@ -1,6 +1,6 @@
 import {handleActions} from 'redux-actions';
 import {UPDATE_VIEWPORT, UPDATE_CURRENT_STEP} from './actions';
-import {generateRandomData} from './utils';
+import {allocBuffer, generateRandomData} from './utils';
 
 export const DEFAULT_STATE = {
   width: 0,
@@ -11,7 +11,8 @@ export const DEFAULT_STATE = {
 
   currentStep: 2,
 
-  data: generateRandomData()
+  pixelBuffer: allocBuffer(25 * 25),
+  dataPoints: generateRandomData()
 };
 
 const handleUpdateViewport = (state, {payload}) => ({

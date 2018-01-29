@@ -13,6 +13,7 @@ import {
   getSiderWidth,
   getMatrixLayout,
   getMatrixData,
+  getMatrixCellShapeLabels,
   getProjectedPointData
 } from './selectors';
 // components
@@ -32,7 +33,8 @@ const mapStateToProps = state => ({
   siderWidth: getSiderWidth(state),
   matrixLayout: getMatrixLayout(state),
   matrixData: getMatrixData(state),
-  pointData: getProjectedPointData(state)
+  pointData: getProjectedPointData(state),
+  matrixShapeIndices: getMatrixCellShapeLabels(state)
 });
 
 class AppContainer extends PureComponent {
@@ -120,7 +122,7 @@ class AppContainer extends PureComponent {
     });
   }
 
-  _renderLabels() {
+  _renderQuantizedLabels() {
     const {matrixData, matrixLayout} = this.props;
     const {dx, dy} = matrixLayout;
 
@@ -131,14 +133,42 @@ class AppContainer extends PureComponent {
     const labels = matrixData.map((d, i) => {
       return (
         <text
-          dominantBaseline={'central'}
-          textAnchor={'middle'}
-          fontSize={16}
-          fontWeight={600}
           key={i}
           x={dx * d.col + dx / 2}
           y={dy * d.row + dy / 2}
-          fill={d.val > 0.5 ? '#AAA' : '#666'}
+          fill="#888"
+          dominantBaseline="central"
+          textAnchor="middle"
+          fontSize={16}
+          fontWeight={600}
+        >
+          {d.val}
+        </text>
+      );
+    });
+
+    return <g>{labels}</g>;
+  }
+
+  _renderShapeIndexLabels() {
+    const {matrixShapeIndices, matrixLayout} = this.props;
+    const {dx, dy} = matrixLayout;
+
+    if (!matrixShapeIndices || matrixShapeIndices.length === 0) {
+      return null;
+    }
+
+    const labels = matrixShapeIndices.map((d, i) => {
+      return (
+        <text
+          key={i}
+          x={dx * d.col + dx}
+          y={dy * d.row + dy}
+          fill="#1890FF"
+          dominantBaseline="central"
+          textAnchor="middle"
+          fontSize={16}
+          fontWeight={600}
         >
           {d.val}
         </text>
@@ -152,7 +182,14 @@ class AppContainer extends PureComponent {
     const {currentStep} = this.props;
 
     if (currentStep === 2) {
-      return <g>{this._renderLabels()}</g>;
+      return <g>{this._renderQuantizedLabels()}</g>;
+    }
+    if (currentStep === 3) {
+      return (
+        <g>
+          {this._renderQuantizedLabels()}, {this._renderShapeIndexLabels()}
+        </g>
+      );
     }
     return <g />;
   }

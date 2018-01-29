@@ -1,5 +1,6 @@
 import {createSelector} from 'reselect';
 import {CANVAS_PADDING, PANEL_PADDING} from './constants';
+import {allocBuffer} from './utils';
 
 const rootSelector = state => state;
 
@@ -11,7 +12,8 @@ export const getScreenHeight = createSelector(rootSelector, root => root.height)
 export const getNumCol = createSelector(rootSelector, root => root.numCol);
 export const getNumRow = createSelector(rootSelector, root => root.numRow);
 
-export const getRawDataPoints = createSelector(rootSelector, state => state.data);
+export const getRawPixelBuffer = createSelector(rootSelector, state => state.pixelBuffer);
+export const getRawDataPoints = createSelector(rootSelector, state => state.dataPoints);
 
 export const getContentPanelSize = createSelector(
   [getScreenWidth, getScreenHeight],
@@ -59,52 +61,135 @@ export const getProjectedPointData = createSelector(
 
 // DATA - need to rewwrite in a more low-level way for parity of glsl implementations
 
-export const getMatrixHeatmap = createSelector(
-  [getNumCol, getNumRow, getRawDataPoints],
-  (numCol, numRow, points) => {
-    return points.reduce((heatmap, [x, y]) => {
-      const col = Math.floor(x * numCol);
-      const row = Math.floor(y * numRow);
-      const key = `${col}-${row}`;
-      if (heatmap[key] > 0) {
-        heatmap[key] += 1;
-      } else {
-        heatmap[key] = 1;
+export const getBuffer = createSelector(
+  [getRawDataPoints, getNumCol, getNumRow],
+  (points, numCol, numRow) => {
+    const buffer = allocBuffer(numCol * numRow);
+    points.forEach(([x, y]) => {
+      if (x >= 0 && y >= 0 && x <= 1 && y <= 1) {
+        const col = Math.floor(x * numCol);
+        const row = Math.floor(y * numRow);
+        const idx = col + row * numCol;
+        buffer[idx] += 1;
       }
-      return heatmap;
-    }, {});
+    });
+    return buffer;
   }
 );
 
-export const getMaxCount = createSelector(getMatrixHeatmap, heatmap =>
-  Math.max(...Object.values(heatmap))
+export const getMaxValueInPixelBuffer = createSelector(getBuffer, buffer =>
+  Math.max(...Object.values(buffer))
 );
 
-// export const getNormalizedMatrixHeatmap = createSelector([getMatrixHeatmap, ])
+export const getNormalizedPixelBuffer = createSelector(
+  [getBuffer, getMaxValueInPixelBuffer],
+  (buffer, maxValue) => {
+    if (!maxValue) {
+      return buffer;
+    }
+    return buffer.map(d => d / maxValue);
+  }
+);
 
-export const getNormalizedMatrixData = createSelector(
-  [getMatrixHeatmap, getMaxCount],
-  (heatmap, maxCount) => {
-    return Object.keys(heatmap).map(key => {
-      const [col, row] = key.split('-').map(Number);
-      return {
-        col,
-        row,
-        val: heatmap[key] / maxCount || 1e10
-      };
+export const getQuantizedBuffer = createSelector(getNormalizedPixelBuffer, buffer =>
+  buffer.map(d => (d > 0.5 ? 1 : 0))
+);
+
+export const getQuantizedBufferOffsetX = createSelector(
+  [getQuantizedBuffer, getNumCol],
+  (buffer, numCol) =>
+    buffer.map((_, idx) => {
+      const col = idx % numCol;
+      if (col === numCol - 1) {
+        return 0;
+      }
+      return buffer[idx + 1];
+    })
+);
+
+export const getQuantizedBufferOffsetY = createSelector(
+  [getQuantizedBuffer, getNumCol, getNumRow],
+  (buffer, numCol, numRow) =>
+    buffer.map((_, idx) => {
+      const row = Math.floor(idx / numRow);
+      if (row === numRow - 1) {
+        return 0;
+      }
+      return buffer[idx + numCol];
+    })
+);
+
+export const getQuantizedBufferOffsetXY = createSelector(
+  [getQuantizedBuffer, getNumCol, getNumRow],
+  (buffer, numCol, numRow) => {
+    return buffer.map((_, idx) => {
+      const col = idx % numCol;
+      const row = Math.floor(idx / numCol);
+      if (col === numCol - 1 || row === numRow - 1) {
+        return 0;
+      }
+      return buffer[col + 1 + (row + 1) * numCol];
     });
   }
 );
 
-export const getDiscretizedMatrixData = createSelector([getNormalizedMatrixData], data => {
-  return data.map(d => ({...d, val: d.val > 0.5 ? 1 : 0}));
-});
-
-export const getMatrixData = createSelector(
-  [getNormalizedMatrixData, getDiscretizedMatrixData, getCurrentStep],
-  (normalizedData, discretizedData, currentStep) => {
-    return currentStep === 2 ? discretizedData : normalizedData;
+export const getMatrixCellShapeIndices = createSelector(
+  [
+    getQuantizedBuffer,
+    getQuantizedBufferOffsetX,
+    getQuantizedBufferOffsetXY,
+    getQuantizedBufferOffsetY,
+    getNumCol,
+    getNumRow
+  ],
+  (buffer, bufferX, bufferXY, bufferY, numCol, numRow) => {
+    const shapeIndices = [];
+    for (let row = 0; row < numRow - 1; row++) {
+      for (let col = 0; col < numCol - 1; col++) {
+        const index = col + row * numCol;
+        const shapeIndex =
+          buffer[index] * 8 + bufferX[index] * 4 + bufferXY[index] * 2 + bufferY[index];
+        shapeIndices.push(shapeIndex);
+      }
+    }
+    return shapeIndices;
   }
 );
 
-export const getMatrixIndexMap = createSelector([getDiscretizedMatrixData], discretizedData => {});
+// for rendering
+
+export const getMatrixCellShapeLabels = createSelector(
+  [getMatrixCellShapeIndices, getNumCol],
+  (shapeIndices, numCol) =>
+    shapeIndices.map((val, idx) => ({
+      col: idx % (numCol - 1),
+      row: Math.floor(idx / (numCol - 1)),
+      val
+    }))
+);
+
+export const getNormalizedMatrixData = createSelector(
+  [getNormalizedPixelBuffer, getNumCol],
+  (buffer, numCol) =>
+    buffer.map((val, idx) => ({
+      col: idx % numCol,
+      row: Math.floor(idx / numCol),
+      val
+    }))
+);
+
+export const getQuantizedMatrixData = createSelector(
+  [getQuantizedBuffer, getNumCol],
+  (buffer, numCol) =>
+    buffer.map((val, idx) => ({
+      col: idx % numCol,
+      row: Math.floor(idx / numCol),
+      val
+    }))
+);
+
+export const getMatrixData = createSelector(
+  [getNormalizedMatrixData, getQuantizedMatrixData, getCurrentStep],
+  (normalizedData, quantizedData, currentStep) =>
+    currentStep >= 2 ? quantizedData : normalizedData
+);
