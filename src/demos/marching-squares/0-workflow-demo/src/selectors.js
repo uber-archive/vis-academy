@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {CANVAS_PADDING, PANEL_PADDING} from './constants';
+import {CANVAS_PADDING, PANEL_PADDING, CONTOUR_SHAPE_MAP} from './constants';
 import {allocBuffer} from './utils';
 
 const rootSelector = state => state;
@@ -157,15 +157,16 @@ export const getMatrixCellShapeIndices = createSelector(
 );
 
 // for rendering
-
-export const getMatrixCellShapeLabels = createSelector(
+export const getContours = createSelector(
   [getMatrixCellShapeIndices, getNumCol],
-  (shapeIndices, numCol) =>
-    shapeIndices.map((val, idx) => ({
+  (shapeIndices, numCol) => {
+    return shapeIndices.map((shapeIndex, idx) => ({
       col: idx % (numCol - 1),
       row: Math.floor(idx / (numCol - 1)),
-      val
-    }))
+      val: shapeIndex,
+      segments: CONTOUR_SHAPE_MAP[shapeIndex]
+    }));
+  }
 );
 
 export const getNormalizedMatrixData = createSelector(

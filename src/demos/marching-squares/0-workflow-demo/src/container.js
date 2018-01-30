@@ -13,7 +13,7 @@ import {
   getSiderWidth,
   getMatrixLayout,
   getMatrixData,
-  getMatrixCellShapeLabels,
+  getContours,
   getProjectedPointData
 } from './selectors';
 // components
@@ -34,7 +34,7 @@ const mapStateToProps = state => ({
   matrixLayout: getMatrixLayout(state),
   matrixData: getMatrixData(state),
   pointData: getProjectedPointData(state),
-  matrixShapeIndices: getMatrixCellShapeLabels(state)
+  contours: getContours(state)
 });
 
 class AppContainer extends PureComponent {
@@ -150,15 +150,43 @@ class AppContainer extends PureComponent {
     return <g>{labels}</g>;
   }
 
-  _renderShapeIndexLabels() {
-    const {matrixShapeIndices, matrixLayout} = this.props;
+  _renderContourSegments() {
+    const {contours, matrixLayout} = this.props;
     const {dx, dy} = matrixLayout;
 
-    if (!matrixShapeIndices || matrixShapeIndices.length === 0) {
+    if (!contours || contours.length === 0) {
       return null;
     }
 
-    const labels = matrixShapeIndices.map((d, i) => {
+    const contourSegments = contours
+      .reduce((acc, contour) => {
+        const {col, row} = contour;
+        const x0 = dx * col + dx;
+        const y0 = dy * row + dy;
+        contour.segments.forEach(([source, target]) => {
+          acc.push({
+            source: [x0 + source[0] * dx, y0 + source[1] * dy],
+            target: [x0 + target[0] * dx, y0 + target[1] * dy]
+          });
+        });
+        return acc;
+      }, [])
+      .map(({source: [x1, y1], target: [x2, y2]}, i) => {
+        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#F00" strokeWidth={3} />;
+      });
+
+    return <g>{contourSegments}</g>;
+  }
+
+  _renderContourLabels() {
+    const {contours, matrixLayout} = this.props;
+    const {dx, dy} = matrixLayout;
+
+    if (!contours || contours.length === 0) {
+      return null;
+    }
+
+    const labels = contours.map((d, i) => {
       return (
         <text
           key={i}
@@ -187,16 +215,19 @@ class AppContainer extends PureComponent {
     if (currentStep === 3) {
       return (
         <g>
-          {this._renderQuantizedLabels()}, {this._renderShapeIndexLabels()}
+          {this._renderQuantizedLabels()}, {this._renderContourLabels()}
         </g>
       );
+    }
+    if (currentStep === 4) {
+      return <g>{this._renderContourSegments()}</g>;
     }
     return <g />;
   }
 
   _renderDeckGLLayers() {
     const {currentStep} = this.props;
-    if (currentStep === 0) {
+    if (currentStep === 0 || currentStep === 4) {
       return [this._renderScatterplot()];
     }
     return [this._renderMatrix()];

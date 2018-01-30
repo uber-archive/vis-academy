@@ -9,10 +9,10 @@ export const DEFAULT_STATE = {
   numCol: 25,
   numRow: 25,
 
-  currentStep: 2,
+  currentStep: 0,
 
   pixelBuffer: allocBuffer(25 * 25),
-  dataPoints: generateRandomData()
+  dataPoints: generateRandomData(100 * 1000)
 };
 
 const handleUpdateViewport = (state, {payload}) => ({
