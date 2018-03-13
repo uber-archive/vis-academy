@@ -9,8 +9,11 @@
   "main": "index.js",
   "scripts": {
     "start": "ocular start",
-    "build": "ocular build && rm -rf docs && mv dist docs",
-    "lint": "ocular lint"
+    "clean": "rm -rf docs/*{.js,.css,index.html,appcache,fonts,images}",
+    "build":
+      "ocular build",
+    "lint": "ocular lint",
+    "publish": "npm run clean && npm run build && mv dist/* docs"
   },
   "dependencies": {
     "@turf/turf": "^4.7.3",
