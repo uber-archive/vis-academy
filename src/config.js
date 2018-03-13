@@ -33,5 +33,5 @@ export const HOME_BULLETS = [{
   text: 'Learn the vis stack',
   img: 'images/icon-layers.svg',
 }];
-
+export const GA_TRACKING = 'UA-64694404-18';
 export const ADDITIONAL_LINKS = []
