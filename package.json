@@ -10,8 +10,7 @@
   "scripts": {
     "start": "ocular start",
     "clean": "rm -rf docs/*{.js,.css,index.html,appcache,fonts,images}",
-    "build":
-      "ocular build",
+    "build": "ocular build",
     "lint": "ocular lint",
     "publish": "npm run clean && npm run build && mv dist/* docs"
   },
@@ -22,7 +21,7 @@
     "d3-force": "^1.0.6",
     "deck.gl": "^4.1.1",
     "luma.gl": "^4.0.1",
-    "ocular": "^0.4.3",
+    "ocular": "^0.4.8",
     "react-map-gl": "^3.0.4",
     "react-vis": "^1.7.2",
     "tape": "^4.8.0",

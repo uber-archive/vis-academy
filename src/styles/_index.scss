@@ -1,6 +1,10 @@
 @import "~react-vis/dist/main.scss";
-@import "./_variables.scss";
-
+@import "variables.scss";
+@import "typography.scss";
+body {
+  font-size: 12px !important;
+  line-height: 1.833;
+}
 .title {
   height: 300px;
   width: 100%;
@@ -15,10 +19,12 @@
   }
   h1 {
     font-size: 2em;
+    line-height: 1.8333;
     font-weight: 600;
   }
   p {
     font-size: 4em;
+    line-height: 1.8333;    
     font-weight: 400;
   }
 }
@@ -63,8 +69,13 @@
   box-shadow: 0 0 5px rgba(black, 0.2);
   transition: background-color 250ms, box-shadow 0.3s, color 250ms, transform 250ms;
 
+  p {
+    line-height: 1.8333;            
+  }
   h3 {
     font-size: 1.2em;
+    font-weight: 500;
+    line-height: 1.8333;        
   }
 
   .btn {
