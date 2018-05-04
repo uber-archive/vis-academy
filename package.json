@@ -28,5 +28,8 @@
     "tape-catch": "^1.0.6"
   },
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "hoek": "^5.0.3"
+  }
 }
