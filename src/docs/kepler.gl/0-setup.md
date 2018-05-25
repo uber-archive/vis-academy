@@ -67,4 +67,4 @@ src/demos/kepler.gl/0-starting-code/src/app.js
 ```
 
 Next, you can head to the next step:
-[Graph Render](#/graph-vis/1-graph-render).
+[Import Kepler.gl](#/kepler.gl/1-import-keplergl).

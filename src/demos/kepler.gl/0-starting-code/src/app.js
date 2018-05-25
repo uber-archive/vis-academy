@@ -21,11 +21,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-const App = () => (
-  <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-    <h2>Kepler.Gl Code Lab!</h2>
-  </div>
-);
+class App extends Component {
+  render() {
+    return (
+      <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+        <h2>Kepler.Gl Code Lab!</h2>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = state => state;
 const dispatchToProps = dispatch => ({dispatch});
