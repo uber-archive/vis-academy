@@ -18,27 +18,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React from 'react';
-import document from 'global/document';
-import {Provider} from 'react-redux';
-import {hashHistory, Router, Route} from 'react-router';
-import {syncHistoryWithStore} from 'react-router-redux';
-import {render} from 'react-dom';
-import store from './store';
-import App from './app';
-// import {getAppUrlPrefix} from './constants/default-settings';
+import {combineReducers, createStore, applyMiddleware, compose} from 'redux';
 
-const history = syncHistoryWithStore(hashHistory, store);
-// const prefix = getAppUrlPrefix();
-// const path = prefix === '' ? '(:id)' : `${prefix}(/:id)`;
+import thunk from 'redux-thunk';
+import window from 'global/window';
+import {taskMiddleware} from 'react-palm';
+import {routerMiddleware} from 'react-router-redux';
+import {hashHistory} from 'react-router';
+import reducers from './reducers';
 
-const Root = () => (
-  <Provider store={store}>
-    <Router history={history}>
-      <Route path="/(:id)" component={App} />
-      <Route path="/demo/(:id)" component={App} />
-    </Router>
-  </Provider>
+export const middlewares = [
+  taskMiddleware,
+  thunk,
+  routerMiddleware(hashHistory)
+];
+
+export const enhancers = [applyMiddleware(...middlewares)];
+
+const initialState = {};
+
+// add redux devtools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export default createStore(
+  reducers,
+  initialState,
+  composeEnhancers(...enhancers)
 );
-
-render(<Root />, document.body.appendChild(document.createElement('div')));

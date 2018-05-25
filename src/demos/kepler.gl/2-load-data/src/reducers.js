@@ -18,9 +18,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {DATA_URL} from './default-settings';
+import {combineReducers} from 'redux';
+import {handleActions} from 'redux-actions';
+import {routerReducer} from 'react-router-redux';
+import keplerGlReducer from 'kepler.gl/reducers';
 
-/*
- * If you want to add more samples, feel free to edit the json file on github kepler.gl data repo
- */
-export const MAP_CONFIG_URL = `${DATA_URL}samples.json?nocache=${(new Date()).getTime()}`;
+// INITIAL_APP_STATE
+const initialAppState = {
+  appName: 'example',
+  loaded: false
+};
+
+const reducers = combineReducers({
+  // mount keplerGl reducer
+  keplerGl: keplerGlReducer,
+  app: handleActions({
+    // empty
+  }, initialAppState),
+  routing: routerReducer
+});
+
+export default reducers;

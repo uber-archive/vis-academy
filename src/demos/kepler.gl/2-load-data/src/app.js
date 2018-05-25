@@ -19,46 +19,23 @@
 // THE SOFTWARE.
 
 import React, {Component} from 'react';
-import window from 'global/window';
 import {connect} from 'react-redux';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
+import KeplerGl from 'kepler.gl';
 
-import {loadSampleConfigurations} from './actions';
-import {replaceLoadDataModal} from './factories/load-data-modal';
-
-const KeplerGl = require('kepler.gl/components').injectComponents([
-  replaceLoadDataModal()
-]);
+// Kepler.gl actions
+import {addDataToMap} from 'kepler.gl/actions';
+// Kepler.gl
+import Processors from 'kepler.gl/processors';
+// Sample data
+import nycTrips from './data/nyc-trips.csv';
 
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
-// Sample data
-/* eslint-disable no-unused-vars */
-import sampleTripData from './data/sample-trip-data';
-import sampleGeojson from './data/sample-geojson.json';
-import sampleIconCsv, {config as savedMapConfig} from './data/sample-icon-csv';
-import {updateVisData, addDataToMap} from 'kepler.gl/actions';
-import Processors from 'kepler.gl/processors';
-/* eslint-enable no-unused-vars */
-
 class App extends Component {
-  componentWillMount() {
-    // if we pass an id as part f the url
-    // we ry to fetch along map configurations
-    const {params: {id: sampleMapId} = {}} = this.props;
-    this.props.dispatch(loadSampleConfigurations(sampleMapId));
-
-    if (window.gtag) {
-      const {token} = this.props.location.query;
-      window.gtag('set', {token});
-
-      window.gtag('config', 'UA-64694404-19', {
-        user_id: token,
-        custom_map: {dimension1: 'token'}
-      });
-
-      window.gtag('send', 'pageview', {token});
-    }
+  componentDidMount() {
+    const datasets = Processors.processCsvData(nycTrips);
+    this.props.dispatch(addDataToMap({datasets}));
   }
 
   render() {
@@ -69,10 +46,6 @@ class App extends Component {
             <KeplerGl
               mapboxApiAccessToken={MAPBOX_TOKEN}
               id="map"
-              /*
-               * Specify path to keplerGl state, because it is not mount at the root
-               */
-              getState={state => state.demo.keplerGl}
               width={width}
               height={height}
             />

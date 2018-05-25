@@ -21,8 +21,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
-
 import KeplerGl from 'kepler.gl';
+
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 class App extends Component {

@@ -18,25 +18,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {LoadDataModalFactory} from 'kepler.gl/components';
-import LoadDataModal from '../components/load-data-modal/load-data-modal';
-import {withState} from 'kepler.gl/components';
+import React from 'react';
+import document from 'global/document';
+import {Provider} from 'react-redux';
+import {hashHistory, Router, Route} from 'react-router';
+import {syncHistoryWithStore} from 'react-router-redux';
+import {render} from 'react-dom';
+import store from './store';
+import App from './app';
+// import {getAppUrlPrefix} from './constants/default-settings';
 
-import {
-  loadSampleMap,
-  setLoadingMethod
-} from '../actions';
+const history = syncHistoryWithStore(hashHistory, store);
+// const prefix = getAppUrlPrefix();
+// const path = prefix === '' ? '(:id)' : `${prefix}(/:id)`;
 
-export const CustomLoadDataModalFactory = () =>
-  withState(
-    [],
-    state => ({...state.demo.app}),
-    {
-      onSetLoadingMethod: setLoadingMethod,
-      onLoadSampleData: loadSampleMap
-    }
-  )(LoadDataModal);
+const Root = () => (
+  <Provider store={store}>
+    <Router history={history}>
+      <Route path="/" component={App} />
+    </Router>
+  </Provider>
+);
 
-export function replaceLoadDataModal() {
-  return [LoadDataModalFactory, CustomLoadDataModalFactory];
-}
+render(<Root />, document.body.appendChild(document.createElement('div')));
