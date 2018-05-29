@@ -250,8 +250,8 @@ export default [
   {
     name: "Embedding Kepler.gl",
     desc: "Advanced topic: learn how to use kepler.gl in your web application.",
-    image: "https://d1a3f4spazzrp4.cloudfront.net/kepler.gl/website/hero/kepler.gl-contours.png",
-    badges: ["kepler.gl"],
+    image: "images/kepler-card.png",
+    badges: ["react", "webGL", "kepler.gl"],
     path: "/embedding-kepler.gl",
     data: [
       {
