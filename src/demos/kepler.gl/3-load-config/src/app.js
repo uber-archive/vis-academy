@@ -70,6 +70,7 @@ class App extends Component {
     return keplerGlConfig;
   }
 
+  // Created to show how to replace dataset with new data and keeping the same configuration
   replaceData() {
   // Use processCsvData helper to convert csv file into kepler.gl structure {fields, rows}
     const data = Processors.processCsvData(nycTripsSubset);

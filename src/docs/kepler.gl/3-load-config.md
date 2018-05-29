@@ -1,96 +1,75 @@
 <ul class='insert learning-objectives'>
-  <li>Load data and export configuration</li>
+  <li>Loading existing configuration</li>
 </ul>
 
 # What Will We Do
-In this step, we will be using Kepler.gl redux actions and helpers to inject data into a map instance 
-and export its configuration programmatically.
+In this step, we will be using Kepler.gl `addDataToMap` action to upload data with an existing configuration.
 
 In this part of our code lab, we are going to update only `app.js` file in `src`.
 
 ## 1. Data to load
-We have created a folder `data` in `src` that contains mocked data which is a subset of the public dataset of 
-New York City trips. The file name is `nyc-trips.csv.js`.
+We have created a folder `data` in `src` that contains mocked configuration which was previously saved it. 
+The file name is `nyc-config.json`.
 
-The file contains a long data string which would simulate the content of a csv file.
 
-First, import nyc trips data into `app.js` by performing the following changes
+First, import nyc config json into `app.js` by performing the following changes
 ```js
-import nycTrips from './data/nyc-trips.csv';
+import nycConfig from './data/nyc-config';
 ```
 
-In order to process the raw data we are going to use Kepler.gl APIs and in particular the following:
-- Processors: provides ability to convert raw data (csv, json) into kepler.gl data form which has rows anf fields properties
-- Actions: provides an easy interface to programmatically interact with kepler.gl instance
+Now that we have the necessary configuration file imported in __app.js__ we can update __componentDidMount__ and inject
+the map configuration into our Kepler.gl instance. Update componentDidMount to look like this:
 
-Import Processors and Actions
 ```js
-// Kepler.gl actions
-import {addDataToMap} from 'kepler.gl/actions';
-// Kepler.gl Data processing APIs
-import Processors from 'kepler.gl/processors';
-```
-
-Now that we have the necessary API imported in __app.js__ we can use react lifecycle to inject
-data into kepler.gl map instance.
-
-We can implement __componentDidMount__ in `app.js` using the following changes:
-```js
-componentDidMount() {
-	// Use processCsvData helper to convert csv file into kepler.gl structure {fields, rows}
+// Use processCsvData helper to convert csv file into kepler.gl structure {fields, rows}
     const data = Processors.processCsvData(nycTrips);
     // Create dataset structure
     const dataset = {
       data,
-      // info: {} // Info property is optional
+      info: {
+        id: 'rizctto3p'
+        // this is used to match the dataId defined in nyc-config.json. For more details see API documentation.
+        // It is paramount that this id mathces your configuration otherwise the configuration file will be ignored.
+      }
     };
     // addDataToMap action to inject dataset into kepler.gl instance
-    this.props.dispatch(addDataToMap({datasets: dataset}));
+    this.props.dispatch(addDataToMap({datasets: dataset, config: nycConfig}));
+```
+
+We now create the dataset to pass using the property Info and an Id. The id must match the Data id defined in some of the properties from within nyc-config.json.
+
+We are also adding the configuration to __addDataToMap call which will make sure to load the existing configuration.
+ 
+## 2. Replace an existing dataset with new data but with the same format
+
+In order to replace the current data with new ones (same data properties), we are going to perform the following steps:
+- generate a new dataset using the same approach we did previously
+- extract the current configuration
+- inject the new data
+
+Let's create a new helper method that we will use to replace data. Add the following method to `app.js`
+
+```js
+// Created to show how to replace dataset with new data and keeping the same configuration
+replaceData() {
+	// Use processCsvData helper to convert csv file into kepler.gl structure {fields, rows}
+	const data = Processors.processCsvData(nycTripsSubset);
+	// Create dataset structure
+	const dataset = {
+	  data,
+	  info: {
+		id: 'rizctto3p'
+		// this is used to match the dataId defined in nyc-config.json. For more details see API documentation.
+		// It is paramount that this id mathces your configuration otherwise the configuration file will be ignored.
+	  }
+	};
+
+	// read the current configuration
+	const config = this.exportConfiguration();
+
+	// addDataToMap action to inject dataset into kepler.gl instance
+	this.props.dispatch(addDataToMap({datasets: dataset, config}));
 }
 ```
 
-In the above snippet, we first process the raw data using __processCsvData__ which will trasform a raw csv content string into a Kepler.gl
-stat structure __{rows, fields}__. The second step is to create the dataset structure with the following structure:
-- data: the generated object with rows and fields
-- info (OPTIONAL): this is used to pass dataset id (this will be used in our next example) and other meta information (see API documentation for more)
-
-In the last step, we are adding the data to our kepler.gl instance using the redux action __addDataToMap and we pass our new created dataset as an input paramenter.
-You may notice, we use __datasets__ property to pass our new data object. __datasets__ property can be either a single object vlue or an array of datasets instances.
-
-## 2. Export Kepler.gl instance configuration
-Kepler.gl provides the ability to programmatically interact with the configuration store of an instance. In this part of our code lab, we are going to create a 
-helper method in `app.js` to export Kepler.gl configuration. 
-
-Before exporting the configuration we need to import Kepler.gl Schema APIs by add the following line to the import section:
-```js
-// Kepler.gl Schema APIs
-import KeplerGlSchema from 'kepler.gl/schemas';
-```
-
-Let's add a new instance method to __app.js__ as it follows:
-
-```js
-// This method is used as reference to show how to export the current kepler.gl instance configuration
-// Once exported the configuration can be imported using parseSavedConfig or load method from KeplerGlSchema
-exportConfiguration() {
-	// retrieve kepler.gl store
-	const {keplerGl} = this.props;
-	// retrieve current kepler.gl instance store
-	const {map} = keplerGl;
-	const {mapStyle, visState, mapState, uiState} = map;
-	
-	const keplerGlConfig = KeplerGlSchema.getConfigToSave({
-	  mapStyle, visState, mapState, uiState
-	});
-
-	console.log('Kepler.gl instance configuration');
-	console.log(keplerGlConfig);
-}
-```
-
-__KeplerGlSchema.getConfigToSave__ takes the current map instance store, available in our component through `const mapStateToProps = state => state;`, and returns
-the current map instance configuration with the following format:
-- version: the current Kepler.gl schema version
-- config: object with the actual configuration
-
-Once the configuraiton is exported we can simply store it as json object wherever you see fit.
+this method will allow programmatically to replace the current data with new one (having the same structure).
