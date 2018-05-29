@@ -50,11 +50,11 @@ Open `app.js` and right after the `import` section, add the following line:
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 ```
 By doing this you can pass the [Mapbox](https://webpack.js.org/) token when you run the app by simply doing:
-```bash
+```
 MapboxAccessToken=TOKEN npm start
 ```
 because of the way we set up Webpack you can also export the Mapbox token into your shell session and pass it to the app by doing the folloing:
-```js
+```
 export MapboxAccessToken=TOKEN
 ```
 either way it will work.
