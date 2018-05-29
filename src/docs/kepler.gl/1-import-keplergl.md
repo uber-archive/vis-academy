@@ -1,3 +1,5 @@
+<!-- INJECT:"KeplerglBasic" heading -->
+
 <ul class='insert learning-objectives'>
   <li>Create a Kepler.gl instance</li>
 </ul>
