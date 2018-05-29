@@ -18,23 +18,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React from 'react';
-import document from 'global/document';
-import {Provider} from 'react-redux';
-import {hashHistory, Router, Route} from 'react-router';
-import {syncHistoryWithStore} from 'react-router-redux';
-import {render} from 'react-dom';
-import store from './store';
-import App from './app';
+import {combineReducers} from 'redux';
+import {handleActions} from 'redux-actions';
+import {routerReducer} from 'react-router-redux';
+import keplerGlReducer from 'kepler.gl/reducers';
 
-const history = syncHistoryWithStore(hashHistory, store);
+// INITIAL_APP_STATE
+const initialAppState = {
+  appName: 'example',
+  loaded: false
+};
 
-const Root = () => (
-  <Provider store={store}>
-    <Router history={history}>
-      <Route path="/" component={App} />
-    </Router>
-  </Provider>
-);
+const reducers = combineReducers({
+  // mount keplerGl reducer
+  keplerGl: keplerGlReducer,
+  app: handleActions({
+    // empty
+  }, initialAppState),
+  routing: routerReducer
+});
 
-render(<Root />, document.body.appendChild(document.createElement('div')));
+export default reducers;

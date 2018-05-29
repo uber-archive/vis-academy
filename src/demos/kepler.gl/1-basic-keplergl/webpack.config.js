@@ -194,6 +194,5 @@ const CONFIG = {
 
 // This line enables bundling against src in this repo rather than installed deck.gl module
 module.exports = env => {
-  console.log('ENV PRINTING: ', env);
   return env ? baseConfig(CONFIG, __dirname)(env) : CONFIG;
 };
