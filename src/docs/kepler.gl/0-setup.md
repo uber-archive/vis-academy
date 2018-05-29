@@ -12,7 +12,7 @@ need to be running node **>=v6** locally.
 git clone https://github.com/uber-common/vis-academy.git
 cd vis-academy/src/demos/kepler.gl/0-starting-code
 
-yarn --ignore engines # or npm install (slower)
+yarn --ignore-engines # or npm install (slower)
 npm start
 ```
 
