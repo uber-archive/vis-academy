@@ -10,7 +10,7 @@ We are going to edit two existing files: `reducers.js`, `app.js`. We are going t
 
 Let's get your hands on kepler.gl implementation by following steps:
 
-## 1. Import Kepler.gl Redux component
+## 1. Import Kepler.gl
 Open `reducers.js` in `src/` folder. We are going to perform to perform two changes in this.
 
 First, import Kepler.gl reducer by adding in the import section of the file the following snippet:
@@ -41,7 +41,7 @@ const reducers = combineReducers({
 
 The above changes will make sure Kepler.gl react component will be able to store its state and handle action handlers accordingly.
 
-## 2. Import Kepler.gl react and set Mapbox Api token
+## 2. Import Kepler.gl react component
 For this part, we are going to modify `app.js` in `src/`. Currently our `app.js` only displays an H2 html tag and we are 
 going to replace that tag with a Kepler.rl react component.
 First since Kepler.gl relies on [Mapbox](https://www.mapbox.com/) we need to have a [Mapbox Api Token](https://www.mapbox.com/help/how-access-tokens-work/) in order to visualize the map layer.

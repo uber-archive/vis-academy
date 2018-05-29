@@ -21,6 +21,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+
 class App extends Component {
   render() {
     return (
