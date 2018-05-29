@@ -47,6 +47,12 @@ import customShader from "docs/custom-layers/3-custom-shader.md";
 import customAttribute from "docs/custom-layers/4-custom-attribute.md";
 import customUniform from "docs/custom-layers/5-custom-uniform.md";
 
+// kepler.gl
+import KeplerglSetup from "docs/kepler.gl/0-setup.md";
+import KeplerglImport from "docs/kepler.gl/1-import-keplergl.md";
+import KeplerglLoadData from "docs/kepler.gl/2-load-data-and-export-configuration.md";
+import KeplerglLoadConfig from "docs/kepler.gl/3-load-config.md";
+
 export default [
   {
     name: "Installing a coding environment",
@@ -238,6 +244,31 @@ export default [
       {
         name: "5. Custom Uniform",
         markdown: customUniform
+      }
+    ]
+  },
+  {
+    name: "Embedding Kepler.gl",
+    desc: "Advanced topic: learn how to use kepler.gl in your web application.",
+    image: "https://d1a3f4spazzrp4.cloudfront.net/kepler.gl/website/hero/kepler.gl-contours.png",
+    badges: ["deck.gl"],
+    path: "/kepler.gl",
+    data: [
+      {
+        name: "Setup",
+        markdown: KeplerglSetup
+      },
+      {
+        name: "1. Import",
+        markdown: KeplerglImport
+      },
+      {
+        name: "2. Load Data",
+        markdown: KeplerglLoadData
+      },
+      {
+        name: "3. Load Config",
+        markdown: KeplerglLoadConfig
       }
     ]
   }
