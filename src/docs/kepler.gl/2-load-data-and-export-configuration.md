@@ -94,4 +94,4 @@ the current map instance configuration with the following format:
 - version: the current Kepler.gl schema version
 - config: object with the actual configuration
 
-Once the configuraiton is exported we can simply store it as json object wherever you see fit.
+Once the configuration is exported we can simply store it as json object wherever you see fit.
