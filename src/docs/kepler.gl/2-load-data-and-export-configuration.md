@@ -83,8 +83,7 @@ exportConfiguration() {
 	  mapStyle, visState, mapState, uiState
 	});
 
-	console.log('Kepler.gl instance configuration');
-	console.log(keplerGlConfig);
+	return keplerGlConfig;
 }
 ```
 
