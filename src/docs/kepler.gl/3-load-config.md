@@ -47,6 +47,12 @@ In order to replace the current data with new ones (same data properties), we ar
 - extract the current configuration
 - inject the new data
 
+Import the new nyc data subset which we are going to use to replace the original one. 
+In the import section of `app.js` add the following
+```js
+import nycTripsSubset from './data/nyc-subset.csv';
+```
+
 Let's create a new helper method that we will use to replace data. Add the following method to `app.js`
 
 ```js
