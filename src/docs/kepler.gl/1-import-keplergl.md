@@ -43,21 +43,7 @@ The above changes will make sure Kepler.gl react component will be able to store
 
 ## 2. Import Kepler.gl react component
 For this part, we are going to modify `app.js` in `src/`. Currently our `app.js` only displays an H2 html tag and we are 
-going to replace that tag with a Kepler.rl react component.
-First since Kepler.gl relies on [Mapbox](https://www.mapbox.com/) we need to have a [Mapbox Api Token](https://www.mapbox.com/help/how-access-tokens-work/) in order to visualize the map layer.
-Open `app.js` and right after the `import` section, add the following line:
-```js
-const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
-```
-By doing this you can pass the [Mapbox](https://webpack.js.org/) token when you run the app by simply doing:
-```
-MapboxAccessToken=TOKEN npm start
-```
-because of the way we set up Webpack you can also export the Mapbox token into your shell session and pass it to the app by doing the folloing:
-```
-export MapboxAccessToken=TOKEN
-```
-either way it will work.
+going to replace that tag with a kepler.gl react component.
 
 Now let's focus on bringing in the actual map and in order to do so, we are going to import the Kepler.gl react component and use it in the app.js `render function`.
 For the purpose of this code we are also going to import `Autosizer` which will be really helpful to handle window resize actions.
