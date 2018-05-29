@@ -17,7 +17,7 @@ yarn --ignore-engines # or npm install (slower)
 
 ## 2. Setup mapbox access token and start the app
 
-We create a token for you just for this colab session. It will expires end of this week
+We created temporary token for you just for this code lab session. It will expire end of this week (June 1 2018).
 ```
 export MapboxAccessToken=pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoiY2poczJzeGt2MGl1bTNkcm1lcXVqMXRpMyJ9.9o2DrYg8C8UWmprj-tcVpQ
 
