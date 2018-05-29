@@ -252,7 +252,7 @@ export default [
     desc: "Advanced topic: learn how to use kepler.gl in your web application.",
     image: "images/kepler-card.png",
     badges: ["react", "webGL", "kepler.gl"],
-    path: "/embedding-kepler.gl",
+    path: "/kepler.gl",
     data: [
       {
         name: "Setup",
