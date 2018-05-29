@@ -3096,9 +3096,9 @@ kdbush@^1.0.1:
   version "1.0.1"
   resolved "https://unpm.uberinternal.com/kdbush/-/kdbush-1.0.1.tgz#3cbd03e9dead9c0f6f66ccdb96450e5cecc640e0"
 
-"kepler.gl@github:uber/kepler.gl#export_import_config":
-  version "0.0.13"
-  resolved "git+ssh://git@github.com/uber/kepler.gl.git#70fb42a22267b531b193aa5faeb9c0e0c4411679"
+kepler.gl@^0.0.18:
+  version "0.0.18"
+  resolved "https://unpm.uberinternal.com/kepler.gl/-/kepler.gl-0.0.18.tgz#03bcd72d29e1c3bef497b58679a2c12cdae8a20a"
   dependencies:
     "@mapbox/geo-viewport" "^0.2.2"
     "@mapbox/geojson-extent" "^0.3.2"
@@ -3136,7 +3136,7 @@ kdbush@^1.0.1:
     react-file-drop "^0.1.8"
     react-map-gl "^3.2.1"
     react-modal "^3.1.10"
-    react-onclickoutside "https://registry.npmjs.org/Pomax/-/react-onclickoutside-6.7.1.tgz"
+    react-onclickoutside "https://registry.npmjs.org/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz"
     react-palm "^0.8.1"
     react-redux "^4.0.0"
     react-tooltip "https://registry.npmjs.org/react-tooltip/-/react-tooltip-3.3.0.tgz"
@@ -3146,7 +3146,7 @@ kdbush@^1.0.1:
     reselect "^3.0.1"
     styled-components "^2.2.4"
     supercluster "^3.0.0"
-    type-analyzer "https://registry.npmjs.org/uber-web/-/type-analyzer-0.1.4.tgz"
+    type-analyzer "https://registry.npmjs.org/type-analyzer/-/type-analyzer-0.1.4.tgz"
     uber-licence "^3.1.1"
     wellknown "^0.5.0"
 
@@ -4275,9 +4275,9 @@ react-motion@^0.5.2:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-"react-onclickoutside@https://registry.npmjs.org/Pomax/-/react-onclickoutside-6.7.1.tgz":
+"react-onclickoutside@https://registry.npmjs.org/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz":
   version "6.7.1"
-  resolved "https://registry.npmjs.org/Pomax/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
+  resolved "https://registry.npmjs.org/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
 
 react-palm@^0.8.1:
   version "0.8.1"
@@ -5199,9 +5199,9 @@ tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://unpm.uberinternal.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
 
-"type-analyzer@https://registry.npmjs.org/uber-web/-/type-analyzer-0.1.4.tgz":
+"type-analyzer@https://registry.npmjs.org/type-analyzer/-/type-analyzer-0.1.4.tgz":
   version "0.1.4"
-  resolved "https://registry.npmjs.org/uber-web/-/type-analyzer-0.1.4.tgz#4592d5792831d0fb061a68feb870d7d171c287aa"
+  resolved "https://registry.npmjs.org/type-analyzer/-/type-analyzer-0.1.4.tgz#4592d5792831d0fb061a68feb870d7d171c287aa"
 
 type-check@~0.3.2:
   version "0.3.2"

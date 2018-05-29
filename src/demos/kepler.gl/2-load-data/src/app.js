@@ -25,17 +25,45 @@ import KeplerGl from 'kepler.gl';
 
 // Kepler.gl actions
 import {addDataToMap} from 'kepler.gl/actions';
-// Kepler.gl
+// Kepler.gl Data processing APIs
 import Processors from 'kepler.gl/processors';
 // Sample data
 import nycTrips from './data/nyc-trips.csv';
+
+// Kepler.gl Schema APIs
+import KeplerGlSchema from 'kepler.gl/schemas';
+
+
 
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 class App extends Component {
   componentDidMount() {
-    const datasets = Processors.processCsvData(nycTrips);
-    this.props.dispatch(addDataToMap({datasets}));
+    // Use processCsvData helper to convert csv file into kepler.gl structure {fields, rows}
+    const data = Processors.processCsvData(nycTrips);
+    // Create dataset structure
+    const dataset = {
+      data,
+      // info: {} // Info property is optional
+    };
+    // addDataToMap action to inject dataset into kepler.gl instance
+    this.props.dispatch(addDataToMap({datasets: dataset}));
+  }
+
+  // This method is used as reference to show how to export the current kepler.gl instance configuration
+  // Once exported the configuration can be imported using parseSavedConfig or load method from KeplerGlSchema
+  exportConfiguration() {
+    // retrieve kepler.gl store
+    const {keplerGl} = this.props;
+    // retrieve current kepler.gl instance store
+    const {map} = keplerGl;
+    const {mapStyle, visState, mapState, uiState} = map;
+    const keplerGlConfig = KeplerGlSchema.getConfigToSave({
+      mapStyle, visState, mapState, uiState
+    });
+
+    console.log('Kepler.gl instance configuration');
+    console.log(keplerGlConfig);
   }
 
   render() {
