@@ -19,14 +19,7 @@ import keplerGlReducer from 'kepler.gl/reducers';
 ```
 
 The second step to perform is to add the reducer to our list of reducers by applying the following changes:
-```js
-const reducers = combineReducers({
-  app: handleActions({
-    // empty
-  }, initialAppState),
-  routing: routerReducer
-});
-```
+
 Let's now add `keplerGlReducer`
 ```js
 const reducers = combineReducers({
@@ -54,7 +47,7 @@ import KeplerGl from 'kepler.gl';
 ```
 The next step is to use the new imported Kepler.gl react and Autosizer components onto the `render` method by applying the following changes
 ```js
-render() {
+  render() {
     return (
       <div style={{position: 'absolute', width: '100%', height: '100%'}}>
         <AutoSizer>
