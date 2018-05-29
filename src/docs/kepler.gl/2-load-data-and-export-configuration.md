@@ -1,3 +1,5 @@
+<!-- INJECT:"KeplerglLoadData" heading -->
+
 <ul class='insert learning-objectives'>
   <li>Load data and export configuration</li>
 </ul>

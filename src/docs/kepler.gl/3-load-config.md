@@ -1,3 +1,5 @@
+<!-- INJECT:"KeplerglLoadConfig" heading -->
+
 <ul class='insert learning-objectives'>
   <li>Loading existing configuration</li>
 </ul>
