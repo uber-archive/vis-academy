@@ -20,7 +20,7 @@
     "babel-preset-env": "^1.6.1",
     "d3-force": "^1.0.6",
     "deck.gl": "^4.1.1",
-    "kepler.gl": "^0.0.18",
+    "kepler.gl": "^0.0.19",
     "luma.gl": "^4.0.1",
     "ocular": "^0.4.8",
     "react-map-gl": "^3.0.4",

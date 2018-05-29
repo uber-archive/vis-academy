@@ -5394,9 +5394,9 @@ kdbush@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/kdbush/-/kdbush-1.0.1.tgz#3cbd03e9dead9c0f6f66ccdb96450e5cecc640e0"
 
-kepler.gl@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/kepler.gl/-/kepler.gl-0.0.18.tgz#03bcd72d29e1c3bef497b58679a2c12cdae8a20a"
+kepler.gl@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/kepler.gl/-/kepler.gl-0.0.19.tgz#9f1de4fb121a5a4c3f7ff653dac9e0b2e5d961ce"
   dependencies:
     "@mapbox/geo-viewport" "^0.2.2"
     "@mapbox/geojson-extent" "^0.3.2"
