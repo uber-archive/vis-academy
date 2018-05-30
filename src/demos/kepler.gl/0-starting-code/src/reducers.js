@@ -29,10 +29,10 @@ const initialAppState = {
 };
 
 const reducers = combineReducers({
-  keplerGl: keplerGlReducer,
   app: handleActions({
     // you can put your app reducer here
-  }, initialAppState)
+  }, initialAppState),
+  routing: routerReducer
 });
 
 export default reducers;
