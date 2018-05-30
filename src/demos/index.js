@@ -20,6 +20,10 @@ import CustomShader from './custom-layers/3-custom-shader/src/app';
 import CustomAttribute from './custom-layers/4-custom-attribute/src/app';
 import CustomUniform from './custom-layers/5-custom-uniform/src/app';
 
+import KeplerglBasic from './kepler.gl/1-basic-keplergl/src/app-root';
+import KeplerglLoadData from './kepler.gl/2-load-data/src/app-root';
+import KeplerglLoadConfig from './kepler.gl/3-load-config/src/app-root';
+
 export default {
 
   GeospatialAppStartingWithMap,
@@ -39,5 +43,9 @@ export default {
   AdaptorLayer,
   CustomShader,
   CustomAttribute,
-  CustomUniform
+  CustomUniform,
+
+  KeplerglBasic,
+  KeplerglLoadData,
+  KeplerglLoadConfig
 }
