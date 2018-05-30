@@ -75,4 +75,4 @@ src/demos/kepler.gl/0-starting-code/src/app.js
 ```
 
 Next, you can head to the next step:
-[Import Kepler.gl](#/kepler.gl/1-import-keplergl).
+[Import Kepler.gl](#/kepler.gl/1-import).

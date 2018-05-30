@@ -33,7 +33,9 @@ import nycTrips from './data/nyc-trips.csv';
 // Kepler.gl Schema APIs
 import KeplerGlSchema from 'kepler.gl/schemas';
 
-
+// Component and helpers
+import Button from './button';
+import downloadJsonFile from "./file-download";
 
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
@@ -44,7 +46,12 @@ class App extends Component {
     // Create dataset structure
     const dataset = {
       data,
-      // info: {} // Info property is optional
+
+      info: {
+        // `info` property are optional, adding an `id` associate with this dataset makes it easier
+        // to replace it later
+        id: 'my_data'
+      }
     };
     // addDataToMap action to inject dataset into kepler.gl instance
     this.props.dispatch(addDataToMap({datasets: dataset}));
@@ -52,22 +59,29 @@ class App extends Component {
 
   // This method is used as reference to show how to export the current kepler.gl instance configuration
   // Once exported the configuration can be imported using parseSavedConfig or load method from KeplerGlSchema
-  exportConfiguration() {
+  getMapConfig() {
     // retrieve kepler.gl store
     const {keplerGl} = this.props;
     // retrieve current kepler.gl instance store
     const {map} = keplerGl;
-    const {mapStyle, visState, mapState, uiState} = map;
-    const keplerGlConfig = KeplerGlSchema.getConfigToSave({
-      mapStyle, visState, mapState, uiState
-    });
 
-    return keplerGlConfig;
+    // create the config object
+    return KeplerGlSchema.getConfigToSave(map);
   }
+
+  // This method is used as reference to show how to export the current kepler.gl instance configuration
+  // Once exported the configuration can be imported using parseSavedConfig or load method from KeplerGlSchema
+  exportMapConfig = () => {
+    // create the config object
+    const mapConfig = this.getMapConfig();
+    // save it as a json file
+    downloadJsonFile(mapConfig, 'kepler.gl.json');
+  };
 
   render() {
     return (
       <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+        <Button onClick={this.exportMapConfig}>Export Config</Button>
         <AutoSizer>
           {({height, width}) => (
             <KeplerGl

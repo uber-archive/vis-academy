@@ -8,7 +8,7 @@
           "id": "6vcue0g",
           "type": "point",
           "config": {
-            "dataId": "rizctto3p",
+            "dataId": "my_data",
             "label": "pickup",
             "color": [
               18,
@@ -61,7 +61,7 @@
           "id": "bg19qua",
           "type": "point",
           "config": {
-            "dataId": "rizctto3p",
+            "dataId": "my_data",
             "label": "dropoff",
             "color": [
               221,
@@ -111,7 +111,7 @@
           "id": "ull4rj",
           "type": "arc",
           "config": {
-            "dataId": "rizctto3p",
+            "dataId": "my_data",
             "label": "pickup -> dropoff arc",
             "color": [
               146,
@@ -160,7 +160,7 @@
           "id": "dw8iqe",
           "type": "line",
           "config": {
-            "dataId": "rizctto3p",
+            "dataId": "my_data",
             "label": "pickup -> dropoff line",
             "color": [
               136,
@@ -209,7 +209,7 @@
       "interactionConfig": {
         "tooltip": {
           "fieldsToShow": {
-            "rizctto3p": [
+            "my_data": [
               "VendorID",
               "tpep_pickup_datetime",
               "tpep_dropoff_datetime",

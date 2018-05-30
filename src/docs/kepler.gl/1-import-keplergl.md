@@ -35,6 +35,7 @@ const reducers = combineReducers({
 ```
 
 The above changes will make sure Kepler.gl react component will be able to store its state and handle action handlers accordingly.
+Checkout the complete code at [this link](https://github.com/uber-common/vis-academy/blob/master/src/demos/kepler.gl/1-basic-keplergl/src/reducers.js)
 
 ## 2. Import Kepler.gl react component
 For this part, we are going to modify `app.js` in `src/`. Currently our `app.js` only displays an H2 html tag and we are 
@@ -69,3 +70,7 @@ The next step is to use the new imported Kepler.gl react and Autosizer component
 
 the above snippet will create a map instance of kepler which use `map` as id. The __id__ is really important because it will also be used as
 key in Kepler.gl redux store to keep the state of the instance updated.
+Checkout the complete code at [this link](https://github.com/uber-common/vis-academy/blob/kepler.gl/src/demos/kepler.gl/1-basic-keplergl/src/app.js)
+
+Next, you can head to the next step:
+[Load Data into Kepler.gl](#/kepler.gl/2-load-data).
