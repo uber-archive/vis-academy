@@ -15,7 +15,7 @@ If you previously downloaded a map config, you can put it in the `src/data` fold
 
 First, import nyc config json into `app.js`
 ```js
-import nycConfig from './data/nyc-config';
+import nycConfig from './data/nyc-config.json';
 ```
 
 Now that we have the necessary configuration file imported in __app.js__ we can update __componentDidMount__ and inject
@@ -43,7 +43,7 @@ We now create the dataset to pass using the property Info and an Id. The id must
 
 We are also adding the configuration to __addDataToMap__ call which will make sure to load the existing configuration.
  
-## 2. Replace an existing dataset with new data with the same format , keeping the current conifg
+## 2. Replace an existing dataset with new data with the same format , keeping the current config.
 
 In order to replace the current data with new ones (same column names, data types etc), we are going to perform the following steps:
 - generate a new dataset using the same approach we did previously

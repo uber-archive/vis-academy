@@ -106,7 +106,7 @@ the current map instance configuration with the following format:
 Finally Let's add a button to trigger exporting configuration, and a helper to download the file.
 ```
 import Button from './button';
-import downloadFile from "./file-download";
+import downloadJsonFile from "./file-download";
 ```
 
 Render the button
@@ -133,7 +133,8 @@ Render the button
 ```
 
 Once the configuration is exported we can simply store it as json object wherever you see fit.
+
 Checkout the complete code at [this link](https://github.com/uber-common/vis-academy/blob/kepler.gl/src/demos/kepler.gl/1-load-data/src/app.js)
 
-Next, you can head to the next step:
+__Next__, you can head to the next step:
 [Load Data into Kepler.gl](#/kepler.gl/3-load-config).
