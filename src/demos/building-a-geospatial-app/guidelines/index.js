@@ -200,7 +200,7 @@ export function GeospatialAppHasHierarchy() {
     </div>);
 }
 
-export class HasHierarchyInteractive extends Component {
+export class GeospatialAppHasHierarchyInteractive extends Component {
   constructor() {
     super();
     this.state = {index: null};
