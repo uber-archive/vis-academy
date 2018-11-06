@@ -4,10 +4,10 @@
   },
   "dependencies": {
     "global": "^4.3.0",
-    "kepler.gl":"^0.0.19",
+    "kepler.gl": "^0.1.6",
     "react": "^15.3.1",
     "react-dom": "^15.6.1",
-    "react-palm": "^0.8.1",
+    "react-palm": "^1.1.2",
     "react-redux": "^4.4.5",
     "react-router": "^3.0.5",
     "react-router-redux": "^4.0.8",
