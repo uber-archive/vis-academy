@@ -44,7 +44,7 @@ export const charts = {
   padding: '10px',
   position: 'absolute',
   left: 20,
-  top: 20,
+  bottom: 20,
   width: 500,
   zIndex: 100
 };

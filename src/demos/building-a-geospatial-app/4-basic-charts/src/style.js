@@ -9,6 +9,13 @@ export const tooltipStyle = {
   pointerEvents: 'none'
 };
 
+export const mapStylePicker = {
+  position: 'absolute',
+  top: '20px',
+  left: '20px',
+  zIndex: 100
+};
+
 export const layerControl = {
   borderRadius: 3,
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
@@ -26,7 +33,8 @@ export const layerControl = {
 
 export const charts = {
   background: 'white',
-  border: '1px solid #C0C0C0',
+  borderRadius: 3,
+  boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
   fontFamily: 'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
   fontSize: '12px',
   lineHeight: 1.833,
@@ -34,7 +42,7 @@ export const charts = {
   padding: '10px',
   position: 'absolute',
   left: 20,
-  top: 20,
+  bottom: 20,
   width: 500,
   zIndex: 100
 };

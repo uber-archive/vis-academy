@@ -24,7 +24,7 @@ export const layerControl = {
   lineHeight: 1.833,
   width: 200,
   position: 'absolute',
-  top: '20px',
+  bottom: '20px',
   right: '20px',
   padding: '20px',
   zIndex: 100,
