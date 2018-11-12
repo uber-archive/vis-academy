@@ -19,8 +19,7 @@ export const mapStylePicker = {
 export const layerControl = {
   borderRadius: 3,
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-  fontFamily:
-    'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
+  fontFamily: 'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
   fontSize: '12px',
   lineHeight: 1.833,
   width: 200,
@@ -36,8 +35,7 @@ export const charts = {
   background: 'white',
   borderRadius: 3,
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-  fontFamily:
-    'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
+  fontFamily: 'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
   fontSize: '12px',
   lineHeight: 1.833,
   height: 210,
@@ -61,4 +59,4 @@ export const spinner = {
   left: 60,
   transformOrigin: '20px 20px',
   zIndex: 110
-};
+}
