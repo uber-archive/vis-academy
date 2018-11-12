@@ -1,22 +1,35 @@
 {
+  "name": "building-a-geospatial-app",
+  "version": "0.0.1",
   "scripts": {
-    "start-local": "webpack-dev-server --env.local --progress --hot --port 3030 --open",
-    "start": "webpack-dev-server --progress --hot --port 3030 --open",
-    "build": "NODE_ENV=production webpack --env.prod=true"
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development"
   },
   "dependencies": {
-    "deck.gl": "^4.1.0",
-    "immutable": "^3.8.1",
-    "luma.gl": "^4.0.1",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "react-map-gl": "^3.0.4",
-    "react-vis": "^1.7.2"
+    "deck.gl": "^6.2.4",
+    "luma.gl": "^6.2.0",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
+    "react-map-gl": "^4.0.0",
+    "react-vis": "^1.11.4"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
   },
   "devDependencies": {
-    "buble-loader": "^0.4.0",
-    "csv-loader": "^2.1.1",
-    "webpack": "^2.2.0",
-    "webpack-dev-server": "^2.2.0"
+    "@babel/core": "^7.1.5",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "react-hot-loader": "^4.3.12",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   }
 }
