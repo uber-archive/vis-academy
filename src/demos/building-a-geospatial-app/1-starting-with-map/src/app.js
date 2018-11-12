@@ -6,7 +6,7 @@ import {MapStylePicker} from './controls';
 
 export default class App extends Component {
   state = {
-    style: 'mapbox://styles/mapbox/dark-v9',
+    style: 'mapbox://styles/mapbox/light-v9',
     viewport: {
       width: window.innerWidth,
       height: window.innerHeight,
