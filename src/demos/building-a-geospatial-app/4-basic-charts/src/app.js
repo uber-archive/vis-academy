@@ -116,7 +116,6 @@ export default class App extends Component {
   }
 
   render() {
-    const { viewState, controller = true } = this.props;
     const data = this.state.points;
     if (!data.length) {
       return null;
@@ -152,8 +151,7 @@ export default class App extends Component {
             settings: this.state.settings
           })}
           initialViewState={INITIAL_VIEW_STATE}
-          viewState={viewState}
-          controller={controller}
+          controller
         >
           <StaticMap mapStyle={this.state.style} />
         </DeckGL>

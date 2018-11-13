@@ -24,18 +24,25 @@ The app component in the starting code above currently looks like this:
 ```js
 ...
 export default class App extends Component {
-
   constructor(props) {
     super(props);
   }
 
   render() {
     return (
-      <div>Empty App, Edit Me!</div>
+      <div>
+        <div className="intro">
+          {MAPBOX_TOKEN ? (
+            `You mapbox token is set. You're good to go!`
+          ) : (
+            <SetToken />
+          )}
+        </div>
+      </div>
     );
   }
-
 }
+
 ```
 The next steps of this tutorial will only refer to parts of the outline shown
 above, and not the whole thing.
@@ -51,6 +58,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      style: 'mapbox://styles/mapbox/light-v9',
       viewport: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -87,9 +95,7 @@ export default class App extends Component {
       <div>
         <MapGL
           {...this.state.viewport}
-          mapStyle={MAPBOX_STYLE}
-          // This is needed to use mapbox styles
-          mapboxApiAccessToken={MAPBOX_TOKEN}>
+          mapStyle={this.state.style}
         </MapGL>
       </div>
     );
@@ -98,7 +104,43 @@ export default class App extends Component {
 }
 ```
 
-## 4. `onViewportChange` Callback
+Note: if a MapboxAccessToken exists in the environment variables, which we've done earlier, the ReactMapGL component will use it automatically. If not, you'd have to supply it explicity: 
+
+```js
+  <MapGL
+    {...this.state.viewport}
+    mapStyle={this.state.style}
+    mapboxApiAccessToken={YOUR_TOKEN}>
+  </MapGL>        
+```
+
+## 4. Changing styles
+
+We can easily use any of the Mapbox default styles. To that end, let's add a drop-down to change them:
+
+After the last import:
+```js
+import {MapStylePicker} from './controls';
+```
+
+As one of the components properties:
+```js
+  onStyleChange = (style) => {
+    this.setState({style});
+  }
+```
+
+In the render function, before the <MapGL> component:
+
+```js
+<MapStylePicker onStyleChange={this.onStyleChange} currentStyle={this.state.style}/>
+```
+
+(The MapStylePicker is just a boring, plain select component. You can look up its code in ./controls if you're interested).
+
+If you feel creative, you can also create your own styles in [Mapbox Studio](https://www.mapbox.com/studio/) and put their url (starting with http://api.mapbox.com/styles/) in the state instead.
+
+## 5. `onViewportChange` Callback
 
 Remember that `react-map-gl` leaves maintaining the viewport to the user. It would
 be super tedious if you had to implement the event handling yourself.
@@ -136,7 +178,7 @@ return (
 );
 ```
 
-## 5. Adding Polish
+## 6. Adding Polish
 
 We now have a fully functional map, and we could stop here. But what happens
 when you resize the window? If you do it right now, you'll notice that the map
@@ -145,11 +187,6 @@ stays the same size. That's a terrible user experience, and we wouldn't want tha
 Let's quickly add a resize handler that updates our viewport with the new dimension
 ```js
 export default class App extends Component {
-
-  constructor(props) {
-    //...
-    this._resize = this._resize.bind(this);
-  }
 
   componentDidMount() {
     window.addEventListener('resize', this._resize);
@@ -160,7 +197,7 @@ export default class App extends Component {
     window.removeEventListener('resize', this._resize);
   }
 
-  _resize() {
+  _resize = () => {
     this._onViewportChange({
       width: window.innerWidth,
       height: window.innerHeight
@@ -185,28 +222,22 @@ Our completed component [app.js](https://github.com/uber-common/vis-academy/blob
 
 ```js
 /* global window */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
+import {MapStylePicker} from './controls';
 
-const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
-// Set your mapbox token here
-const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 export default class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        longitude: -74,
-        latitude: 40.7,
-        zoom: 11,
-        maxZoom: 16
-      }
-    };
-    this._resize = this._resize.bind(this);
+  state = {
+    style: 'mapbox://styles/mapbox/light-v9',
+    viewport: {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      longitude: -74,
+      latitude: 40.7,
+      zoom: 11,
+      maxZoom: 16
+    }
   }
 
   componentDidMount() {
@@ -218,13 +249,17 @@ export default class App extends Component {
     window.removeEventListener('resize', this._resize);
   }
 
-  _onViewportChange(viewport) {
+  onStyleChange = (style) => {
+    this.setState({style});
+  }
+
+  _onViewportChange = (viewport) => {
     this.setState({
-      viewport: {...this.state.viewport, ...viewport}
+      viewport: { ...this.state.viewport, ...viewport }
     });
   }
 
-  _resize() {
+  _resize = () => {
     this._onViewportChange({
       width: window.innerWidth,
       height: window.innerHeight
@@ -234,16 +269,18 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <MapStylePicker onStyleChange={this.onStyleChange} currentStyle={this.state.style}/>
         <MapGL
           {...this.state.viewport}
-          mapStyle={MAPBOX_STYLE}
+          mapStyle={this.state.style}
           onViewportChange={viewport => this._onViewportChange(viewport)}
-          mapboxApiAccessToken={MAPBOX_TOKEN}>
+        >
         </MapGL>
       </div>
     );
   }
 }
+
 ```
 
 That's all you need to render a map and make it interactive!

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
 import {MapStylePicker} from './controls';
 
-
 export default class App extends Component {
   state = {
     style: 'mapbox://styles/mapbox/light-v9',

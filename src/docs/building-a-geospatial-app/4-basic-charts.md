@@ -14,13 +14,12 @@ In React Vis, creating a chart has a nice React-y feeling of assembling componen
 
 We're going to need extra data for the charts.
 
-in your app.js file, replace your _processData method with this one:
-```js
-  _processData() {
-    if (taxiData) {
-      this.setState({status: 'LOADED'});
-      const data = taxiData.reduce((accu, curr) => {
+in your app.js file, replace your \_processData method with this one:
 
+```js
+  _processData = () => {
+    const data = taxiData.reduce(
+      (accu, curr) => {
         const pickupHour = new Date(curr.pickup_datetime).getUTCHours();
         const dropoffHour = new Date(curr.dropoff_datetime).getUTCHours();
 
@@ -53,23 +52,13 @@ in your app.js file, replace your _processData method with this one:
         accu.dropoffObj[dropoffHour] = prevDropoffs + 1;
 
         return accu;
-      }, {
+      },
+      {
         points: [],
         pickupObj: {},
         dropoffObj: {}
-      });
-
-      data.pickups = Object.entries(data.pickupObj).map(([hour, count]) => {
-        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
-      });
-      data.dropoffs = Object.entries(data.dropoffObj).map(([hour, count]) => {
-        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
-      });
-      data.status = 'READY';
-
-      this.setState(data);
-    }
-  }
+      }
+    );
 ```
 
 You can just copy/paste. Nothing is rocket science here, we're just creating our dataset.
@@ -80,19 +69,12 @@ Then, create a new file called charts.js with the following:
 
 ```js
 import React from 'react';
-import {charts} from './style';
+import { charts } from './style';
 
-import {
-  VerticalBarSeries,
-  XAxis,
-  XYPlot,
-  YAxis
-} from 'react-vis';
+import { VerticalBarSeries, XAxis, XYPlot, YAxis } from 'react-vis';
 
 export default function Charts() {
-  return (
-    <div style={charts} />
-  );
+  return <div style={charts} />;
 }
 ```
 
@@ -102,38 +84,53 @@ Finally, back in your app.js file, add the following:
 import Charts from './charts';
 ```
 
-Towards the top of the file with your other imports, and update the render method like so:
+Towards the top of the file with your other imports, and update the render method like so (we're just adding <Charts /> in the very end): 
 
 ```js
 render() {
-  return (
-    <div>
-      {this.state.hoveredObject &&
-        <div style={{
-          ...tooltipStyle,
-          left: this.state.x,
-          top: this.state.y
-        }}>
-          <div>{this.state.hoveredObject.id}</div>
-        </div>}
-      <LayerControls
-        settings={this.state.settings}
-        propTypes={HEXAGON_CONTROLS}
-        onChange={settings => this._updateLayerSettings(settings)}/>
-      <MapGL
-        {...this.state.viewport}
-        mapStyle={MAPBOX_STYLE}
-        onViewportChange={viewport => this._onViewportChange(viewport)}
-        mapboxApiAccessToken={MAPBOX_TOKEN}>
-        <DeckGLOverlay
-          viewport={this.state.viewport}
-          data={this.state.points}
-          onHover={hover => this._onHover(hover)}
-          {...this.state.settings}/>
-      </MapGL>
-      <Charts {...this.state} />
-    </div>
-  );
+    const data = this.state.points;
+    if (!data.length) {
+      return null;
+    }
+    const { hover, settings } = this.state;
+    return (
+      <div>
+        {hover.hoveredObject && (
+          <div
+            style={{
+              ...tooltipStyle,
+              transform: `translate(${hover.x}px, ${hover.y}px)`
+            }}
+          >
+            <div>{hover.label}</div>
+          </div>
+        )}
+        <MapStylePicker
+          onStyleChange={this.onStyleChange}
+          currentStyle={this.state.style}
+        />
+        <LayerControls
+          settings={this.state.settings}
+          propTypes={HEXAGON_CONTROLS}
+          onChange={settings => this._updateLayerSettings(settings)}
+        />
+        <DeckGL
+          {...this.state.settings}
+          onWebGLInitialized={this._onWebGLInitialize}
+          layers={renderLayers({
+            data: this.state.points,
+            onHover: hover => this._onHover(hover),
+            settings: this.state.settings
+          })}
+          initialViewState={INITIAL_VIEW_STATE}
+          controller
+        >
+          <StaticMap mapStyle={this.state.style} />
+        </DeckGL>
+        <Charts {...this.state} />
+      </div>
+    );
+  }
 }
 ```
 
@@ -151,23 +148,18 @@ Then, we are going to create our barchart using the following React-Vis componen
 In your charts.js file, update the Charts component as follows:
 
 ```js
-export default function Charts({pickups}) {
+export default function Charts({ pickups }) {
   if (!pickups) {
-    return (<div style={charts}/>);
+    return <div style={charts} />;
   }
   return (
     <div style={charts}>
       <h2>Pickups by hour</h2>
       <p>As percentage of all trips</p>
-      <XYPlot
-        height={140}
-        width={480}
-      >
-      <XAxis />
-      <YAxis />
-      <VerticalBarSeries
-        data={pickups}
-      />
+      <XYPlot height={140} width={480}>
+        <XAxis />
+        <YAxis />
+        <VerticalBarSeries data={pickups} />
       </XYPlot>
     </div>
   );
@@ -196,9 +188,7 @@ Our dataset is based a sample of 10,000 trips on a single day. The Y values prop
 We can do that by changing the way the ticks are represented in the axes.
 
 ```js
-<YAxis
-  tickFormat={d => (d / 100).toFixed(0) + '%'}
-/>
+<YAxis tickFormat={d => (d / 100).toFixed(0) + '%'} />
 ```
 
 We'd also like to have the labels of axis go from 0% to 10% (that is: y between 0 and 1000). To do that, we can use the yDomain prop on XYPlot.
@@ -265,17 +255,16 @@ For React-vis, the x value of a bar chart corresponds to its center, not to its 
 We don't want to write out many x-axis labels either: every 6 hours should be enough.
 XAxis has a tickValues prop that allows us to specify where we want to draw a tick: in our case, on [0, 6, 12, 18 and 24].
 
-We can pass those custom values to the xAxis with the *tickValues* prop.
+We can pass those custom values to the xAxis with the _tickValues_ prop.
 
 But we also want to format them right! we our ticks to read 12AM, 6AM, 12PM, 6PM and 12PM.
-We can use *tickFormat* just as above to turn these values in the correct strings.
-Finally, we can set *tickInnerSize* to 0 to only have ticks going from the axis to the outside of the chart.
+We can use _tickFormat_ just as above to turn these values in the correct strings.
+Finally, we can set _tickInnerSize_ to 0 to only have ticks going from the axis to the outside of the chart.
 
 ```js
 <XAxis
-  tickFormat={h => (h % 24) >= 12 ?
-    (h % 12 || 12) + 'PM' :
-    (h % 12 || 12) + 'AM'
+  tickFormat={h =>
+    h % 24 >= 12 ? (h % 12 || 12) + 'PM' : (h % 12 || 12) + 'AM'
   }
   tickSizeInner={0}
   tickValues={[0, 6, 12, 18, 24]}
@@ -289,10 +278,7 @@ Finally, we can set *tickInnerSize* to 0 to only have ticks going from the axis 
 React-Vis has many options to [style color](http://uber.github.io/react-vis/#/general-principles/colors). For now, let's just choose another blue
 
 ```js
-<VerticalBarSeries
-  color="#125C77"
-  data={pickups}
-/>
+<VerticalBarSeries color="#125C77" data={pickups} />
 ```
 
 <!-- INSERT:"GeospatialAppBarChartCustomColor" -->
@@ -307,6 +293,7 @@ React-Vis has a many forms available for your charts. Here we're going to use Li
   <MarkSeries data={dropoffs} color="#f08" opacity="0.5" size="3" />
 </XYPlot>
 ```
+
 <!-- INSERT:"GeospatialAppBasicLineChart" -->
 
 To learn about various React-Vis series, checkout [their docs](https://uber.github.io/react-vis/series-reference/arc-series).
@@ -317,44 +304,33 @@ Final charts.js code:
 
 ```js
 import React from 'react';
-import {charts} from './style';
+import { charts } from './style';
 
-import {
-  VerticalBarSeries,
-  XAxis,
-  XYPlot,
-  YAxis
-} from 'react-vis';
+import { VerticalBarSeries, XAxis, XYPlot, YAxis } from 'react-vis';
 
-export default function Charts({pickups}) {
+export default function Charts({ pickups }) {
   if (!pickups) {
-    return (<div style={charts}/>);
+    return <div style={charts} />;
   }
   return (
     <div style={charts}>
       <h2>Pickups by hour</h2>
       <p>As percentage of all trips</p>
       <XYPlot
-        margin={{left: 40, right: 25, top: 10, bottom: 25}}
+        margin={{ left: 40, right: 25, top: 10, bottom: 25 }}
         height={140}
         width={480}
         yDomain={[0, 1000]}
       >
-      <YAxis
-        tickFormat={d => (d / 100).toFixed(0) + '%'}
-      />
-      <VerticalBarSeries
-        color="#125C77"
-        data={pickups}
-      />
-      <XAxis
-        tickFormat={h => (h % 24) >= 12 ?
-          (h % 12 || 12) + 'PM' :
-          (h % 12 || 12) + 'AM'
-        }
-        tickSizeInner={0}
-        tickValues={[0, 6, 12, 18, 24]}
-      />
+        <YAxis tickFormat={d => (d / 100).toFixed(0) + '%'} />
+        <VerticalBarSeries color="#125C77" data={pickups} />
+        <XAxis
+          tickFormat={h =>
+            h % 24 >= 12 ? (h % 12 || 12) + 'PM' : (h % 12 || 12) + 'AM'
+          }
+          tickSizeInner={0}
+          tickValues={[0, 6, 12, 18, 24]}
+        />
       </XYPlot>
     </div>
   );

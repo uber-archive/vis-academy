@@ -79,13 +79,23 @@ export default class App extends Component {
   }
 
   render() {
-    const { viewState, controller = true } = this.props;
     const data = this.state.points;
     if (!data.length) {
       return null;
     }
+
     return (
       <div>
+        {hover.hoveredObject && (
+          <div
+            style={{
+              ...tooltipStyle,
+              transform: `translate(${hover.x}px, ${hover.y}px)`
+            }}
+          >
+            <div>{hover.label}</div>
+          </div>
+        )}
         <MapStylePicker
           onStyleChange={this.onStyleChange}
           currentStyle={this.state.style}
@@ -96,15 +106,13 @@ export default class App extends Component {
           onChange={settings => this._updateLayerSettings(settings)}
         />
         <DeckGL
-          {...this.state.settings}
-          onHover={hover => this._onHover(hover)}
           layers={renderLayers({
             data: this.state.points,
+            onHover: hover => this._onHover(hover),
             settings: this.state.settings
           })}
           initialViewState={INITIAL_VIEW_STATE}
-          viewState={viewState}
-          controller={controller}
+          controller
         >
           <StaticMap mapStyle={this.state.style} />
         </DeckGL>
