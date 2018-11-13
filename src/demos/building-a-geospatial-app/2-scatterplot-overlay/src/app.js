@@ -83,7 +83,7 @@ export default class App extends Component {
     if (!data.length) {
       return null;
     }
-
+    const { hover, settings } = this.state;
     return (
       <div>
         {hover.hoveredObject && (
