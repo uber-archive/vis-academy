@@ -28,10 +28,10 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-        MapboxAccessToken: JSON.stringify(
-          process.env.MapboxAccessToken
+        MapboxAccessToken: JSON.stringify(process.env.MapboxAccessToken)
       }
-    })],
+    })
+  ],
   devServer: {
     contentBase: './dist',
     hot: true

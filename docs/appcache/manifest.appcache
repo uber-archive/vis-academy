@@ -1,46 +1,46 @@
 CACHE MANIFEST
-#ver:2018-5-29 23:19:48
+#ver:2018-11-13 22:53:25
 #plugin:4.9.1
 
 CACHE:
-../bundle-118ea17594b12fef03da.js
-../styles-118ea17594b12fef03da.css
+../bundle-1349947c8f3871b73522.js
+../styles-1349947c8f3871b73522.css
 ../
-../favicon.ico
-../images/icon-chart.svg
 ../images/footer-pattern.gif
-../images/icon-layers.svg
-../images/icon-high-precision.svg
+../favicon.ico
 ../images/icon-custom.svg
+../images/icon-chart.svg
+../images/icon-high-precision.svg
 ../images/icon-react.svg
+../images/icon-layers.svg
 ../images/hero.jpg
 ../images/custom-layers/cover.png
 ../images/graph-vis/architecture-basic.png
-../images/graph-vis/architecture-with-layout-engine.png
-../images/geospatial-app/geospatial-app.png
 ../images/graph-vis/architecture-graph-render.png
-../images/graph-vis/cover.png
-../images/graph-vis/no-position-update-trigger.png
+../images/graph-vis/architecture-with-layout-engine.png
 ../images/kepler-card.png
+../images/geospatial-app/geospatial-app.png
 ../images/graph-vis/random-graph.png
-../images/mg_arc_1.png
+../images/graph-vis/no-position-update-trigger.png
+../images/graph-vis/cover.png
 ../images/mg_choropleth.png
-../images/mg_arc_2.png
+../images/mg_arc_1.png
 ../images/mg_hex_1.png
-../images/mg_hex_2.png
+../images/mg_arc_2.png
 ../images/mg_hex_3d.png
-../images/mg_hex_3.png
 ../images/mg_hex_4.png
+../images/mg_hex_2.png
+../images/mg_hex_3.png
+../images/mg_hex_6.png
 ../images/mg_hex_5.png
 ../images/mg_path.png
-../images/mg_hex_6.png
 ../images/mg_scatterplot_1.png
 ../images/setup/empty-app.png
 ../images/path.jpg
 ../images/vis-logo.png
-../images/mg_scatterplot_2.png
-../images/setup/testing.png
 ../images/setup/setup.png
+../images/setup/testing.png
+../images/mg_scatterplot_2.png
 
 NETWORK:
 *

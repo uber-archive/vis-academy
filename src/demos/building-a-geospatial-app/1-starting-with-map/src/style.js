@@ -10,6 +10,7 @@ export const tooltipStyle = {
 };
 
 export const mapStylePicker = {
+  background: '#fff',
   position: 'absolute',
   top: '20px',
   left: '20px',
@@ -19,12 +20,13 @@ export const mapStylePicker = {
 export const layerControl = {
   borderRadius: 3,
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-  fontFamily: 'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
+  fontFamily:
+    'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
   fontSize: '12px',
   lineHeight: 1.833,
   width: 200,
   position: 'absolute',
-  bottom: '20px',
+  top: '20px',
   right: '20px',
   padding: '20px',
   zIndex: 100,
@@ -35,14 +37,15 @@ export const charts = {
   background: 'white',
   borderRadius: 3,
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-  fontFamily: 'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
+  fontFamily:
+    'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
   fontSize: '12px',
   lineHeight: 1.833,
   height: 210,
   padding: '10px',
   position: 'absolute',
   left: 20,
-  top: 20,
+  bottom: 20,
   width: 500,
   zIndex: 100
 };
@@ -59,4 +62,4 @@ export const spinner = {
   left: 60,
   transformOrigin: '20px 20px',
   zIndex: 110
-}
+};
