@@ -2,6 +2,38 @@
 # yarn lockfile v1
 
 
+"@babel/runtime@^7.0.0":
+  version "7.1.5"
+  resolved "https://unpm.uberinternal.com/@babel%2fruntime/-/runtime-7.1.5.tgz#4170907641cf1f61508f563ece3725150cc6fe39"
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
+"@deck.gl/core@^6.2.4":
+  version "6.2.4"
+  resolved "https://unpm.uberinternal.com/@deck.gl%2fcore/-/core-6.2.4.tgz#c569854633f3087dea9866276ad68812671487d7"
+  dependencies:
+    luma.gl "^6.2.0"
+    math.gl "^2.1.0"
+    mjolnir.js "^1.0.0"
+    probe.gl "^2.0.1"
+    seer "^0.2.4"
+    viewport-mercator-project "^6.0.0"
+
+"@deck.gl/layers@^6.2.4":
+  version "6.2.4"
+  resolved "https://unpm.uberinternal.com/@deck.gl%2flayers/-/layers-6.2.4.tgz#c5c9473a174cd45d01cd404177cbff20c9da1f56"
+  dependencies:
+    "@deck.gl/core" "^6.2.4"
+    d3-hexbin "^0.2.1"
+    earcut "^2.0.6"
+
+"@deck.gl/react@^6.2.4":
+  version "6.2.4"
+  resolved "https://unpm.uberinternal.com/@deck.gl%2freact/-/react-6.2.4.tgz#fab68aaac23a1429c4ad84dd09879ca764543f2f"
+  dependencies:
+    "@deck.gl/core" "^6.2.4"
+    prop-types "^15.6.0"
+
 "@mapbox/extent@0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@mapbox/extent/-/extent-0.4.0.tgz#3e591f32e1f0c3981c864239f7b0ac06e610f8a9"
@@ -38,13 +70,25 @@
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@mapbox/geojson-normalize/-/geojson-normalize-0.0.1.tgz#1da1e6b3a7add3ad29909b30f438f60581b7cd80"
 
+"@mapbox/geojson-types@^1.0.2":
+  version "1.0.2"
+  resolved "https://unpm.uberinternal.com/@mapbox%2fgeojson-types/-/geojson-types-1.0.2.tgz#9aecf642cb00eab1080a57c4f949a65b4a5846d6"
+
 "@mapbox/gl-matrix@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@mapbox/gl-matrix/-/gl-matrix-0.0.1.tgz#e5126aab4d64c36b81c7a97d0ae0dddde5773d2b"
 
+"@mapbox/jsonlint-lines-primitives@^2.0.2":
+  version "2.0.2"
+  resolved "https://unpm.uberinternal.com/@mapbox%2fjsonlint-lines-primitives/-/jsonlint-lines-primitives-2.0.2.tgz#ce56e539f83552b58d10d672ea4d6fc9adc7b234"
+
 "@mapbox/mapbox-gl-supported@^1.3.0":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@mapbox/mapbox-gl-supported/-/mapbox-gl-supported-1.3.1.tgz#81bd3a5e3cfdc40047608656ee9b519e02216bf1"
+
+"@mapbox/mapbox-gl-supported@^1.4.0":
+  version "1.4.0"
+  resolved "https://unpm.uberinternal.com/@mapbox%2fmapbox-gl-supported/-/mapbox-gl-supported-1.4.0.tgz#36946b22944fe2cfa43cfafd5ef36fdb54a069e4"
 
 "@mapbox/point-geometry@0.1.0", "@mapbox/point-geometry@^0.1.0", "@mapbox/point-geometry@~0.1.0":
   version "0.1.0"
@@ -75,6 +119,10 @@
 "@mapbox/whoots-js@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@mapbox/whoots-js/-/whoots-js-3.0.0.tgz#c1de4293081424da3ac30c23afa850af1019bb54"
+
+"@mapbox/whoots-js@^3.1.0":
+  version "3.1.0"
+  resolved "https://unpm.uberinternal.com/@mapbox%2fwhoots-js/-/whoots-js-3.1.0.tgz#497c67a1cef50d1a2459ba60f315e448d2ad87fe"
 
 "@turf/along@^4.7.3":
   version "4.7.3"
@@ -2164,7 +2212,7 @@ braces@^2.3.0, braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-brfs@^1.4.0:
+brfs@^1.4.0, brfs@^1.4.4:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/brfs/-/brfs-1.6.1.tgz#b78ce2336d818e25eea04a0947cba6d4fb8849c3"
   dependencies:
@@ -3194,7 +3242,7 @@ decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
-deck.gl@4.1.6, deck.gl@^4.1.1:
+deck.gl@4.1.6:
   version "4.1.6"
   resolved "https://registry.yarnpkg.com/deck.gl/-/deck.gl-4.1.6.tgz#9d5ca87c41c4dde86f9351b981b0bcf3132184e7"
   dependencies:
@@ -3208,6 +3256,14 @@ deck.gl@4.1.6, deck.gl@^4.1.1:
     lodash.flattendeep "^4.4.0"
     prop-types "^15.5.8"
     seer "^0.2.3"
+
+deck.gl@^6.2.4:
+  version "6.2.4"
+  resolved "https://unpm.uberinternal.com/deck.gl/-/deck.gl-6.2.4.tgz#8652f492a6d6e30dc32925355d6f8f820967a70c"
+  dependencies:
+    "@deck.gl/core" "^6.2.4"
+    "@deck.gl/layers" "^6.2.4"
+    "@deck.gl/react" "^6.2.4"
 
 decode-uri-component@^0.2.0:
   version "0.2.0"
@@ -4349,6 +4405,10 @@ geojson-vt@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/geojson-vt/-/geojson-vt-3.1.2.tgz#ea98849bd7717979db4c86fed8ef4e47475e4bab"
 
+geojson-vt@^3.2.0:
+  version "3.2.1"
+  resolved "https://unpm.uberinternal.com/geojson-vt/-/geojson-vt-3.2.1.tgz#f8adb614d2c1d3f6ee7c4265cad4bbf3ad60c8b7"
+
 get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
@@ -4390,6 +4450,10 @@ gl-mat3@^1.0.0:
 gl-mat4@^1.1.4:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/gl-mat4/-/gl-mat4-1.2.0.tgz#49d8a7636b70aa00819216635f4a3fd3f4669b26"
+
+gl-matrix@^2.6.1:
+  version "2.8.1"
+  resolved "https://unpm.uberinternal.com/gl-matrix/-/gl-matrix-2.8.1.tgz#1c7873448eac61d2cd25803a074e837bd42581a3"
 
 gl-quat@^1.0.0:
   version "1.0.0"
@@ -4705,6 +4769,10 @@ hmac-drbg@^1.0.0:
 hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
+
+hoek@4.2.1, hoek@^4.2.1:
+  version "4.2.1"
+  resolved "https://unpm.uberinternal.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
 hoek@^5.0.3:
   version "5.0.3"
@@ -5394,6 +5462,10 @@ kdbush@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/kdbush/-/kdbush-1.0.1.tgz#3cbd03e9dead9c0f6f66ccdb96450e5cecc640e0"
 
+kdbush@^2.0.1:
+  version "2.0.1"
+  resolved "https://unpm.uberinternal.com/kdbush/-/kdbush-2.0.1.tgz#90c6128e3001ac68c550d7c9e2f222c0269666f1"
+
 kepler.gl@^0.0.19:
   version "0.0.19"
   resolved "https://registry.yarnpkg.com/kepler.gl/-/kepler.gl-0.0.19.tgz#9f1de4fb121a5a4c3f7ff653dac9e0b2e5d961ce"
@@ -5650,7 +5722,7 @@ lru-cache@^4.0.1, lru-cache@^4.1.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-luma.gl@4.0.6, luma.gl@^4.0.1:
+luma.gl@4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/luma.gl/-/luma.gl-4.0.6.tgz#815de594f121d4dca1d68abd941fd6db60440c67"
   dependencies:
@@ -5662,6 +5734,16 @@ luma.gl@4.0.6, luma.gl@^4.0.1:
     gl-vec4 "^1.0.1"
     seer "^0.2.2"
     webgl-debug "^1.0.2"
+
+luma.gl@^6.2.0:
+  version "6.2.0"
+  resolved "https://unpm.uberinternal.com/luma.gl/-/luma.gl-6.2.0.tgz#449760dc735e2e89a55bb78697c8dd1093626b2c"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    math.gl "^2.2.0"
+    probe.gl "^2.0.1"
+    seer "^0.2.4"
+    webgl-debug "^2.0.0"
 
 magic-string@^0.14.0:
   version "0.14.0"
@@ -5731,6 +5813,35 @@ mapbox-gl@0.44:
     vt-pbf "^3.0.1"
     webworkify "^1.5.0"
 
+mapbox-gl@~0.50.0:
+  version "0.50.0"
+  resolved "https://unpm.uberinternal.com/mapbox-gl/-/mapbox-gl-0.50.0.tgz#49f44149f02fdd25ab64a2ec4efc7a11a5c96f55"
+  dependencies:
+    "@mapbox/geojson-types" "^1.0.2"
+    "@mapbox/jsonlint-lines-primitives" "^2.0.2"
+    "@mapbox/mapbox-gl-supported" "^1.4.0"
+    "@mapbox/point-geometry" "^0.1.0"
+    "@mapbox/tiny-sdf" "^1.1.0"
+    "@mapbox/unitbezier" "^0.0.0"
+    "@mapbox/vector-tile" "^1.3.1"
+    "@mapbox/whoots-js" "^3.1.0"
+    brfs "^1.4.4"
+    csscolorparser "~1.0.2"
+    earcut "^2.1.3"
+    geojson-rewind "^0.3.0"
+    geojson-vt "^3.2.0"
+    gl-matrix "^2.6.1"
+    grid-index "^1.0.0"
+    minimist "0.0.8"
+    murmurhash-js "^1.0.0"
+    pbf "^3.0.5"
+    potpack "^1.0.1"
+    quickselect "^1.0.0"
+    rw "^1.3.3"
+    supercluster "^4.1.1"
+    tinyqueue "^1.1.0"
+    vt-pbf "^3.0.1"
+
 marchingsquares@1.2.0, marchingsquares@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/marchingsquares/-/marchingsquares-1.2.0.tgz#36ae2dcc170be576d42579aac3c46da89ab650e6"
@@ -5751,6 +5862,18 @@ math.gl@^1.1.0, math.gl@^1.1.3:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/math.gl/-/math.gl-1.2.1.tgz#3c7da0ae4f3383116c24bc183533cc4d7b8065a9"
   dependencies:
+    gl-mat3 "^1.0.0"
+    gl-mat4 "^1.1.4"
+    gl-quat "^1.0.0"
+    gl-vec2 "^1.0.0"
+    gl-vec3 "^1.0.3"
+    gl-vec4 "^1.0.1"
+
+math.gl@^2.0.0, math.gl@^2.1.0, math.gl@^2.2.0:
+  version "2.2.0"
+  resolved "https://unpm.uberinternal.com/math.gl/-/math.gl-2.2.0.tgz#301dcda760ae235f5fdf471dd67ef2aa8c74d659"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
     gl-mat3 "^1.0.0"
     gl-mat4 "^1.1.4"
     gl-quat "^1.0.0"
@@ -5954,10 +6077,23 @@ mixin-object@^2.0.1:
     for-in "^0.1.3"
     is-extendable "^0.1.1"
 
+mjolnir.js@^1.0.0:
+  version "1.2.2"
+  resolved "https://unpm.uberinternal.com/mjolnir.js/-/mjolnir.js-1.2.2.tgz#65938d6b443fed5b5c65456e6c934b01fece3610"
+  dependencies:
+    hammerjs "^2.0.8"
+
 mjolnir.js@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/mjolnir.js/-/mjolnir.js-1.1.0.tgz#16361c5fc5a5eea47f5f9083e0cc0d540c37932f"
   dependencies:
+    hammerjs "^2.0.8"
+
+mjolnir.js@^2.0.0:
+  version "2.0.0"
+  resolved "https://unpm.uberinternal.com/mjolnir.js/-/mjolnir.js-2.0.0.tgz#8475d2fb3b09780dbff122f245c6b3ddc46fc41e"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
     hammerjs "^2.0.8"
 
 mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
@@ -6007,6 +6143,10 @@ multicast-dns@^6.0.1:
   dependencies:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
+
+murmurhash-js@^1.0.0:
+  version "1.0.0"
+  resolved "https://unpm.uberinternal.com/murmurhash-js/-/murmurhash-js-1.0.0.tgz#b06278e21fc6c37fa5313732b0412bcb6ae15f51"
 
 mute-stream@0.0.7:
   version "0.0.7"
@@ -6311,9 +6451,9 @@ obuf@^1.0.0, obuf@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
 
-ocular@^0.4.8:
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/ocular/-/ocular-0.4.8.tgz#fbe99e47668825fa2730a09f6e78b4a6e1406a89"
+ocular@^0.6.2:
+  version "0.6.2"
+  resolved "https://unpm.uberinternal.com/ocular/-/ocular-0.6.2.tgz#8761fb5794a6bae5664dfdf1462fd288d889d8db"
   dependencies:
     autoprefixer-loader "^3.2.0"
     babel-core "^6.26.0"
@@ -6340,6 +6480,7 @@ ocular@^0.4.8:
     eslint-plugin-react "^7.2.1"
     extract-text-webpack-plugin "^3.0.0"
     file-loader "^1.1.5"
+    hoek "^4.2.1"
     html-webpack-plugin "^2.30.1"
     html-webpack-template "^5.6.0"
     inquirer "^3.2.2"
@@ -6944,6 +7085,10 @@ postcss@^6.0.1:
     source-map "^0.6.1"
     supports-color "^5.4.0"
 
+potpack@^1.0.1:
+  version "1.0.1"
+  resolved "https://unpm.uberinternal.com/potpack/-/potpack-1.0.1.tgz#d1b1afd89e4c8f7762865ec30bd112ab767e2ebf"
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -6972,6 +7117,12 @@ prismjs@^1.8.1:
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
+
+probe.gl@^2.0.1:
+  version "2.0.1"
+  resolved "https://unpm.uberinternal.com/probe.gl/-/probe.gl-2.0.1.tgz#e42dfe02eca9ef262cdf89a24e1a4c0856e989e0"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"
@@ -7024,6 +7175,13 @@ prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8,
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
     fbjs "^0.8.16"
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
+
+prop-types@^15.6.2:
+  version "15.6.2"
+  resolved "https://unpm.uberinternal.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
+  dependencies:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
@@ -7219,6 +7377,15 @@ react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
+react-dom@^16.6.1:
+  version "16.6.3"
+  resolved "https://unpm.uberinternal.com/react-dom/-/react-dom-16.6.3.tgz#8fa7ba6883c85211b8da2d0efeffc9d3825cccc0"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.11.2"
+
 react-file-drop@^0.1.8:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/react-file-drop/-/react-file-drop-0.1.9.tgz#97102ebdfcddafd948bb20c16bfe3f07ddaf7a52"
@@ -7257,7 +7424,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-map-gl@^3.0.4, react-map-gl@^3.2.1:
+react-map-gl@^3.2.1:
   version "3.2.7"
   resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-3.2.7.tgz#dcc4f21b7231b4d883192d2a9e24fa2b00c219a1"
   dependencies:
@@ -7269,6 +7436,18 @@ react-map-gl@^3.0.4, react-map-gl@^3.2.1:
     mjolnir.js "^1.1.0"
     prop-types "^15.5.7"
     viewport-mercator-project "^5.1.0"
+
+react-map-gl@^4.0.0:
+  version "4.0.0"
+  resolved "https://unpm.uberinternal.com/react-map-gl/-/react-map-gl-4.0.0.tgz#b8e0c50fd4b5da9304a32f5d68de39d864906a09"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    mapbox-gl "~0.50.0"
+    math.gl "^2.0.0"
+    mjolnir.js "^2.0.0"
+    prop-types "^15.5.7"
+    react-virtualized-auto-sizer "^1.0.2"
+    viewport-mercator-project "^6.0.0"
 
 react-modal@^3.1.10:
   version "3.4.4"
@@ -7357,6 +7536,10 @@ react-router@^4.1.2, react-router@^4.2.0:
     classnames "^2.2.0"
     prop-types "^15.5.8"
 
+react-virtualized-auto-sizer@^1.0.2:
+  version "1.0.2"
+  resolved "https://unpm.uberinternal.com/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.2.tgz#a61dd4f756458bbf63bd895a92379f9b70f803bd"
+
 react-virtualized@^9.19.1:
   version "9.19.1"
   resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.19.1.tgz#84b53253df2d9df61c85ce037141edccc70a73fd"
@@ -7368,7 +7551,30 @@ react-virtualized@^9.19.1:
     prop-types "^15.6.0"
     react-lifecycles-compat "^3.0.4"
 
-react-vis@^1.7.2, react-vis@^1.8.0:
+react-vis@^1.11.4:
+  version "1.11.4"
+  resolved "https://unpm.uberinternal.com/react-vis/-/react-vis-1.11.4.tgz#f5d662d3439d45fd0f1f1186f725bf19b9b3a718"
+  dependencies:
+    d3-array "^1.2.0"
+    d3-collection "^1.0.3"
+    d3-color "^1.0.3"
+    d3-contour "^1.1.0"
+    d3-format "^1.2.0"
+    d3-geo "^1.6.4"
+    d3-hexbin "^0.2.2"
+    d3-hierarchy "^1.1.4"
+    d3-interpolate "^1.1.4"
+    d3-sankey "^0.7.1"
+    d3-scale "^1.0.5"
+    d3-shape "^1.1.0"
+    d3-voronoi "^1.1.2"
+    deep-equal "^1.0.1"
+    global "^4.3.1"
+    hoek "4.2.1"
+    prop-types "^15.5.8"
+    react-motion "^0.5.2"
+
+react-vis@^1.8.0:
   version "1.9.4"
   resolved "https://registry.yarnpkg.com/react-vis/-/react-vis-1.9.4.tgz#367934fb8fc9bc53026e5d29a3ff810d97f72b03"
   dependencies:
@@ -7407,6 +7613,15 @@ react@^15.6.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+react@^16.6.1:
+  version "16.6.3"
+  resolved "https://unpm.uberinternal.com/react/-/react-16.6.3.tgz#25d77c91911d6bbdd23db41e70fb094cc1e0871c"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.11.2"
 
 read-all-stream@^3.0.0:
   version "3.1.0"
@@ -7559,6 +7774,10 @@ regenerator-runtime@^0.10.5:
 regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+
+regenerator-runtime@^0.12.0:
+  version "0.12.1"
+  resolved "https://unpm.uberinternal.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
 
 regenerator-transform@^0.10.0:
   version "0.10.1"
@@ -7900,6 +8119,13 @@ sax@^1.2.4, sax@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
+scheduler@^0.11.2:
+  version "0.11.2"
+  resolved "https://unpm.uberinternal.com/scheduler/-/scheduler-0.11.2.tgz#a8db5399d06eba5abac51b705b7151d2319d33d3"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
 schema-utils@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
@@ -7924,7 +8150,7 @@ seedrandom@^2.4.2:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/seedrandom/-/seedrandom-2.4.3.tgz#2438504dad33917314bff18ac4d794f16d6aaecc"
 
-seer@^0.2.2, seer@^0.2.3:
+seer@^0.2.2, seer@^0.2.3, seer@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/seer/-/seer-0.2.4.tgz#6b8a81d09bfe6b3b3ad0268971a65e7f7405135c"
 
@@ -8536,6 +8762,12 @@ supercluster@^3.0.0:
   dependencies:
     kdbush "^1.0.1"
 
+supercluster@^4.1.1:
+  version "4.1.1"
+  resolved "https://unpm.uberinternal.com/supercluster/-/supercluster-4.1.1.tgz#cf13c3b28a3fb3db5290bfad7f524e244bd4ce78"
+  dependencies:
+    kdbush "^2.0.1"
+
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
@@ -9138,6 +9370,13 @@ viewport-mercator-project@^5.1.0:
   dependencies:
     math.gl "^1.1.0"
 
+viewport-mercator-project@^6.0.0:
+  version "6.0.0"
+  resolved "https://unpm.uberinternal.com/viewport-mercator-project/-/viewport-mercator-project-6.0.0.tgz#33b8bb40bae44978b889e5425f4f5d26f2367ecb"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    math.gl "^2.1.0"
+
 vlq@^0.2.1, vlq@^0.2.2:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/vlq/-/vlq-0.2.3.tgz#8f3e4328cf63b1540c0d67e1b2778386f8975b26"
@@ -9179,6 +9418,10 @@ wbuf@^1.1.0, wbuf@^1.7.2:
 webgl-debug@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/webgl-debug/-/webgl-debug-1.0.2.tgz#93bac5aed181343a136ad34f249920d3b9ccc69a"
+
+webgl-debug@^2.0.0:
+  version "2.0.1"
+  resolved "https://unpm.uberinternal.com/webgl-debug/-/webgl-debug-2.0.1.tgz#dc11bea3d947764bce061fdb5a23109c13787c95"
 
 webpack-dev-middleware@1.12.2:
   version "1.12.2"
