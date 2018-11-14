@@ -30,8 +30,7 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
         MapboxAccessToken: JSON.stringify(process.env.MapboxAccessToken)
       }
-    })
-  ],
+    })],
   devServer: {
     contentBase: './dist',
     hot: true
