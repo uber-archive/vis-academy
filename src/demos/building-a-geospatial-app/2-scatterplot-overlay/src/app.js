@@ -105,7 +105,7 @@ export default class App extends Component {
           propTypes={SCATTERPLOT_CONTROLS}
           onChange={settings => this._updateLayerSettings(settings)}
         />
-        <DeckGL
+        <DeckGL 
           layers={renderLayers({
             data: this.state.points,
             onHover: hover => this._onHover(hover),
