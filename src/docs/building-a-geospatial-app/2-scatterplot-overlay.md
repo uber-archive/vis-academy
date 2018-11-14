@@ -20,11 +20,107 @@ which we will use.
 Checkout the complete code for this step
 [here](https://github.com/uber-common/vis-academy/blob/master/src/demos/building-a-geospatial-app/2-scatterplot-overlay/src/app.js).
 
+## 1. An introduction to Deck.GL
 
-## 1. Add Taxi Data
+Deck.GL allows you to visualize stacked layers of data. Each layer can be of a different type (we'll see two: scatterplots and hexagons, but there are many more) and can have millions of data points. In the finished visualization, the layers appear on top of each other, and they support interactions like pan, zoom, rotate, as well as mouse hover, clicks, etc.
 
-Import the taxi data into your `app.js` component. If you cloned our
-tutorial repo as-is, your import statement should look like this:
+In our app, Deck.GL will appear as a <DeckGL /> component with, among others, a layers property which is where these layers will be defined.
+
+Deck.GL doesn't have to work with a map but it was designed with geospatial applications in mind.
+Like the map we've designed in the previous module, Deck.GL layers have the same concept of viewport and similar interactions.
+
+As such, there are 2 ways of making Deck.GL work with React-Map-GL:
+
+- DeckGL is a child of a React-Map-GL map:
+
+In the previous lesson, when there are interactions in the map, we update the state of the app.
+We could have a DeckGL component inside our MapGL component and pass it the viewport as it is updated:
+
+```js
+<MapGL ...>
+  <DeckGL viewport={this.state.viewport} />
+</MapGL>
+```
+
+- we use a special React-Map-GL map is a child of DeckGL.
+
+Instead, we can use a staticMap from React-Map-GL. StaticMaps get all the viewport information from their parent and all the interactions for free (viewport change, resize). We no longer need to maintain the viewport in a state. The resulting code is much more concise:
+
+```js
+import React, { Component } from 'react';
+import { StaticMap } from 'react-map-gl';
+import DeckGL from 'deck.gl';
+
+const INITIAL_VIEW_STATE = {
+  longitude: -74,
+  latitude: 40.7,
+  zoom: 11,
+  minZoom: 5,
+  maxZoom: 16,
+  pitch: 0,
+  bearing: 0
+};
+
+export default class App extends Component {
+  render() {
+    return (
+      <div>
+        <DeckGL initialViewState={INITIAL_VIEW_STATE} controller>
+          <StaticMap />
+        </DeckGL>
+      </div>
+    );
+  }
+}
+```
+
+That's enough to create a map!
+We are going to going to use that syntax going forward. It's still interesting to show the previous form because:
+
+- so you can see the interactions needed for a workable map,
+- in earlier versions of React-Map-GL/Deck.GL this was the only way to go so you may encounter code that is written this way.
+
+Also note that in our initialViewState object, we must include pitch and bearing (which we could just omit in the previous form.)
+
+In our example, we are still going to maintain a state to do things like changing the style of the map but we no longer need to maintain the viewport in it. So if we want to have the exact same features as at the end of the previous lesson, let's use this code with which you may replace your app.js file entirely -
+
+```js
+import React, { Component } from 'react';
+import { StaticMap } from 'react-map-gl';
+import { MapStylePicker } from './controls';
+
+const INITIAL_VIEW_STATE = {
+  longitude: -74,
+  latitude: 40.7,
+  zoom: 11,
+  minZoom: 5,
+  maxZoom: 16,
+  pitch: 0,
+  bearing: 0
+};
+
+export default class App extends Component {
+  state = {
+    style: 'mapbox://styles/mapbox/light-v9'
+  };
+  onStyleChange = style => {
+    this.setState({ style });
+  };
+  render() {
+    return (
+      <div>
+        <DeckGL initialViewState={INITIAL_VIEW_STATE} controller>
+          <StaticMap style={this.state.style} />
+        </DeckGL>
+      </div>
+    );
+  }
+}
+```
+
+## 2. Add data
+
+Import the taxi data into your `app.js` component.
 
 ```js
 import taxiData from '../../../data/taxi';
@@ -41,141 +137,440 @@ the data.
 ```js
 export default class App extends Component {
 
+  state = {
+    points: [],
+    style: 'mapbox://styles/mapbox/light-v9'
+  }
+
   componentDidMount() {
     this._processData();
     // ...
   }
 
   _processData() {
-    if (taxiData) {
-      this.setState({status: 'LOADED'});
-      const points = taxiData.reduce((accu, curr) => {
-        accu.push({
-          position: [Number(curr.pickup_longitude), Number(curr.pickup_latitude)],
-          pickup: true
-        });
-        accu.push({
-          position: [Number(curr.dropoff_longitude), Number(curr.dropoff_latitude)],
-          pickup: false
-        });
-        return accu;
-      }, []);
-      this.setState({
-        points,
-        status: 'READY'
+    const points = taxiData.reduce((accu, curr) => {
+      accu.push({
+        position: [Number(curr.pickup_longitude), Number(curr.pickup_latitude)],
+        pickup: true
       });
-    }
+      accu.push({
+        position: [
+          Number(curr.dropoff_longitude),
+          Number(curr.dropoff_latitude)
+        ],
+        pickup: false
+      });
+      return accu;
+    }, []);
+    this.setState({
+      points
+    });
   }
 
   // ...
 }
 ```
 
-## 2. Add `deck.gl` Component
+## 2. Add deck.gl layers
 
-Open file `deckgl-overlay.js` where we will put the deck.gl
-component. First, let's add  `DeckGl`:
+Open file `deckgl-layers.js` where we will put the deck.gl layers.
+
+First, let's import our first layer, the ScatterplotLayer:
+
+```js
+import {ScatterplotLayer} from 'deck.gl';
 
 ```
-import DeckGL, {ScatterplotLayer} from 'deck.gl';
 
-```
-
-then render it:
+then edit the renderLayers function:
 
 ```js
 
+  export function renderLayers(props) {
+    const {data} = props;
+    return [
+      new ScatterplotLayer({
+        id: 'scatterplot',
+        getPosition: d => d.position,
+        getColor: d => [0, 128, 255],
+        getRadius: d => 5,
+        opacity: 0.5,
+        pickable: true,
+        radiusMinPixels: 0.25,
+        radiusMaxPixels: 30,
+        data
+      })
+    ];
+  }
+```
+
+Now, let's just use our layers in the app.js file. 
+
+In the render function of app.js, add the following property to the DeckGL component:
+
+```js
+  <DeckGL
+    layers={renderLayers({data: this.state.points})}
+    initialViewState={INITIAL_VIEW_STATE}
+    controller
+  >
+```
+
+There we go! our first layer!
+
+That's all you need to render a scatter plot layer with deck.gl. Let's go over
+just some properties of the `ScatterplotLayer` above:
+
+##### `data` {Array}
+
+Data for the layer. In this case, it's our Taxi data set.
+
+##### `getPosition` {Function}
+
+Function that gets called for each data point, should return an array of [longitude, latitude].
+
+##### `getColor, getRadius` {Function}
+
+Also get called for each data point, and return the color and radius, respectively,
+for each point.
+
+##### `pickable` {Bool}
+
+Indicates whether this layer would be interactive.
+
+With this, you should have a working `deck.gl` overlay that displays the taxi
+data as a scatterplot overlay.
+
+## 3. Polish
+
+### Dynamic color
+Right now, our `getColor` accessor returns a constant. We can have color change depending on the data we pass. 
+Let's do that change in our deckgl-layers.js file:
+
+```js
+  getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
+
+```
+
+### Control panel
+Import `LayerControls` and `SCATTERPLOT_CONTROLS` from `./controls`, then add `settings` to `this.state`.
+With this code, we created settings for our scatterplot layer:
+
+In the imports:
+```js
+import {
+  LayerControls,
+  MapStylePicker,
+  SCATTERPLOT_CONTROLS
+} from './controls';
+```
+
+In the state definition:
+```js
+state = {
+  points: [],
+  settings: Object.keys(SCATTERPLOT_CONTROLS).reduce(
+    (accu, key) => ({
+      ...accu,
+      [key]: SCATTERPLOT_CONTROLS[key].value
+    }),
+    {}
+  ),
+  style: 'mapbox://styles/mapbox/light-v9'
+}
+```
+
+Before the render:
+```js
+  _updateLayerSettings(settings) {
+    this.setState({ settings });
+  }
+```
+
+In the DeckGL component in render:
+```js
+  <DeckGL
+    layers={renderLayers({data: this.state.points, settings: this.state.settings})}
+    initialViewState={INITIAL_VIEW_STATE}
+    controller
+  >
+```
+
+In the deckgl-layers file:
+```js
+export function renderLayers(props) {
+  const {data, settings} = props;
+  return [
+    settings.showScatterplot && new ScatterplotLayer({
+      id: 'scatterplot',
+      getPosition: d => d.position,
+      getColor: d => (d.pickup ? PICKUP_COLOR : DROPOFF_COLOR),
+      getRadius: d => 5,
+      opacity: 0.5,
+      pickable: true,
+      radiusMinPixels: 0.25,
+      radiusMaxPixels: 30,
+      data,
+      ...settings
+    })
+  ];
+}
+```
+
+Now, we have a control panel with which we can control aspects of our layer. We can control our WebGL layer the same way as we can pass properties to React Components
+
+### Mouseover interaction
+
+Finally, we can add mouseover interaction to our scatterplot. The steps are very similar to the above, even though we are doing the opposite: instead of capturing an interaction in HTML components and reflecting it to the WebGL layer, we capture an interaction in the WebGL layer and we reflect it in HTML components. 
+Let's go:
+
+In the imports, let's add:
+```js
+import { tooltipStyle } from './style';
+```
+
+In the state:
+```js
+  state = {
+    hover: {
+      x: 0,
+      y: 0,
+      hoveredObject: null
+    },
+    points: [],
+    settings: Object.keys(SCATTERPLOT_CONTROLS).reduce(
+      (accu, key) => ({
+        ...accu,
+        [key]: SCATTERPLOT_CONTROLS[key].value
+      }),
+      {}
+    ),
+    style: 'mapbox://styles/mapbox/light-v9'
+  };
+```
+
+Before render, let's add this method:
+```js
+  _onHover({ x, y, object }) {
+    const label = object ? (object.pickup ? 'Pickup' : 'Dropoff') : null;
+
+    this.setState({ hover: { x, y, hoveredObject: object, label } });
+  }
+```
+
+Let's change the beginning of render:
+```js
   render() {
-    if (!this.props.data) {
+    const data = this.state.points;
+    if (!data.length) {
       return null;
     }
-
-    const layers = [];
-
-    return (
-      <DeckGL {...this.props.viewport} layers={layers} onWebGLInitialized={this._initialize}/>
-    );
-  }
-
-```
-
-This gives us the basic structure, using the export `DeckGL` react component
-to render our `deck.gl` overlay. You'll notice that `layers` is being passed to
-`DeckGL` but it's an empty array. We have to initialize each `deck.gl` layer
-separately. Let's edit the function and initialize a `ScatterplotLayer` in `render()` function.
-
-```js
-// const layers = [];
-
-const layers = [
-  new ScatterplotLayer({
-    id: 'scatterplot',
-    getPosition: d => d.position,
-    getColor: d => [0, 128, 255],
-    getRadius: d => 5,
-    opacity: 0.5,
-    pickable: false,
-    radiusScale: 5,
-    radiusMinPixels: 0.25,
-    radiusMaxPixels: 30,
-    ...this.props
-  })
-];
-```
-
-## 3. Using the `deck.gl` Component
-
-Now that we have the component created, we can render it inside `App` and pass
-data as well as other props to it.
-
-```js
-import DeckGLOverlay from './deckgl-overlay';
-
-export default class App extends Component {
-
-  render() {
+    const { hover, settings } = this.state;
     return (
       <div>
-        <MapGL ...>
-          <DeckGLOverlay
-            viewport={this.state.viewport}
-            data={this.state.points} />
-        </MapGL>
+        {hover.hoveredObject && (
+          <div
+            style={{
+              ...tooltipStyle,
+              transform: `translate(${hover.x}px, ${hover.y}px)`
+            }}
+          >
+            <div>{hover.label}</div>
+          </div>
+        )}
+```
+
+Add the following to our DeckGL component: 
+```js
+  <DeckGL
+    layers={renderLayers({
+      data: this.state.points,
+      onHover: hover => this._onHover(hover),
+      settings: this.state.settings
+    })}
+    initialViewState={INITIAL_VIEW_STATE}
+    controller
+  >
+```
+
+And finally, add onHover in the deckgl-layers file:
+```js
+export function renderLayers(props) {
+  const {data, onHover, settings} = props;
+  return [
+    settings.showScatterplot && new ScatterplotLayer({
+      id: 'scatterplot',
+      getPosition: d => d.position,
+      getColor: d => (d.pickup ? PICKUP_COLOR : DROPOFF_COLOR),
+      getRadius: d => 5,
+      opacity: 0.5,
+      pickable: true,
+      radiusMinPixels: 0.25,
+      radiusMaxPixels: 30,
+      data,
+      onHover,
+      ...settings
+    })
+  ];
+}
+```
+
+This is it! we now have two-way interactions between our webGL layer and the rest of our application.
+
+Complete code:
+
+app.js:
+```js
+/* global window */
+import React, { Component } from 'react';
+import { StaticMap } from 'react-map-gl';
+import {
+  LayerControls,
+  MapStylePicker,
+  SCATTERPLOT_CONTROLS
+} from './controls';
+import { tooltipStyle } from './style';
+import DeckGL from 'deck.gl';
+import taxiData from '../../../data/taxi';
+import { renderLayers } from './deckgl-layers';
+
+const INITIAL_VIEW_STATE = {
+  longitude: -74,
+  latitude: 40.7,
+  zoom: 11,
+  minZoom: 5,
+  maxZoom: 16,
+  pitch: 0,
+  bearing: 0
+};
+
+export default class App extends Component {
+  state = {
+    hover: {
+      x: 0,
+      y: 0,
+      hoveredObject: null
+    },
+    points: [],
+    settings: Object.keys(SCATTERPLOT_CONTROLS).reduce(
+      (accu, key) => ({
+        ...accu,
+        [key]: SCATTERPLOT_CONTROLS[key].value
+      }),
+      {}
+    ),
+    style: 'mapbox://styles/mapbox/light-v9'
+  };
+
+  componentDidMount() {
+    this._processData();
+  }
+
+  _processData = () => {
+    const points = taxiData.reduce((accu, curr) => {
+      accu.push({
+        position: [Number(curr.pickup_longitude), Number(curr.pickup_latitude)],
+        pickup: true
+      });
+
+      accu.push({
+        position: [
+          Number(curr.dropoff_longitude),
+          Number(curr.dropoff_latitude)
+        ],
+        pickup: false
+      });
+      return accu;
+    }, []);
+    this.setState({
+      points
+    });
+  };
+
+  _onHover({ x, y, object }) {
+    const label = object ? (object.pickup ? 'Pickup' : 'Dropoff') : null;
+
+    this.setState({ hover: { x, y, hoveredObject: object, label } });
+  }
+
+  onStyleChange = style => {
+    this.setState({ style });
+  };
+
+  _updateLayerSettings(settings) {
+    this.setState({ settings });
+  }
+
+  render() {
+    const data = this.state.points;
+    if (!data.length) {
+      return null;
+    }
+    const { hover, settings } = this.state;
+    return (
+      <div>
+        {hover.hoveredObject && (
+          <div
+            style={{
+              ...tooltipStyle,
+              transform: `translate(${hover.x}px, ${hover.y}px)`
+            }}
+          >
+            <div>{hover.label}</div>
+          </div>
+        )}
+        <MapStylePicker
+          onStyleChange={this.onStyleChange}
+          currentStyle={this.state.style}
+        />
+        <LayerControls
+          settings={this.state.settings}
+          propTypes={SCATTERPLOT_CONTROLS}
+          onChange={settings => this._updateLayerSettings(settings)}
+        />
+        <DeckGL
+          layers={renderLayers({
+            data: this.state.points,
+            onHover: hover => this._onHover(hover),
+            settings: this.state.settings
+          })}
+          initialViewState={INITIAL_VIEW_STATE}
+          controller
+        >
+          <StaticMap mapStyle={this.state.style} />
+        </DeckGL>
       </div>
     );
   }
 }
 ```
 
-Once we add the code to initialize a `ScatterplotLayer`, we will have
-a working map. We can further edit our `ScatterplotLayer` to color
-the dots by `pickup` or `dropoff`. Let's edit our `ScatterplotLayer` to have the color depends on pickup or dropoff by changing
-the `getColor` callback
-
-```js
-  getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
-
+deckgl-layers.js:
 ```
-That's all you need to render a scatter plot layer with deck.gl. Let's go over
-just some properties of the `ScatterplotLayer` above:
+import { ScatterplotLayer } from 'deck.gl';
 
-##### `data` {Array}
-Data for the layer. In this case, it's our Taxi data set.
+const PICKUP_COLOR = [0, 128, 255];
+const DROPOFF_COLOR = [255, 0, 128];
 
-##### `getPosition` {Function}
-Function that gets called for each data point, should return an array of [longitude, latitude].
-
-##### `getColor, getRadius` {Function}
-Also get called for each data point, and return the color and radius, respectively,
-for each point.
-
-##### `pickable` {Bool}
-Indicates whether this layer would be interactive.
-
-
-With this, you should have a working `deck.gl` overlay that displays the taxi
-data as a scatterplot overlay.
-
+export function renderLayers(props) {
+  const {data, onHover, settings} = props;
+  return [
+    settings.showScatterplot && new ScatterplotLayer({
+      id: 'scatterplot',
+      getPosition: d => d.position,
+      getColor: d => (d.pickup ? PICKUP_COLOR : DROPOFF_COLOR),
+      getRadius: d => 5,
+      opacity: 0.5,
+      pickable: true,
+      radiusMinPixels: 0.25,
+      radiusMaxPixels: 30,
+      data,
+      onHover,
+      ...settings
+    })
+  ];
+}
+```
 
 <ul class="insert takeaways">
   <li>the Deck.GL __DeckGL__ component can be used to plot _layers_ over a map.</li>
@@ -190,68 +585,3 @@ data as a scatterplot overlay.
 ## Optional section
 
 Feel free to skip to [lesson 3](https://uber-common.github.io/vis-academy/#/building-a-geospatial-app/3-more-data-overlays-hexagons) or even [lesson 4](https://uber-common.github.io/vis-academy/#/building-a-geospatial-app/4-a-basic-chart).
-
-## 4. Adding Polish
-
-If you check out the source code for this step, you'll see extra code that add
-functionalities such as a settings panel, hover handler, hover tooltip, and
-loading spinner.
-
-The control for the settings panel is already provided in your starting code. It's a typical React component, so there's no use going through the details in this tutorial.
-
-## 4.1. Add layer control panel
-
-Import `LayerControls` and `SCATTERPLOT_CONTROLS` from `./layer-controls`, then add `settings` to `this.state`.
-With this code, we created settings for our scatterplot layer
-
-```js
-/* global window */
-import {LayerControls, SCATTERPLOT_CONTROLS} from './layer-controls';
-
-export default class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      // add settings
-      settings: Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
-        ...accu,
-        [key]: SCATTERPLOT_CONTROLS[key].value
-      }), {}),
-    };
-  }
-}
-```
-Next, lets render a layer control panel on the screen. Lets add `LayerControls` to render methods.
-
-```js
-  _updateLayerSettings(settings) {
-    this.setState({settings});
-  }
-
-  render() {
-    return (
-      <div>
-        <LayerControls
-          settings={this.state.settings}
-          propTypes={SCATTERPLOT_CONTROLS}
-          onChange={settings => this._updateLayerSettings(settings)}/>
-        <MapGL
-           // ...
-        </MapGL>
-      </div>
-    );
-  }
-}
-```
-
-Finally, let's pass `state.settings` to `DeckGLOverlay`.
-
-```js
-
-    <DeckGLOverlay
-    // ...
-    {...this.state.settings}
-    />
-
-```

@@ -9,6 +9,13 @@ export const tooltipStyle = {
   pointerEvents: 'none'
 };
 
+export const mapStylePicker = {
+  position: 'absolute',
+  top: '20px',
+  left: '20px',
+  zIndex: 100
+};
+
 export const layerControl = {
   borderRadius: 3,
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
@@ -35,7 +42,7 @@ export const charts = {
   padding: '10px',
   position: 'absolute',
   left: 20,
-  top: 20,
+  bottom: 20,
   width: 500,
   zIndex: 100
 };

@@ -1,57 +1,48 @@
 /* global window */
-import React, {Component} from 'react';
-import MapGL from 'react-map-gl';
-import DeckGLOverlay from './deckgl-overlay';
-import {
-  LayerControls,
-  HEXAGON_CONTROLS
-} from './layer-controls';
-import Charts from './charts';
-import {tooltipStyle} from './style';
-
+import React, { Component } from 'react';
+import { StaticMap } from 'react-map-gl';
+import { LayerControls, MapStylePicker, HEXAGON_CONTROLS } from './controls';
+import { tooltipStyle } from './style';
+import DeckGL from 'deck.gl';
 import taxiData from '../../../data/taxi';
+import { renderLayers } from './deckgl-layers';
+import Charts from './charts';
 
-const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
-// Set your mapbox token here
-const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+const INITIAL_VIEW_STATE = {
+  longitude: -74,
+  latitude: 40.7,
+  zoom: 11,
+  minZoom: 5,
+  maxZoom: 16,
+  pitch: 0,
+  bearing: 0
+};
 
 export default class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        longitude: -74,
-        latitude: 40.7,
-        zoom: 11,
-        maxZoom: 16
-      },
-      settings: Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
+  state = {
+    hover: {
+      x: 0,
+      y: 0,
+      hoveredObject: null
+    },
+    points: [],
+    settings: Object.keys(HEXAGON_CONTROLS).reduce(
+      (accu, key) => ({
         ...accu,
         [key]: HEXAGON_CONTROLS[key].value
-      }), {}),
-
-      status: 'LOADING'
-    };
-    this._resize = this._resize.bind(this);
-  }
+      }),
+      {}
+    ),
+    style: 'mapbox://styles/mapbox/light-v9'
+  };
 
   componentDidMount() {
     this._processData();
-    window.addEventListener('resize', this._resize);
-    this._resize();
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this._resize);
-  }
-
-  _processData() {
-    if (taxiData) {
-      this.setState({status: 'LOADED'});
-      const data = taxiData.reduce((accu, curr) => {
+  _processData = () => {
+    const data = taxiData.reduce(
+      (accu, curr) => {
         const pickupHour = new Date(curr.pickup_datetime).getUTCHours();
         const dropoffHour = new Date(curr.dropoff_datetime).getUTCHours();
 
@@ -84,71 +75,86 @@ export default class App extends Component {
         accu.dropoffObj[dropoffHour] = prevDropoffs + 1;
 
         return accu;
-      }, {
+      },
+      {
         points: [],
         pickupObj: {},
         dropoffObj: {}
-      });
+      }
+    );
 
-      data.pickups = Object.entries(data.pickupObj).map(([hour, count]) => {
-        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
-      });
-      data.dropoffs = Object.entries(data.dropoffObj).map(([hour, count]) => {
-        return {hour: Number(hour), x: Number(hour) + 0.5, y: count};
-      });
-      data.status = 'READY';
-
-      this.setState(data);
-    }
-  }
-
-  _onHover({x, y, object}) {
-    this.setState({x, y, hoveredObject: object});
-  }
-
-  _onViewportChange(viewport) {
-    this.setState({
-      viewport: {...this.state.viewport, ...viewport}
+    data.pickups = Object.entries(data.pickupObj).map(([hour, count]) => {
+      return { hour: Number(hour), x: Number(hour) + 0.5, y: count };
     });
-  }
-
-  _resize() {
-    this._onViewportChange({
-      width: window.innerWidth,
-      height: window.innerHeight
+    data.dropoffs = Object.entries(data.dropoffObj).map(([hour, count]) => {
+      return { hour: Number(hour), x: Number(hour) + 0.5, y: count };
     });
+    this.setState(data);
+  };
+
+  _onHover({ x, y, object }) {
+    const label = object
+      ? object.points
+        ? `${object.points.length} pickups or dropoffs here`
+        : object.pickup
+        ? 'Pickup'
+        : 'Dropoff'
+      : null;
+
+    this.setState({ hover: { x, y, hoveredObject: object, label } });
   }
 
+  onStyleChange = style => {
+    this.setState({ style });
+  };
+  _onWebGLInitialize = gl => {
+    gl.enable(gl.DEPTH_TEST);
+    gl.depthFunc(gl.LEQUAL);
+  };
   _updateLayerSettings(settings) {
-    this.setState({settings});
+    this.setState({ settings });
   }
 
   render() {
+    const data = this.state.points;
+    if (!data.length) {
+      return null;
+    }
+    const { hover, settings } = this.state;
     return (
       <div>
-        {this.state.hoveredObject &&
-          <div style={{
-            ...tooltipStyle,
-            transform: `translate(${this.state.x}px, ${this.state.y}px)`
-          }}>
-            <div>{JSON.stringify(this.state.hoveredObject)}</div>
-          </div>}
+        {hover.hoveredObject && (
+          <div
+            style={{
+              ...tooltipStyle,
+              transform: `translate(${hover.x}px, ${hover.y}px)`
+            }}
+          >
+            <div>{hover.label}</div>
+          </div>
+        )}
+        <MapStylePicker
+          onStyleChange={this.onStyleChange}
+          currentStyle={this.state.style}
+        />
         <LayerControls
           settings={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
-          onChange={settings => this._updateLayerSettings(settings)}/>
-        <MapGL
-          {...this.state.viewport}
-          mapStyle={MAPBOX_STYLE}
-          onViewportChange={viewport => this._onViewportChange(viewport)}
-          mapboxApiAccessToken={MAPBOX_TOKEN}>
-          <DeckGLOverlay
-            viewport={this.state.viewport}
-            data={this.state.points}
-            onHover={hover => this._onHover(hover)}
-             {...this.state.settings}
-          />
-        </MapGL>
+          onChange={settings => this._updateLayerSettings(settings)}
+        />
+        <DeckGL
+          {...this.state.settings}
+          onWebGLInitialized={this._onWebGLInitialize}
+          layers={renderLayers({
+            data: this.state.points,
+            onHover: hover => this._onHover(hover),
+            settings: this.state.settings
+          })}
+          initialViewState={INITIAL_VIEW_STATE}
+          controller
+        >
+          <StaticMap mapStyle={this.state.style} />
+        </DeckGL>
         <Charts {...this.state} />
       </div>
     );
