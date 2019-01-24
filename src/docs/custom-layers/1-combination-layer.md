@@ -114,7 +114,7 @@ export default class TaxiLayer extends CompositeLayer {
 }
 ```
 
-Note that we're passing the props of this layer to the sublayers by mapping them to the prop names the ScatterplotLayer recognizes. The only exception is the `id` prop, because layer ids much be unique, we create them by appending suffix to the user defined id.
+Note that we're passing the props of this layer to the sublayers by mapping them to the prop names the ScatterplotLayer recognizes. The only exception is the `id` prop, because layer ids must be unique, we create them by appending suffix to the user defined id.
 
 Run the app -- it should render both pickup and dropoff locations now.
 
