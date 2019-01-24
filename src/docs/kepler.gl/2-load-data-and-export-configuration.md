@@ -60,7 +60,7 @@ stat structure __{rows, fields}__. The second step is to create the dataset obje
 - data: the generated object with rows and fields
 - info (OPTIONAL): this is used to pass dataset id (this will be used in our next example) and other meta information (see API documentation for more)
 
-In the last step, we are adding the data to our kepler.gl instance using the action __addDataToMap__ and we pass our new created dataset as an input paramenter.
+In the last step, we are adding the data to our kepler.gl instance using the action __addDataToMap__ and we pass our new created dataset as an input parameter.
 You may notice, we use __datasets__ property to pass our new data object. __datasets__ property can be either a single object vlue or an array of datasets instances.
 
 ## 2. Export Kepler.gl instance configuration
