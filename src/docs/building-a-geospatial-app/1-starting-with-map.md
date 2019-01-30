@@ -93,7 +93,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <MapGL
+        <MapGL>
           {...this.state.viewport}
           mapStyle={this.state.style}
         </MapGL>
