@@ -5,18 +5,18 @@
     "build": "NODE_ENV=production webpack --env.prod=true"
   },
   "dependencies": {
-    "d3-force": "^1.0.6",
-    "deck.gl": "^4.1.0",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "d3-force": "^2.0.1",
+    "deck.gl": "^7.1.10",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "webpack": "^2.2.0",
-    "webpack-dev-server": "^2.2.0"
+    "webpack": "^2.7.0",
+    "webpack-dev-server": "^2.11.5"
   }
 }

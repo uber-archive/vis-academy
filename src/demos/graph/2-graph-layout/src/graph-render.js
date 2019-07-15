@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import DeckGL, {
   LineLayer,
   ScatterplotLayer,
-  OrthographicViewport,
+  OrthographicView,
   COORDINATE_SYSTEM
 } from 'deck.gl';
 
@@ -12,7 +12,7 @@ export default class GraphRender extends PureComponent {
   createViewport() {
     const width = this.props.width;
     const height = this.props.height;
-    return new OrthographicViewport({
+    return new OrthographicView({
       width,
       height,
       left: (-width / 2),
@@ -27,7 +27,7 @@ export default class GraphRender extends PureComponent {
       getPosition: node => this.props.getNodePosition(node),
       getRadius: node => this.props.getNodeSize(node),
       getColor: node => this.props.getNodeColor(node),
-      projectionMode: COORDINATE_SYSTEM.IDENTITY,
+      coordinateSystem: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
         getPosition: this.props.positionUpdateTrigger
       }
@@ -44,7 +44,7 @@ export default class GraphRender extends PureComponent {
         this.props.getEdgePosition(e).targetPosition,
       getColor: e => this.props.getEdgeColor(e),
       strokeWidth: this.props.getEdgeWidth(),
-      projectionMode: COORDINATE_SYSTEM.IDENTITY,
+      coordinateSystem: COORDINATE_SYSTEM.IDENTITY,
       updateTriggers: {
         getSourcePosition: this.props.positionUpdateTrigger,
         getTargetPosition: this.props.positionUpdateTrigger
@@ -58,7 +58,7 @@ export default class GraphRender extends PureComponent {
         <DeckGL
           width={this.props.width}
           height={this.props.height}
-          viewport={this.createViewport()}
+          views={this.createViewport()}
           layers={[
             this.createEdgeLayer(),
             this.createNodeLayer()
