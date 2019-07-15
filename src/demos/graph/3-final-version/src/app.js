@@ -6,7 +6,7 @@ import sampleGraph from '../../data/sample-graph';
 
 // utils
 import Graph from '../../common/graph';
-import LayoutEngine from '../../common/layout-engine';
+import LayoutEngine from './layout-engine';
 
 // components
 import GraphRender from './graph-render';
