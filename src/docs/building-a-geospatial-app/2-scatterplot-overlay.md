@@ -206,6 +206,11 @@ then edit the renderLayers function:
 
 Now, let's just use our layers in the app.js file. 
 
+Import the renderLayers function into our app:
+```js
+import { renderLayers } from "./deckgl-layers";
+```
+
 In the render function of app.js, add the following property to the DeckGL component:
 
 ```js
