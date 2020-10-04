@@ -6,7 +6,7 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 function SetToken() {
   return (
     <div style={{fontSize: '20px'}}>
-      <div>You don't have a Mapbox token set in your environemnt.</div>
+      <div>You don't have a Mapbox token set in your environment.</div>
       <ul>
         <li>
           Go to <a href="http://mapbox.com">Mapbox</a> and log in or sign up to
@@ -40,7 +40,7 @@ export default class App extends Component {
       <div>
         <div className="intro">
           {MAPBOX_TOKEN ? (
-            `You mapbox token is set. You're good to go!`
+            `Your mapbox token is set. You're good to go!`
           ) : (
             <SetToken />
           )}
