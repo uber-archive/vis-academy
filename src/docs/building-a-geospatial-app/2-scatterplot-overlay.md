@@ -110,7 +110,7 @@ export default class App extends Component {
     return (
       <div>
         <DeckGL initialViewState={INITIAL_VIEW_STATE} controller>
-          <StaticMap style={this.state.style} />
+          <StaticMap mapStyle={this.state.style} />
         </DeckGL>
       </div>
     );
@@ -205,6 +205,8 @@ then edit the renderLayers function:
 ```
 
 Now, let's just use our layers in the app.js file. 
+
+`import { renderLayers } from './deckgl-layers';`
 
 In the render function of app.js, add the following property to the DeckGL component:
 
