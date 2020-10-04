@@ -110,7 +110,7 @@ export default class App extends Component {
     return (
       <div>
         <DeckGL initialViewState={INITIAL_VIEW_STATE} controller>
-          <StaticMap style={this.state.style} />
+          <StaticMap mapStyle={this.state.style} />
         </DeckGL>
       </div>
     );
