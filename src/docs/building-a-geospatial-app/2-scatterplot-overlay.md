@@ -109,6 +109,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <MapStylePicker onStyleChange={this.onStyleChange} currentStyle={this.state.style}/>
         <DeckGL initialViewState={INITIAL_VIEW_STATE} controller>
           <StaticMap style={this.state.style} />
         </DeckGL>
