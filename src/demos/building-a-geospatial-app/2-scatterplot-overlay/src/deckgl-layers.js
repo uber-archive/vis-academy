@@ -6,7 +6,7 @@ const DROPOFF_COLOR = [243, 185, 72];
 export function renderLayers(props) {
   const { data, onHover, settings } = props;
   return [
-    settings.showScatterplot &&
+    settings.showHexagon &&
       new ScatterplotLayer({
         id: 'scatterplot',
         getPosition: d => d.position,
