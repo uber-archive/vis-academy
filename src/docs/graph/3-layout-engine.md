@@ -98,7 +98,7 @@ export default class App extends Component {
   processData() {
     // ...
     const newGraph = new Graph();
-    newGraph.nodes.forEach(node => {
+    sampleGraph.nodes.forEach(node => {
       newGraph.addNode(node);
     });
     sampleGraph.edges.forEach(edge => {
