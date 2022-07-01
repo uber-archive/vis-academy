@@ -13,7 +13,7 @@ We are going to edit two existing files: `reducers.js`, `app.js`. We are going t
 Let's get your hands on kepler.gl implementation by following steps:
 
 ## 1. Import Kepler.gl
-Open `reducers.js` in `src/` folder. We are going to perform to perform two changes in this.
+Open `reducers.js` in `src/` folder. We are going to perform two changes in this.
 
 First, import Kepler.gl reducer by adding in the import section of the file the following snippet:
 ```js
