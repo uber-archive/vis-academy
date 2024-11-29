@@ -86,7 +86,7 @@ Next, we're going to put that token in your .bash_profile file so that you can a
 There, add the line: 
 
 ```
-export MAPBOX_TOKEN="[your mapbox access token]"
+export MapboxAccessToken="[your mapbox access token]"
 ```
 
 (you'll replace [your mapbox access token goes here] by the mapbox access token you just created or copied, and there's no brackets.)
@@ -97,7 +97,7 @@ Close your terminal window and reopen it.
 Now type: 
 
 ```
-echo $MAPBOX_TOKEN
+echo $MapboxAccessToken
 ```
 
 And you should see your Mapbox access token. 
