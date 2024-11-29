@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-const MAPBOX_STYLE = 'mapbox://styles/mapbox/light-v9';
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 function SetToken() {
