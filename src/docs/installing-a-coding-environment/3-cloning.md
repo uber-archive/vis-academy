@@ -42,7 +42,7 @@ This step can take a minute or two as all the dependencies are downloaded. When 
 npm run start
 ```
 
-And open your browser at this address: http://localhost:3030/ - though a new browser should already be open.
+And open your browser at this address: http://localhost:8080/ - though a new browser should already be open.
 
 If you see:
 ![empty app - Edit me!](images/setup/emtpy-app.png)
