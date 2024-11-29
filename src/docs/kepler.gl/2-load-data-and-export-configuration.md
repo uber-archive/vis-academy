@@ -22,7 +22,7 @@ import nycTrips from './data/nyc-trips.csv';
 ```
 
 In order to process the raw data we are going to use Kepler.gl APIs and in particular the following:
-- Processors: provides ability to convert raw data (csv, json) into kepler.gl data form which has rows anf fields properties
+- Processors: provides ability to convert raw data (csv, json) into kepler.gl data form which has rows and fields properties
 - Actions: provides an easy interface to programmatically interact with kepler.gl instance
 
 Import Processors and Actions
@@ -61,7 +61,7 @@ stat structure __{rows, fields}__. The second step is to create the dataset obje
 - info (OPTIONAL): this is used to pass dataset id (this will be used in our next example) and other meta information (see API documentation for more)
 
 In the last step, we are adding the data to our kepler.gl instance using the action __addDataToMap__ and we pass our new created dataset as an input paramenter.
-You may notice, we use __datasets__ property to pass our new data object. __datasets__ property can be either a single object vlue or an array of datasets instances.
+You may notice, we use __datasets__ property to pass our new data object. __datasets__ property can be either a single object value or an array of datasets instances.
 
 ## 2. Export Kepler.gl instance configuration
 Kepler.gl provides the ability to programmatically interact with the configuration store of an instance. In this part of our code lab, we are going to create a 
