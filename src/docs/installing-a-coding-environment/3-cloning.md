@@ -45,7 +45,7 @@ npm run start
 And open your browser at this address: http://localhost:3030/ - though a new browser should already be open.
 
 If you see:
-![empty app - Edit me!](images/setup/emtpy-app.png)
+![empty app - Edit me!](images/setup/empty-app.png)
 
 Congratulations! You are ready to enroll to the academy.
 If the app cannot find your Mapbox token, it would let you know. Go back to the previous step and make sure it's set in your environment variables. 
