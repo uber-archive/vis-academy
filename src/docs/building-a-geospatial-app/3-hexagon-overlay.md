@@ -114,11 +114,9 @@ Here's a link to the [complete code of this step](https://github.com/uber-common
   <li>It's possible to deactivate any of these layers at runtime by returning null instead of a layer</li>
 </ul>
 
-Let's go over some properties of the `HexagonLayer`:
-
 [Deck.gl documentation of Hexagon Layer](https://uber.github.io/deck.gl/#/layer-catalog/hexagon-layer)
 
-Let's go over just some properties of the `HexagonLayer` above:
+Let's go over some properties of the `HexagonLayer` above:
 
 ##### `data` {Array}
 Array of points for the layer. In this case, it's our Taxi data set.
