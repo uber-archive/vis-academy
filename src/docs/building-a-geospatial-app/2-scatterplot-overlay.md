@@ -87,6 +87,7 @@ In our example, we are still going to maintain a state to do things like changin
 ```js
 import React, { Component } from 'react';
 import { StaticMap } from 'react-map-gl';
+import DeckGL from 'deck.gl';
 import { MapStylePicker } from './controls';
 
 const INITIAL_VIEW_STATE = {
